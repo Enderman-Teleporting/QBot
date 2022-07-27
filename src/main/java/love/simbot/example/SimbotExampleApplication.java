@@ -1,8 +1,13 @@
 package love.simbot.example;
 
+import org.jetbrains.annotations.NotNull;
+
 import love.forte.simbot.annotation.SimbotApplication;
 import love.forte.simbot.annotation.SimbotResource;
+import love.forte.simbot.api.sender.BotSender;
+import love.forte.simbot.bot.Bot;
 import love.forte.simbot.core.SimbotApp;
+import love.forte.simbot.core.SimbotContext;
 
 /**
  * simbot 启动类。
@@ -31,5 +36,12 @@ public class SimbotExampleApplication {
             第二个参数是main方法得到的启动参数。
          */
         SimbotApp.run(SimbotExampleApplication.class, args);
+    }
+    
+    @Override
+    public void post(@NotNull SimbotContext context) {
+    	Bot bot=context.getBotManager().getDefaultBot();
+    	BotSender sender =bot.getSender();
+    	sender.SENDER.sendPrivateMsg( code: /* */, msg:"已成功启动!");
     }
 }

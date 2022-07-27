@@ -27,3 +27,6 @@ src/main/resources/simbot-bots/yourBot1.bot
 src/main/resources/simbot-bots/yourBot2.bot
 target/classes/simbot-bots/yourBot1.bot
 target/classes/simbot-bots/yourBot2.bot
+src/main/resources/simbot-bots/yourBot1.bot
+*.bot
+/target/
