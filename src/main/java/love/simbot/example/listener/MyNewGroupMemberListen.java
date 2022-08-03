@@ -26,7 +26,7 @@ public class MyNewGroupMemberListen {
         AccountInfo accountInfo = groupMemberIncrease.getAccountInfo();
         MessageContent msg = builder
                 .at(accountInfo)
-                .text(" 欢迎萌新!我是机器人Steve 很高兴见到你\n")
+                .text(" 欢迎萌新!我是机器人菲菲 很高兴见到你\n")
                 .build();
         GroupInfo groupInfo = groupMemberIncrease.getGroupInfo();
         sender.sendGroupMsg(groupInfo, msg);
@@ -46,7 +46,7 @@ public class MyNewGroupMemberListen {
                 .at(accountInfoC)
                 .text("的权限被")
                 .at(operatorinfo)
-                .text("失去管理权限")
+                .text("降级为群成员权限")
                 .build();
             sender.sendGroupMsg(groupInfoC, message_);
         }
@@ -55,7 +55,7 @@ public class MyNewGroupMemberListen {
                 .at(accountInfoC)
                 .text("的权限被")
                 .at(operatorinfo)
-                .text("获得管理权限")
+                .text("升级为管理权限")
                 .build();
             sender.sendGroupMsg(groupInfoC, message_);
         }

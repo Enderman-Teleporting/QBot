@@ -9,9 +9,18 @@ import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.containers.GroupAccountInfo;
 import love.forte.simbot.api.message.containers.GroupInfo;
 import love.forte.simbot.api.message.events.GroupMsg;
+import love.forte.simbot.api.message.events.MsgGet;
 import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.filter.MatchType;
+import net.sf.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.List;
+
 @Beans
 public class MyGroupListen {
     @OnGroup
@@ -33,9 +42,26 @@ public class MyGroupListen {
         System.out.println(groupInfo.getGroupName());
     }
     @Listen(GroupMsg.class)
-    @Filter (value="Steve",matchType = MatchType.EQUALS)
+    @Filter (value="菲菲",matchType = MatchType.EQUALS)
     public void beCalled(GroupMsg groupmsg,Sender sender){
         GroupInfo groupInfo1=groupmsg.getGroupInfo();
-        sender.sendGroupMsg(groupInfo1,"┗|｀O′|┛ 嗷~~ 史蒂夫搁这儿呢");
+        sender.sendGroupMsg(groupInfo1,"是谁在叫菲菲啊");
     }
+
+    @Listen(GroupMsg.class)
+    @Filter(atBot=true,matchType=MatchType.CONTAINS)
+    public void Groupmsglisten(GroupMsg groupMsg, MsgGet msgGet, Sender sender) throws IOException, InterruptedException{
+        GroupInfo listenedgroupinfo=groupMsg.getGroupInfo();
+        String gottenmsg1=groupMsg.getText();
+        URL url=new URL ("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg1);
+        InputStream is =url.openStream();
+        BufferedReader br=new BufferedReader(new InputStreamReader(is));
+        String result =br.readLine();
+        JSONObject obj=JSONObject.fromObject(result);
+        result=obj.getString("content");
+        sender.sendGroupMsg(listenedgroupinfo, result);
+        Thread.sleep(3000);
+    }
+    
 }
+

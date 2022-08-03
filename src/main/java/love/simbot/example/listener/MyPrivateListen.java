@@ -1,25 +1,40 @@
 package love.simbot.example.listener;
 
-import catcode.CatCodeUtil;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import love.forte.common.ioc.annotation.Beans;
-import love.forte.common.ioc.annotation.Depend;
 import love.forte.simbot.annotation.Listen;
-import love.forte.simbot.annotation.OnPrivate;
-import love.forte.simbot.api.message.MessageContent;
-import love.forte.simbot.api.message.MessageContentBuilder;
-import love.forte.simbot.api.message.MessageContentBuilderFactory;
-import love.forte.simbot.api.message.containers.AccountInfo;
+import love.forte.simbot.annotation.Listens;
 import love.forte.simbot.api.message.events.MsgGet;
 import love.forte.simbot.api.message.events.PrivateMsg;
 import love.forte.simbot.api.message.events.PrivateMsgRecall;
 import love.forte.simbot.api.sender.Sender;
+import love.forte.simbot.constant.PriorityConstant;
+import net.sf.json.JSONObject;
 
-import org.json.JSONObject;
 @Beans
 public class MyPrivateListen {
     @Listen(PrivateMsgRecall.class)
     public void message(PrivateMsgRecall privateMsgRecall, Sender sender){
         sender.sendPrivateMsg(privateMsgRecall, "快说,撤回了什么?!");
+    }
+    @Listens(value={
+            @Listen(MsgGet.class),
+            @Listen(PrivateMsg.class)
+        },priority=PriorityConstant.FIRST,name="LISTENPRIVATE")
+    public void Privatemsglisten(PrivateMsg privateMsg, MsgGet msgGet, Sender sender) throws IOException{
+        String listenedinfo=privateMsg.getId();
+        String gottenmsg2=privateMsg.getText();
+        URL url=new URL ("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg2);
+        InputStream is =url.openStream();
+        BufferedReader br=new BufferedReader(new InputStreamReader(is));
+        String result =br.readLine();
+        JSONObject obj=JSONObject.fromObject(result);
+        result=obj.getString("content");
+        sender.sendGroupMsg(listenedinfo, result);
     }
     
 }
