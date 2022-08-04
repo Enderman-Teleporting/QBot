@@ -8,6 +8,7 @@ import java.net.URL;
 import love.forte.common.ioc.annotation.Beans;
 import love.forte.simbot.annotation.Listen;
 import love.forte.simbot.annotation.Listens;
+import love.forte.simbot.api.message.containers.AccountInfo;
 import love.forte.simbot.api.message.events.MsgGet;
 import love.forte.simbot.api.message.events.PrivateMsg;
 import love.forte.simbot.api.message.events.PrivateMsgRecall;
@@ -26,7 +27,7 @@ public class MyPrivateListen {
             @Listen(PrivateMsg.class)
         },priority=PriorityConstant.FIRST,name="LISTENPRIVATE")
     public void Privatemsglisten(PrivateMsg privateMsg, MsgGet msgGet, Sender sender) throws IOException{
-        String listenedinfo=privateMsg.getId();
+        AccountInfo listenedinfo=privateMsg.getAccountInfo();
         String gottenmsg2=privateMsg.getText();
         URL url=new URL ("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg2);
         InputStream is =url.openStream();
@@ -34,7 +35,7 @@ public class MyPrivateListen {
         String result =br.readLine();
         JSONObject obj=JSONObject.fromObject(result);
         result=obj.getString("content");
-        sender.sendGroupMsg(listenedinfo, result);
+        sender.sendPrivateMsg(listenedinfo, result);
     }
     
 }

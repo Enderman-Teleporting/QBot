@@ -30,3 +30,4 @@ target/classes/simbot-bots/yourBot2.bot
 src/main/resources/simbot-bots/yourBot1.bot
 *.bot
 /target/
+*.bot
