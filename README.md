@@ -9,7 +9,7 @@
  https://github.com/ForteScarlet/simple-robot-demo-project(大概是这个,我也整忘了)  
  api接口为青云客(https://qingyunke.com)  
  若要使用该机器人,请克隆库并且在.\src\resource里面找到后缀名为.bot的文件并按提示输入账号密码  
- 并且打成jar包使用Java指令启动  
+ 并且去IntelliJ Idea使用Springboot(详见simpler-robot文档,必须是springboot)打成jar包使用Java指令启动  
  示例启动指令:java -jar (路径)  
    
  包含功能:  
