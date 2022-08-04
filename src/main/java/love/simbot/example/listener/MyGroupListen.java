@@ -9,7 +9,9 @@ import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.containers.GroupAccountInfo;
 import love.forte.simbot.api.message.containers.GroupInfo;
 import love.forte.simbot.api.message.events.GroupMsg;
+import love.forte.simbot.api.message.events.GroupMsgRecall;
 import love.forte.simbot.api.message.events.MsgGet;
+import love.forte.simbot.api.message.events.PrivateMsgRecall;
 import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.filter.MatchType;
 import net.sf.json.JSONObject;
@@ -61,6 +63,11 @@ public class MyGroupListen {
         result=obj.getString("content");
         sender.sendGroupMsg(listenedgroupinfo, result);
         Thread.sleep(3000);
+    }
+    @Listen(GroupMsgRecall.class)
+    public void message(GroupMsgRecall groupMsgRecall, Sender sender){
+    	GroupInfo groupinforec=groupMsgRecall.getGroupInfo();
+        sender.sendGroupMsg(groupinforec, "快说,撤回了什么?!");
     }
     
 }

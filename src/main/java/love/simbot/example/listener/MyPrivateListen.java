@@ -22,10 +22,7 @@ public class MyPrivateListen {
     public void message(PrivateMsgRecall privateMsgRecall, Sender sender){
         sender.sendPrivateMsg(privateMsgRecall, "快说,撤回了什么?!");
     }
-    @Listens(value={
-            @Listen(MsgGet.class),
-            @Listen(PrivateMsg.class)
-        },priority=PriorityConstant.FIRST,name="LISTENPRIVATE")
+    @Listen(PrivateMsg.class)
     public void Privatemsglisten(PrivateMsg privateMsg, MsgGet msgGet, Sender sender) throws IOException, InterruptedException{
         AccountInfo listenedinfo=privateMsg.getAccountInfo();
         String gottenmsg2=privateMsg.getText();
@@ -36,6 +33,7 @@ public class MyPrivateListen {
         JSONObject obj=JSONObject.fromObject(result);
         result=obj.getString("content");
         sender.sendPrivateMsg(listenedinfo, result);
+        Thread.sleep(3000);
     }
     
 }
