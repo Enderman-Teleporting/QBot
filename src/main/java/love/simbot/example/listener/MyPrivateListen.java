@@ -26,7 +26,7 @@ public class MyPrivateListen {
             @Listen(MsgGet.class),
             @Listen(PrivateMsg.class)
         },priority=PriorityConstant.FIRST,name="LISTENPRIVATE")
-    public void Privatemsglisten(PrivateMsg privateMsg, MsgGet msgGet, Sender sender) throws IOException{
+    public void Privatemsglisten(PrivateMsg privateMsg, MsgGet msgGet, Sender sender) throws IOException, InterruptedException{
         AccountInfo listenedinfo=privateMsg.getAccountInfo();
         String gottenmsg2=privateMsg.getText();
         URL url=new URL ("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg2);
@@ -36,6 +36,7 @@ public class MyPrivateListen {
         JSONObject obj=JSONObject.fromObject(result);
         result=obj.getString("content");
         sender.sendPrivateMsg(listenedinfo, result);
+        Thread.sleep(3000);
     }
     
 }
