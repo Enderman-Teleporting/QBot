@@ -36,7 +36,7 @@ public class MyPrivateListen {
         JSONObject obj=JSONObject.fromObject(result);
         result=obj.getString("content");
         sender.sendPrivateMsg(listenedinfo, result);
-        Thread.sleep(3000);
+        Thread.sleep(5000);
     }
     
 }
