@@ -21,6 +21,44 @@
             <artifactId>component-mirai</artifactId>
             <version>${simbot.version}</version><!--vv-->
         </dependency>
+        <!--json-lib-->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.1</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sf.ezmorph/ezmorph -->
+        <dependency>
+            <groupId>net.sf.ezmorph</groupId>
+            <artifactId>ezmorph</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+
+
+
     </dependencies>
 
     <build>
@@ -32,7 +70,7 @@
                 <version>2.5.3</version>
                 <configuration>
                     <!-- main方法所在类。 -->
-                    <mainClass>love.simbot.example.TestSimbotExampleApplication</mainClass>
+                    <mainClass>love.simbot.example.SimbotExampleApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
@@ -44,5 +82,8 @@
             </plugin>
         </plugins>
     </build>
+
+
+
 
 </project>
