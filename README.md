@@ -10,8 +10,9 @@
  api接口为青云客(https://qingyunke.com)  
  若要使用该机器人,请克隆库并且在.\src\resource里面找到后缀名为.bot的文件并按提示输入账号密码  
  并且去IntelliJ Idea使用Springboot(详见simpler-robot文档,必须是springboot)打成jar包使用Java指令启动  
- 示例启动指令:java -Dfile.encoding=utf-8 -jar (路径)  
- 同时你也可以选择示例jar包  
+ 示例启动指令:java -Dfile.encoding=utf-8 -jar [路径]  
+ PS:必须要-Dfile.encoding,不然会乱码  
+ 同时你也可以选择示例jar包(见release)  
  
 如果遇到你的账号需要滑动登录,最好的选择是https://github.com/mzdluo123/TxCaptchaHelper  
 
