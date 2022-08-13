@@ -4,7 +4,9 @@
  注意:该项目仅供学习,娱乐等,禁止做违法的事  
  注意:该项目仅供学习,娱乐等,禁止做违法的事  
  注意:该项目仅供学习,娱乐等,禁止做违法的事  
-
+   
+ 请先下载Java并确保加入了环境变量使指令可以使用  
+  
  本项目使用的是ForteScarlet的simpler-robot项目及其demo项目作为框架:  
  https://github.com/ForteScarlet/simpler-robot  
  https://github.com/ForteScarlet/simple-robot-demo-project(大概是这个,我也整忘了)  
