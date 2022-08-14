@@ -21,7 +21,7 @@ public class Log_settler {
         Date date2=new Date();
         SimpleDateFormat formatter2 = new SimpleDateFormat("yyyyMMdd");
         String date3= formatter2.format(date2);
-        File log1= new File ("./cache/logs/"+date2+".log");
+        File log1= new File ("./cache/logs/"+date3+".log");
         BufferedWriter output= new BufferedWriter(new FileWriter(log1));
         output.write(content+"\n");
         output.close();
