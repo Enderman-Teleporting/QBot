@@ -32,6 +32,7 @@ public class MyPrivateListen {
         String result =br.readLine();
         JSONObject obj=JSONObject.fromObject(result);
         result=obj.getString("content");
+        result=result.replace("{br}","\n");
         sender.sendPrivateMsg(listenedinfo, result);
         Thread.sleep(3000);
     }

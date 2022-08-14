@@ -10,6 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="QBot" target="1.8" />
       <module name="simbot-mirai-demo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
