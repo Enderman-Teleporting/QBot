@@ -1,29 +1,45 @@
 package love.simbot.example;
-import java.io.BufferedWriter;
+
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.*;
+
 public class Log_settler {
-    public static void settle() throws IOException {
-        Date date=new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        String date1= formatter.format(date);
-        File dir = new File("./cache/logs");
-        dir.mkdirs();
-        File log= new File ("./cache/logs/"+date1+".log");
-        if (!log.exists()){
-            log.createNewFile();
-        }
+    public static void settle(){
+        File file =new File("./cache/logs");
+        file.mkdirs();
     }
-    public static void writelog(String content) throws IOException {
-        Date date2=new Date();
-        SimpleDateFormat formatter2 = new SimpleDateFormat("yyyyMMdd");
-        String date3= formatter2.format(date2);
-        File log1= new File ("./cache/logs/"+date3+".log");
-        BufferedWriter output= new BufferedWriter(new FileWriter(log1));
-        output.write(content+"\n");
-        output.close();
+    public static void writelog(String content) {
+        Log_settler lt= new Log_settler();
+        Logger log = lt.getMylog();
+        log.info(content);
+    }
+
+    public Logger getMylog(){
+        ZonedDateTime time =ZonedDateTime.now();
+        String date1  = time.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        Logger logger = Logger.getLogger(date1);
+        logger.setLevel(Level.ALL);
+        for(Handler h: logger.getHandlers()){
+            h.close();
+        }
+        try{
+            FileHandler fileHandler = new FileHandler("./cache/logs/"+date1+".log",true);
+            fileHandler.setFormatter(new myFormat());
+            logger.addHandler(fileHandler);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return logger;
+    }
+}
+
+class myFormat extends Formatter{
+    @Override
+    public String format(LogRecord record){
+        ZonedDateTime zdf =ZonedDateTime.now();
+        String sDate  = zdf.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+        return "["+ sDate + "]: "+record.getMessage()+"\n";
     }
 }

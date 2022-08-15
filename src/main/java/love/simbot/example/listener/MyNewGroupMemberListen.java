@@ -14,10 +14,8 @@ import love.forte.simbot.api.message.events.GroupMemberPermissionChanged;
 import love.forte.simbot.api.message.events.GroupNameChanged;
 import love.forte.simbot.api.sender.Sender;
 import love.simbot.example.Log_settler;
-
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 
 @Beans
@@ -35,10 +33,6 @@ public class MyNewGroupMemberListen {
                 .build();
         GroupInfo groupInfo = groupMemberIncrease.getGroupInfo();
         sender.sendGroupMsg(groupInfo, msg);
-        Date date=new Date();
-        SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss");
-        String date1= formatter2.format(date);
-        Log_settler.writelog(date1);
         Log_settler.writelog("OnGroup"+String.valueOf(groupInfo));
         Log_settler.writelog(String.valueOf(groupMemberIncrease.getBotInfo()));
         Log_settler.writelog(String.valueOf(msg)+"\n\n\n");
@@ -61,10 +55,6 @@ public class MyNewGroupMemberListen {
                 .text("降级为群成员权限")
                 .build();
             sender.sendGroupMsg(groupInfoC, message_);
-            Date date=new Date();
-            SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss");
-            String date1= formatter2.format(date);
-            Log_settler.writelog(date1);
             Log_settler.writelog("OnGroup"+String.valueOf(groupInfoC));
             Log_settler.writelog(String.valueOf(groupMemberPermissionChanged.getBotInfo()));
             Log_settler.writelog(String.valueOf(message_)+"\n\n\n");
@@ -77,10 +67,6 @@ public class MyNewGroupMemberListen {
                 .text("升级为管理权限")
                 .build();
             sender.sendGroupMsg(groupInfoC, message_);
-            Date date=new Date();
-            SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss");
-            String date1= formatter2.format(date);
-            Log_settler.writelog(date1);
             Log_settler.writelog("OnGroup"+String.valueOf(groupInfoC));
             Log_settler.writelog(String.valueOf(groupMemberPermissionChanged.getBotInfo()));
             Log_settler.writelog(String.valueOf(message_)+"\n\n\n");
@@ -102,10 +88,6 @@ public class MyNewGroupMemberListen {
             .text(groupname)
             .build();
         sender.sendGroupMsg(groupInfoGMC,message1);
-        Date date=new Date();
-        SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss");
-        String date1= formatter2.format(date);
-        Log_settler.writelog(date1);
         Log_settler.writelog("OnGroup"+String.valueOf(groupInfoGMC));
         Log_settler.writelog(String.valueOf(groupNameChanged.getBotInfo()));
         Log_settler.writelog(String.valueOf(message1)+"\n\n\n");

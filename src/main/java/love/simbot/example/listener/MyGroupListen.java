@@ -24,43 +24,31 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Beans
 public class MyGroupListen {
+    HashMap<Integer, String> renyunyiren=new HashMap<Integer, String>();
     @Depend
     private MessageContentBuilderFactory messageBuilderFactory;
     @OnGroup
     public void onGroupMsg(GroupMsg groupMsg) throws IOException {
-        System.out.println(groupMsg.getText());
         Log_settler.writelog(groupMsg.getText());
-        System.out.println(groupMsg.getMsg());
         Log_settler.writelog(groupMsg.getMsg());
         MessageContent msgContent = groupMsg.getMsgContent();
-        System.out.println(msgContent);
         Log_settler.writelog(String.valueOf(msgContent));
         List<Neko> imageCats = msgContent.getCats("image");
-        System.out.println("img counts: " + imageCats.size());
+        Log_settler.writelog("img counts: " + imageCats.size());
         for (Neko image : imageCats) {
-            System.out.println("Img url: " + image.get("url"));
             Log_settler.writelog("Img url: " + image.get("url"));
         }
         GroupAccountInfo accountInfo = groupMsg.getAccountInfo();
-        Date date=new Date();
-        SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss");
-        String date1= formatter2.format(date);
-        Log_settler.writelog(date1);
-        System.out.println(accountInfo.getAccountCode());
         Log_settler.writelog("OnGroup\n"+accountInfo.getAccountCode());
-        System.out.println(accountInfo.getAccountNickname());
         Log_settler.writelog(accountInfo.getAccountNickname());
         GroupInfo groupInfo = groupMsg.getGroupInfo();
         Log_settler.writelog(String.valueOf(groupMsg.getGroupInfo()));
-        System.out.println(groupInfo.getGroupCode());
         Log_settler.writelog(groupInfo.getGroupCode());
-        System.out.println(groupInfo.getGroupName());
         Log_settler.writelog(groupInfo.getGroupName());
         Log_settler.writelog("\n\n");
     }
@@ -70,10 +58,6 @@ public class MyGroupListen {
         GroupInfo groupInfo1=groupmsg.getGroupInfo();
         sender.sendGroupMsg(groupInfo1,"是谁在叫菲菲啊");
         Log_settler.writelog("OnGroup"+String.valueOf(groupmsg.getBotInfo()));
-        Date date=new Date();
-        SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss");
-        String date1= formatter2.format(date);
-        Log_settler.writelog(date1);
         Log_settler.writelog(String.valueOf(groupInfo1));
         Log_settler.writelog("bot:是谁在叫菲菲呀\n\n\n");
     }
@@ -98,10 +82,6 @@ public class MyGroupListen {
                 .at(accountInfoabc)
                 .build();
         sender.sendGroupMsg(listenedgroupinfo,message12);
-        Date date=new Date();
-        SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss");
-        String date1= formatter2.format(date);
-        Log_settler.writelog(date1);
         Log_settler.writelog("OnGroup"+String.valueOf(groupMsg.getBotInfo()));
         Log_settler.writelog("bot:"+result);
         Log_settler.writelog(String.valueOf(listenedgroupinfo)+"\n\n\n");
@@ -111,13 +91,29 @@ public class MyGroupListen {
     public void message(GroupMsgRecall groupMsgRecall, Sender sender) throws IOException {
     	GroupInfo groupinforec=groupMsgRecall.getGroupInfo();
         sender.sendGroupMsg(groupinforec, "快说,撤回了什么?!");
-        Date date=new Date();
-        SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss");
-        String date1= formatter2.format(date);
-        Log_settler.writelog(date1);
         Log_settler.writelog("OnGroup"+String.valueOf(groupMsgRecall.getBotInfo()));
         Log_settler.writelog("bot:"+"快说,撤回了什么?!");
         Log_settler.writelog(String.valueOf(groupinforec)+"\n\n\n");
+    }
+
+    @Listen(GroupMsg.class)
+    public void renyunyiyun(GroupMsg groupMsg, Sender sender){
+        if (renyunyiren.isEmpty()){
+            renyunyiren.put(1,groupMsg.getMsg());
+        }
+        else{
+            renyunyiren.put(2,groupMsg.getMsg());
+        }
+        if (renyunyiren.get(1)==renyunyiren.get(2)){
+            sender.sendGroupMsg(groupMsg.getGroupInfo(),renyunyiren.get(2));
+            renyunyiren.clear();
+        }
+        else{
+            if(renyunyiren.size()==2) {
+                renyunyiren.clear();
+                renyunyiren.put(1, groupMsg.getMsg());
+            }
+        }
     }
     
 }
