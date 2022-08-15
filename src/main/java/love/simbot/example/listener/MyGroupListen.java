@@ -29,7 +29,7 @@ import java.util.List;
 
 @Beans
 public class MyGroupListen {
-    HashMap<Integer, String> renyunyiren=new HashMap<Integer, String>();
+    HashMap<String, String> renyunyiren= new HashMap<String, String>();
     @Depend
     private MessageContentBuilderFactory messageBuilderFactory;
     @OnGroup
@@ -99,19 +99,19 @@ public class MyGroupListen {
     @Listen(GroupMsg.class)
     public void renyunyiyun(GroupMsg groupMsg, Sender sender){
         if (renyunyiren.isEmpty()){
-            renyunyiren.put(1,groupMsg.getMsg());
+            renyunyiren.put("a",groupMsg.getMsg());
         }
         else{
-            renyunyiren.put(2,groupMsg.getMsg());
+            renyunyiren.put("b",groupMsg.getMsg());
         }
-        if (renyunyiren.get(1)==renyunyiren.get(2)){
-            sender.sendGroupMsg(groupMsg.getGroupInfo(),renyunyiren.get(2));
+        if (renyunyiren.size()==2 && renyunyiren.get("a").equals(renyunyiren.get("b"))){
+            sender.sendGroupMsg(groupMsg.getGroupInfo(),renyunyiren.get("b"));
             renyunyiren.clear();
         }
         else{
             if(renyunyiren.size()==2) {
                 renyunyiren.clear();
-                renyunyiren.put(1, groupMsg.getMsg());
+                renyunyiren.put("a", groupMsg.getMsg());
             }
         }
     }
