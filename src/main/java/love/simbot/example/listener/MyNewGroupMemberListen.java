@@ -3,25 +3,57 @@ package love.simbot.example.listener;
 import love.forte.common.ioc.annotation.Beans;
 import love.forte.common.ioc.annotation.Depend;
 import love.forte.simbot.annotation.Listen;
+import love.forte.simbot.annotation.OnGroupAddRequest;
 import love.forte.simbot.annotation.OnGroupMemberIncrease;
 import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.MessageContentBuilder;
 import love.forte.simbot.api.message.MessageContentBuilderFactory;
 import love.forte.simbot.api.message.containers.AccountInfo;
+import love.forte.simbot.api.message.containers.BotInfo;
 import love.forte.simbot.api.message.containers.GroupInfo;
+import love.forte.simbot.api.message.events.GroupAddRequest;
 import love.forte.simbot.api.message.events.GroupMemberIncrease;
 import love.forte.simbot.api.message.events.GroupMemberPermissionChanged;
 import love.forte.simbot.api.message.events.GroupNameChanged;
 import love.forte.simbot.api.sender.Sender;
+import love.forte.simbot.api.sender.Setter;
 import love.simbot.example.Log_settler;
 import java.io.IOException;
-
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 @Beans
 public class MyNewGroupMemberListen {
     @Depend
     private MessageContentBuilderFactory messageBuilderFactory;
+    private static final Map<String, String> REQUEST_TEXT_MAP = new ConcurrentHashMap<>();
+    @OnGroupAddRequest
+
+    public void onRequest(GroupAddRequest groupAddRequest, Setter setter, Sender sender) {
+        AccountInfo accountInfo = groupAddRequest.getRequestAccountInfo();
+        BotInfo botInfo = groupAddRequest.getBotInfo();
+        if (!accountInfo.getAccountCode().equals(botInfo.getBotCode())) {
+            String text = groupAddRequest.getText();
+            if (text != null) {
+                REQUEST_TEXT_MAP.put(accountInfo.getAccountCode(), text);
+            }
+            GroupInfo groupInfo = groupAddRequest.getGroupInfo();
+
+            Log_settler.writelog(accountInfo.getAccountNickname()+"("+accountInfo.getAccountCode()+")"+"申请加入群"+groupInfo.getGroupName()+"("+groupInfo.getGroupCode()+")"+",申请备注："+text+"\n\n\n");
+            setter.acceptGroupAddRequest(groupAddRequest.getFlag());
+            MessageContentBuilder buil_=messageBuilderFactory.getMessageContentBuilder();
+            MessageContent msgg=buil_
+                    .text(accountInfo.getAccountNickname())
+                    .text("(")
+                    .text(accountInfo.getAccountCode())
+                    .text(")")
+                    .text("申请加入此群,加群信息为")
+                    .text(text)
+                    .build();
+            sender.sendGroupMsg(groupAddRequest.getGroupInfo(),msgg);
+        }
+    }
  
     @OnGroupMemberIncrease
     public void newGroupMember(GroupMemberIncrease groupMemberIncrease, Sender sender) throws IOException {

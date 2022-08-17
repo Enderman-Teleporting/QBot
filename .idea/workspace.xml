@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/Log_settler.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyNewGroupMemberListen.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyPrivateListen.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/Log_settler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyNewGroupMemberListen.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyPrivateListen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyNewGroupMemberListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyNewGroupMemberListen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,6 +104,7 @@
       <workItem from="1660530221928" duration="25000" />
       <workItem from="1660530461818" duration="3768000" />
       <workItem from="1660550212495" duration="1583000" />
+      <workItem from="1660701774979" duration="21000" />
     </task>
     <servers />
   </component>

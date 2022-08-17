@@ -13,7 +13,6 @@ import java.io.IOException;
 // @SimbotApplication
 public class SimbotExampleApplication {
     public static void main(String[] args) throws IOException {
-        Log_settler.settle();
         SimbotApp.run(SimbotExampleApplication.class, args);
     }
 }

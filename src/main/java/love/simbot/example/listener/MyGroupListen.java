@@ -1,20 +1,25 @@
 package love.simbot.example.listener;
 
 import catcode.Neko;
+import jdk.jpackage.internal.Log;
 import love.forte.common.ioc.annotation.Beans;
 import love.forte.common.ioc.annotation.Depend;
 import love.forte.simbot.annotation.Filter;
 import love.forte.simbot.annotation.Listen;
 import love.forte.simbot.annotation.OnGroup;
+import love.forte.simbot.annotation.OnGroupAddRequest;
 import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.MessageContentBuilder;
 import love.forte.simbot.api.message.containers.AccountInfo;
+import love.forte.simbot.api.message.containers.BotInfo;
 import love.forte.simbot.api.message.containers.GroupAccountInfo;
 import love.forte.simbot.api.message.containers.GroupInfo;
+import love.forte.simbot.api.message.events.GroupAddRequest;
 import love.forte.simbot.api.message.events.GroupMsg;
 import love.forte.simbot.api.message.events.GroupMsgRecall;
 import love.forte.simbot.api.message.events.MsgGet;
 import love.forte.simbot.api.sender.Sender;
+import love.forte.simbot.api.sender.Setter;
 import love.forte.simbot.filter.MatchType;
 import love.simbot.example.Log_settler;
 import net.sf.json.JSONObject;
@@ -26,12 +31,15 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Beans
 public class MyGroupListen {
     HashMap<String, String> renyunyiren= new HashMap<String, String>();
     @Depend
     private MessageContentBuilderFactory messageBuilderFactory;
+
     @OnGroup
     public void onGroupMsg(GroupMsg groupMsg) throws IOException {
         Log_settler.writelog(groupMsg.getText());
@@ -98,6 +106,7 @@ public class MyGroupListen {
 
     @Listen(GroupMsg.class)
     public void renyunyiyun(GroupMsg groupMsg, Sender sender){
+        Log_settler.settle();
         if (renyunyiren.isEmpty()){
             renyunyiren.put("a",groupMsg.getMsg());
         }
