@@ -1,26 +1,31 @@
 package love.simbot.example.listener;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.List;
 import catcode.Neko;
 import love.forte.common.ioc.annotation.Beans;
 import love.forte.simbot.annotation.Listen;
 import love.forte.simbot.annotation.OnPrivate;
 import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.containers.AccountInfo;
+import love.forte.simbot.api.message.events.FriendAddRequest;
 import love.forte.simbot.api.message.events.MsgGet;
 import love.forte.simbot.api.message.events.PrivateMsg;
 import love.forte.simbot.api.message.events.PrivateMsgRecall;
 import love.forte.simbot.api.sender.Sender;
+import love.forte.simbot.api.sender.Setter;
 import love.simbot.example.Log_settler;
 import net.sf.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 @Beans
 public class MyPrivateListen {
+    private static final Map<String, String> REQUEST_TEXT_MAP = new ConcurrentHashMap<>();
     @OnPrivate
     public void onPrivateMsg(PrivateMsg privateMsg) throws IOException {
         Log_settler.writelog(privateMsg.getText());
@@ -61,6 +66,20 @@ public class MyPrivateListen {
         Log_settler.writelog("bot:"+result);
         Log_settler.writelog(String.valueOf(listenedinfo)+"\n\n\n");
         Thread.sleep(3000);
+    }
+    @Listen(FriendAddRequest.class)
+
+    public void onRequest(FriendAddRequest friendAddRequest, Setter setter, Sender sender) {
+        AccountInfo accountInfo = friendAddRequest.getAccountInfo();
+
+        String text = friendAddRequest.getText();
+        if (text != null) {
+            REQUEST_TEXT_MAP.put(accountInfo.getAccountCode(), text);
+        }
+
+        Log_settler.writelog(accountInfo.getAccountNickname()+"("+accountInfo.getAccountCode()+")"+"申请加好友,申请备注："+text+"\n\n\n");
+        setter.acceptFriendAddRequest(friendAddRequest.getFlag());
+
     }
     
 }
