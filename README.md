@@ -4,12 +4,13 @@
  注意:该项目仅供学习,娱乐等,禁止做违法的事  
  注意:该项目仅供学习,娱乐等,禁止做违法的事  
  注意:该项目仅供学习,娱乐等,禁止做违法的事  
+ 请详细阅读Wiki
    
  请先下载Java并确保加入了环境变量使指令可以使用  
   
  本项目使用的是ForteScarlet的simpler-robot项目及其demo项目作为框架:  
  https://github.com/ForteScarlet/simpler-robot  
- https://github.com/ForteScarlet/simple-robot-demo-project(大概是这个,我也整忘了)  
+ https://github.com/ForteScarlet/simple-robot-demo-project  
  api接口为青云客(https://qingyunke.com)  
  若要使用该机器人,请克隆库并且在.\src\resource里面找到后缀名为.bot的文件并按提示输入账号密码  
  并且去IntelliJ Idea使用Springboot(详见simpler-robot文档,必须是springboot)打成jar包使用Java指令启动  
