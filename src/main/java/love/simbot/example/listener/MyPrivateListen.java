@@ -54,7 +54,7 @@ public class MyPrivateListen {
     public void Privatemsglisten(PrivateMsg privateMsg, MsgGet msgGet, Sender sender) throws IOException, InterruptedException{
         AccountInfo listenedinfo=privateMsg.getAccountInfo();
         String gottenmsg2=privateMsg.getText();
-        gottenmsg2=gottenmsg2.replace(" ","\n");
+        gottenmsg2=gottenmsg2.replace(" ","%20");
         URL url=new URL ("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg2);
         InputStream is =url.openStream();
         BufferedReader br=new BufferedReader(new InputStreamReader(is));

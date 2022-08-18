@@ -106,7 +106,6 @@ public class MyGroupListen {
 
     @Listen(GroupMsg.class)
     public void renyunyiyun(GroupMsg groupMsg, Sender sender){
-        Log_settler.settle();
         if (renyunyiren.isEmpty()){
             renyunyiren.put("a",groupMsg.getMsg());
         }
