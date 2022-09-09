@@ -2,6 +2,7 @@ package love.simbot.example.tools;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.*;
@@ -15,10 +16,11 @@ public class Log_settler {
         file.mkdirs();
     }
     public static void writelog(String content) throws IOException {
-        it.load(Log_settler.class.getResourceAsStream(".\\cache\\property.properties"));
+        InputStream inputstream=Log_settler.class.getResourceAsStream(".\\cache\\property.properties");
         Log_settler lt= new Log_settler();
         Logger log = lt.getMylog();
-        if (it.getProperty("Log")=="true"){
+        it.load(inputstream);
+        if (it.getProperty("Log").equals("true")){
             log.info(content);
         }
 
