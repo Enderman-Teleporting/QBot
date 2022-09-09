@@ -11,13 +11,10 @@ import love.forte.simbot.api.message.MessageContentBuilderFactory;
 import love.forte.simbot.api.message.containers.AccountInfo;
 import love.forte.simbot.api.message.containers.BotInfo;
 import love.forte.simbot.api.message.containers.GroupInfo;
-import love.forte.simbot.api.message.events.GroupAddRequest;
-import love.forte.simbot.api.message.events.GroupMemberIncrease;
-import love.forte.simbot.api.message.events.GroupMemberPermissionChanged;
-import love.forte.simbot.api.message.events.GroupNameChanged;
+import love.forte.simbot.api.message.events.*;
 import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.api.sender.Setter;
-import love.simbot.example.Log_settler;
+import love.simbot.example.tools.Log_settler;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,7 +27,7 @@ public class MyNewGroupMemberListen {
     private static final Map<String, String> REQUEST_TEXT_MAP = new ConcurrentHashMap<>();
     @OnGroupAddRequest
 
-    public void onRequest(GroupAddRequest groupAddRequest, Setter setter, Sender sender) {
+    public void onRequest(GroupAddRequest groupAddRequest, Setter setter, Sender sender) throws IOException {
         AccountInfo accountInfo = groupAddRequest.getRequestAccountInfo();
         BotInfo botInfo = groupAddRequest.getBotInfo();
         if (!accountInfo.getAccountCode().equals(botInfo.getBotCode())) {
@@ -57,11 +54,12 @@ public class MyNewGroupMemberListen {
  
     @OnGroupMemberIncrease
     public void newGroupMember(GroupMemberIncrease groupMemberIncrease, Sender sender) throws IOException {
+
         MessageContentBuilder builder = messageBuilderFactory.getMessageContentBuilder();
         AccountInfo accountInfo = groupMemberIncrease.getAccountInfo();
         MessageContent msg = builder
                 .at(accountInfo)
-                .text(" 欢迎萌新!我是机器人菲菲 很高兴见到你\n")
+                .text(" 欢迎萌新!我是机器人"+groupMemberIncrease.getBotInfo().getBotName()+" 很高兴见到你\n")
                 .build();
         GroupInfo groupInfo = groupMemberIncrease.getGroupInfo();
         sender.sendGroupMsg(groupInfo, msg);
@@ -124,6 +122,8 @@ public class MyNewGroupMemberListen {
         Log_settler.writelog(String.valueOf(groupNameChanged.getBotInfo()));
         Log_settler.writelog(String.valueOf(message1)+"\n\n\n");
     }
+
+
 
 
 }

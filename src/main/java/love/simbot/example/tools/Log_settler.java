@@ -1,19 +1,27 @@
-package love.simbot.example;
+package love.simbot.example.tools;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.*;
+import java.util.Properties;
 
 public class Log_settler {
+    static Properties it =new Properties();
+
     public static void settle(){
         File file =new File("./cache/logs");
         file.mkdirs();
     }
-    public static void writelog(String content) {
+    public static void writelog(String content) throws IOException {
+        it.load(Log_settler.class.getResourceAsStream(".\\cache\\property.properties"));
         Log_settler lt= new Log_settler();
         Logger log = lt.getMylog();
-        log.info(content);
+        if (it.getProperty("Log")=="true"){
+            log.info(content);
+        }
+
     }
 
     public Logger getMylog(){

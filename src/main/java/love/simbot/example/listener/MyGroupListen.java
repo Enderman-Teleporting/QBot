@@ -1,27 +1,22 @@
 package love.simbot.example.listener;
 
 import catcode.Neko;
-import jdk.jpackage.internal.Log;
 import love.forte.common.ioc.annotation.Beans;
 import love.forte.common.ioc.annotation.Depend;
 import love.forte.simbot.annotation.Filter;
 import love.forte.simbot.annotation.Listen;
 import love.forte.simbot.annotation.OnGroup;
-import love.forte.simbot.annotation.OnGroupAddRequest;
 import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.MessageContentBuilder;
 import love.forte.simbot.api.message.containers.AccountInfo;
-import love.forte.simbot.api.message.containers.BotInfo;
 import love.forte.simbot.api.message.containers.GroupAccountInfo;
 import love.forte.simbot.api.message.containers.GroupInfo;
-import love.forte.simbot.api.message.events.GroupAddRequest;
 import love.forte.simbot.api.message.events.GroupMsg;
 import love.forte.simbot.api.message.events.GroupMsgRecall;
 import love.forte.simbot.api.message.events.MsgGet;
 import love.forte.simbot.api.sender.Sender;
-import love.forte.simbot.api.sender.Setter;
 import love.forte.simbot.filter.MatchType;
-import love.simbot.example.Log_settler;
+import love.simbot.example.tools.Log_settler;
 import net.sf.json.JSONObject;
 import love.forte.simbot.api.message.MessageContentBuilderFactory;
 import java.io.BufferedReader;
@@ -31,8 +26,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Beans
 public class MyGroupListen {
@@ -64,10 +57,10 @@ public class MyGroupListen {
     @Filter (value="菲菲",matchType = MatchType.EQUALS)
     public void beCalled(GroupMsg groupmsg,Sender sender) throws IOException {
         GroupInfo groupInfo1=groupmsg.getGroupInfo();
-        sender.sendGroupMsg(groupInfo1,"是谁在叫菲菲啊");
+        sender.sendGroupMsg(groupInfo1,"是谁在叫"+groupmsg.getBotInfo().getAccountNickname()+"啊");
         Log_settler.writelog("OnGroup"+String.valueOf(groupmsg.getBotInfo()));
         Log_settler.writelog(String.valueOf(groupInfo1));
-        Log_settler.writelog("bot:是谁在叫菲菲呀\n\n\n");
+        Log_settler.writelog("bot:是谁在叫"+groupmsg.getBotInfo().getAccountNickname()+"呀\n\n\n");
     }
 
     @Listen(GroupMsg.class)
@@ -84,6 +77,7 @@ public class MyGroupListen {
         JSONObject obj=JSONObject.fromObject(result);
         result=obj.getString("content");
         result=result.replace("{br}","\n");
+        result=result.replace("菲菲",groupMsg.getBotInfo().getBotName());
         MessageContentBuilder builder2=messageBuilderFactory.getMessageContentBuilder();
         MessageContent message12=builder2
                 .text(result)

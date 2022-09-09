@@ -12,7 +12,7 @@ import love.forte.simbot.api.message.events.PrivateMsg;
 import love.forte.simbot.api.message.events.PrivateMsgRecall;
 import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.api.sender.Setter;
-import love.simbot.example.Log_settler;
+import love.simbot.example.tools.Log_settler;
 import net.sf.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -62,6 +62,7 @@ public class MyPrivateListen {
         JSONObject obj=JSONObject.fromObject(result);
         result=obj.getString("content");
         result=result.replace("{br}","\n");
+        result=result.replace("菲菲",privateMsg.getBotInfo().getBotName());
         sender.sendPrivateMsg(listenedinfo, result);
         Log_settler.writelog("OnPrivate"+String.valueOf(privateMsg.getBotInfo()));
         Log_settler.writelog("bot:"+result);
@@ -70,7 +71,7 @@ public class MyPrivateListen {
     }
     @Listen(FriendAddRequest.class)
 
-    public void onRequest(FriendAddRequest friendAddRequest, Setter setter, Sender sender) {
+    public void onRequest(FriendAddRequest friendAddRequest, Setter setter, Sender sender) throws IOException {
         AccountInfo accountInfo = friendAddRequest.getAccountInfo();
 
         String text = friendAddRequest.getText();
