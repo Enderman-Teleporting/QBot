@@ -54,13 +54,14 @@ public class MyGroupListen {
         Log_settler.writelog("\n\n");
     }
     @Listen(GroupMsg.class)
-    @Filter (value="菲菲",matchType = MatchType.EQUALS)
     public void beCalled(GroupMsg groupmsg,Sender sender) throws IOException {
-        GroupInfo groupInfo1=groupmsg.getGroupInfo();
-        sender.sendGroupMsg(groupInfo1,"是谁在叫"+groupmsg.getBotInfo().getAccountNickname()+"啊");
-        Log_settler.writelog("OnGroup"+String.valueOf(groupmsg.getBotInfo()));
-        Log_settler.writelog(String.valueOf(groupInfo1));
-        Log_settler.writelog("bot:是谁在叫"+groupmsg.getBotInfo().getAccountNickname()+"呀\n\n\n");
+        if (groupmsg.getText().equals(groupmsg.getBotInfo().getAccountNickname())){
+            GroupInfo groupInfo1 = groupmsg.getGroupInfo();
+            sender.sendGroupMsg(groupInfo1, "是谁在叫" + groupmsg.getBotInfo().getAccountNickname() + "啊");
+            Log_settler.writelog("OnGroup" + String.valueOf(groupmsg.getBotInfo()));
+            Log_settler.writelog(String.valueOf(groupInfo1));
+            Log_settler.writelog("bot:是谁在叫" + groupmsg.getBotInfo().getAccountNickname() + "呀\n\n\n");
+        }
     }
 
     @Listen(GroupMsg.class)
