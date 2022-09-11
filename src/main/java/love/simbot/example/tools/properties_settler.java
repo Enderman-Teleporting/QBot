@@ -21,9 +21,7 @@ public class properties_settler {
     }
 
     public static String read(String path, String key) throws IOException {
-        URL url = properties_settler.class.getClassLoader().getResource(path);
-        String fileName = url.getFile();
-        InputStream in = new BufferedInputStream(new FileInputStream(fileName));
+        InputStream in = new BufferedInputStream(new FileInputStream(path));
         Properties properties = new Properties();
         properties.load(in);
         return (properties.getProperty(key));
