@@ -2,25 +2,20 @@ package love.simbot.example.tools;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.*;
-import java.util.Properties;
+import static love.simbot.example.tools.properties_settler.read;
 
 public class Log_settler {
-    static Properties it =new Properties();
-
     public static void settle(){
         File file =new File("./cache/logs");
         file.mkdirs();
     }
     public static void writelog(String content) throws IOException {
-        InputStream inputstream=Log_settler.class.getResourceAsStream(".\\cache\\property.properties");
         Log_settler lt= new Log_settler();
         Logger log = lt.getMylog();
-        it.load(inputstream);
-        if (it.getProperty("Log").equals("true")){
+        if (read(".\\cache\\property.properties","Log").equals("true")){
             log.info(content);
         }
 

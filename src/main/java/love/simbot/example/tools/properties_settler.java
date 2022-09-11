@@ -1,23 +1,31 @@
 package love.simbot.example.tools;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.util.Properties;
 
 
 public class properties_settler {
-    public static void settle(){
-        String fileName=".\\cache\\property.properties" ;
-        try{
+    public static void settle() {
+        String fileName = ".\\cache\\property.properties";
+        try {
             File f = new File(fileName);
             f.createNewFile();
-            BufferedWriter bw=new BufferedWriter(new FileWriter(".\\cache\\property.properties"));
-            bw.write("Log=true\nName=菲菲");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(".\\cache\\property.properties"));
+            bw.write("Log=true\n");
             bw.close();
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public static String read(String path, String key) throws IOException {
+        URL url = properties_settler.class.getClassLoader().getResource(path);
+        String fileName = url.getFile();
+        InputStream in = new BufferedInputStream(new FileInputStream(fileName));
+        Properties properties = new Properties();
+        properties.load(in);
+        return (properties.getProperty(key));
     }
 }
