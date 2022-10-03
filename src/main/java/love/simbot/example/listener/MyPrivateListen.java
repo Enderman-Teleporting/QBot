@@ -13,16 +13,12 @@ import love.forte.simbot.api.message.events.PrivateMsgRecall;
 import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.api.sender.Setter;
 import love.simbot.example.tools.Log_settler;
-import net.sf.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import static love.simbot.example.tools.API.getApi;
+
 @Beans
 public class MyPrivateListen {
     private static final Map<String, String> REQUEST_TEXT_MAP = new ConcurrentHashMap<>();
@@ -55,12 +51,7 @@ public class MyPrivateListen {
         AccountInfo listenedinfo=privateMsg.getAccountInfo();
         String gottenmsg2=privateMsg.getText();
         gottenmsg2=gottenmsg2.replace(" ","%20");
-        URL url=new URL ("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg2);
-        InputStream is =url.openStream();
-        BufferedReader br=new BufferedReader(new InputStreamReader(is));
-        String result =br.readLine();
-        JSONObject obj=JSONObject.fromObject(result);
-        result=obj.getString("content");
+        String result =getApi("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg2,"content");
         result=result.replace("{br}","\n");
         result=result.replace("菲菲",privateMsg.getBotInfo().getBotName());
         sender.sendPrivateMsg(listenedinfo, result);

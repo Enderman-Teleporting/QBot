@@ -8,6 +8,8 @@ import love.simbot.example.tools.properties_settler;
 
 import java.io.IOException;
 
+import static love.simbot.example.tools.API.getApi;
+
 @SimbotApplication({
         @SimbotResource(value = "simbot.yml", orIgnore = true),
         @SimbotResource(value = "simbot-dev.yml", orIgnore = true, command = "dev"),

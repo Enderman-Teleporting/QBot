@@ -1,5 +1,7 @@
 package love.simbot.example.listener;
 
+import catcode.CatCodeUtil;
+import catcode.CodeBuilder;
 import catcode.Neko;
 import love.forte.common.ioc.annotation.Beans;
 import love.forte.common.ioc.annotation.Depend;
@@ -10,22 +12,21 @@ import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.MessageContentBuilder;
 import love.forte.simbot.api.message.containers.AccountInfo;
 import love.forte.simbot.api.message.containers.GroupAccountInfo;
+import love.forte.simbot.api.message.containers.GroupCodeContainer;
 import love.forte.simbot.api.message.containers.GroupInfo;
 import love.forte.simbot.api.message.events.GroupMsg;
 import love.forte.simbot.api.message.events.GroupMsgRecall;
 import love.forte.simbot.api.message.events.MsgGet;
 import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.filter.MatchType;
+import love.forte.simbot.listener.ListenerContext;
 import love.simbot.example.tools.Log_settler;
-import net.sf.json.JSONObject;
 import love.forte.simbot.api.message.MessageContentBuilderFactory;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+
+import static love.simbot.example.tools.API.getApi;
 
 @Beans
 public class MyGroupListen {
@@ -71,12 +72,7 @@ public class MyGroupListen {
         AccountInfo accountInfoabc=groupMsg.getAccountInfo();
         String gottenmsg1=groupMsg.getText();
         gottenmsg1=gottenmsg1.replace(" ","%20");
-        URL url=new URL ("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg1);
-        InputStream is =url.openStream();
-        BufferedReader br=new BufferedReader(new InputStreamReader(is));
-        String result =br.readLine();
-        JSONObject obj=JSONObject.fromObject(result);
-        result=obj.getString("content");
+        String result =getApi("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg1,"content");
         result=result.replace("{br}","\n");
         result=result.replace("菲菲",groupMsg.getBotInfo().getBotName());
         MessageContentBuilder builder2=messageBuilderFactory.getMessageContentBuilder();
@@ -100,7 +96,7 @@ public class MyGroupListen {
     }
 
     @Listen(GroupMsg.class)
-    public void renyunyiyun(GroupMsg groupMsg, Sender sender){
+    public void renyunyiyun(GroupMsg groupMsg, ListenerContext context,Sender sender){
         if (renyunyiren.isEmpty()){
             renyunyiren.put("a",groupMsg.getMsg());
         }
@@ -118,6 +114,16 @@ public class MyGroupListen {
             }
         }
     }
-    
+
+    @Listen(GroupMsg.class)
+    @Filter(value = "二次元",matchType=MatchType.EQUALS)
+    public void pic(GroupMsg groupMsg, Sender sender){
+        GroupInfo groupInfo= groupMsg.getGroupInfo();
+        final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
+        String img=catUtil.toCat("image",true,"url=https://api.ococn.cn/api/img");
+        sender.sendGroupMsg(groupInfo, img);
+
+    }
+
 }
 

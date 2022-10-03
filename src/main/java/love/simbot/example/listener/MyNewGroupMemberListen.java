@@ -123,7 +123,7 @@ public class MyNewGroupMemberListen {
         Log_settler.writelog(String.valueOf(message1)+"\n\n\n");
     }
 
-
+    
 
 
 }
