@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static love.simbot.example.tools.API.getApi;
+import static love.simbot.example.tools.properties_settler.read;
 
 @Beans
 public class MyGroupListen {
@@ -117,12 +118,15 @@ public class MyGroupListen {
 
     @Listen(GroupMsg.class)
     @Filter(value = "二次元",matchType=MatchType.EQUALS)
-    public void pic(GroupMsg groupMsg, Sender sender){
-        GroupInfo groupInfo= groupMsg.getGroupInfo();
-        final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
-        String img=catUtil.toCat("image",true,"url=https://api.ococn.cn/api/img");
-        sender.sendGroupMsg(groupInfo, img);
-
+    public void pic(GroupMsg groupMsg, Sender sender) throws IOException {
+        if (read(".\\cache\\properties\\"+groupMsg.getBotInfo().getBotCode()+".properties","Pic").equals("true")) {
+            GroupInfo groupInfo = groupMsg.getGroupInfo();
+            final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
+            String img = catUtil.toCat("image", true, "url=https://api.ococn.cn/api/img");
+            sender.sendGroupMsg(groupInfo, img);
+            Log_settler.writelog("OnGroup");
+            Log_settler.writelog("bot"+img+"\n\n\n\n");
+        }
     }
 
 }

@@ -1,23 +1,25 @@
 package love.simbot.example.listener;
 
+import catcode.CatCodeUtil;
 import catcode.Neko;
 import love.forte.common.ioc.annotation.Beans;
+import love.forte.simbot.annotation.Filter;
 import love.forte.simbot.annotation.Listen;
 import love.forte.simbot.annotation.OnPrivate;
 import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.containers.AccountInfo;
-import love.forte.simbot.api.message.events.FriendAddRequest;
-import love.forte.simbot.api.message.events.MsgGet;
-import love.forte.simbot.api.message.events.PrivateMsg;
-import love.forte.simbot.api.message.events.PrivateMsgRecall;
+import love.forte.simbot.api.message.containers.GroupInfo;
+import love.forte.simbot.api.message.events.*;
 import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.api.sender.Setter;
+import love.forte.simbot.filter.MatchType;
 import love.simbot.example.tools.Log_settler;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import static love.simbot.example.tools.API.getApi;
+import static love.simbot.example.tools.properties_settler.read;
 
 @Beans
 public class MyPrivateListen {
@@ -73,6 +75,18 @@ public class MyPrivateListen {
         Log_settler.writelog(accountInfo.getAccountNickname()+"("+accountInfo.getAccountCode()+")"+"申请加好友,申请备注："+text+"\n\n\n");
         setter.acceptFriendAddRequest(friendAddRequest.getFlag());
 
+    }
+    @Listen(PrivateMsg.class)
+    @Filter(value = "二次元",matchType= MatchType.EQUALS)
+    public void pic(PrivateMsg privateMsg, Sender sender) throws IOException {
+        if (read(".\\cache\\properties\\"+privateMsg.getBotInfo().getBotCode()+".properties","Pic").equals("true")) {
+            AccountInfo info = privateMsg.getAccountInfo();
+            final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
+            String img = catUtil.toCat("image", true, "url=https://api.ococn.cn/api/img");
+            sender.sendPrivateMsg(info, img);
+            Log_settler.writelog("OnPrivate");
+            Log_settler.writelog("bot"+img+"\n\n\n\n");
+        }
     }
     
 }

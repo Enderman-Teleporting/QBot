@@ -34,7 +34,7 @@ public class properties_settler {
                 File f = new File(file);
                 f.createNewFile();
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-                bw.write("Pic=true\n");
+                bw.write("Pic=true\n300WordsBan=true\nallowGroupNameChanging=true\nallowChangeTitle=true\n");
                 bw.close();
             } catch (IOException e) {
                 e.printStackTrace();
