@@ -14,6 +14,10 @@ import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.api.sender.Setter;
 import love.forte.simbot.filter.MatchType;
 import love.simbot.example.tools.Log_settler;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -168,6 +172,20 @@ public class MyNewGroupMemberListen {
         Log_settler.writelog("OnGroup"+ groupMsg.getGroupInfo());
         Log_settler.writelog(String.valueOf(groupMsg.getBotInfo()));
         Log_settler.writelog("已给予头衔" +"\n\n\n");
+    }
+    @OnGroup
+    public void settle(GroupMsg groupMsg){
+        (new File(".\\cache\\properties")).mkdirs();
+        String fileName = ".\\cache\\properties\\"+ groupMsg.getBotInfo().getBotCode()+".properties";
+        try {
+            File f = new File(fileName);
+            f.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+            bw.write("Pic=true\n300WordsBan=true\nallowGroupNameChanging=true\nallowChangeTitle=true\n");
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
