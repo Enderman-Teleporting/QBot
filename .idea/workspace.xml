@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/cache/account.secrets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,6 +142,7 @@
       <workItem from="1664880022551" duration="31000" />
       <workItem from="1664880277037" duration="74000" />
       <workItem from="1664882158236" duration="22000" />
+      <workItem from="1664883342903" duration="73000" />
     </task>
     <servers />
   </component>
