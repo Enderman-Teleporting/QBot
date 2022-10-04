@@ -31,3 +31,4 @@ src/main/resources/simbot-bots/yourBot1.bot
 *.bot
 /target/
 *.bot
+*.secrets
