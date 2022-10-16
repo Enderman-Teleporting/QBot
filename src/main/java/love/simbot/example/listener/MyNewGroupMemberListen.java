@@ -179,10 +179,12 @@ public class MyNewGroupMemberListen {
         String fileName = "./cache/properties/"+ groupMsg.getBotInfo().getBotCode()+".properties";
         try {
             File f = new File(fileName);
-            f.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
-            bw.write("Pic=true\n300WordsBan=true\nallowGroupNameChanging=true\nallowChangeTitle=true\n");
-            bw.close();
+            if (!f.exists()) {
+                f.createNewFile();
+                BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+                bw.write("Pic=true\n300WordsBan=true\nallowGroupNameChanging=true\nallowChangeTitle=true\n");
+                bw.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

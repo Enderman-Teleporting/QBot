@@ -8,10 +8,12 @@ public class properties_settler {
         String fileName = "./cache/property.properties";
         try {
             File f = new File(fileName);
-            f.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new FileWriter("./cache/property.properties"));
-            bw.write("Log=true\n");
-            bw.close();
+            if(!f.exists()){
+                f.createNewFile();
+                BufferedWriter bw = new BufferedWriter(new FileWriter("./cache/property.properties"));
+                bw.write("Log=true\n");
+                bw.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
