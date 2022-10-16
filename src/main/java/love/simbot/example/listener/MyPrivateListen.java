@@ -8,7 +8,6 @@ import love.forte.simbot.annotation.Listen;
 import love.forte.simbot.annotation.OnPrivate;
 import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.containers.AccountInfo;
-import love.forte.simbot.api.message.containers.GroupInfo;
 import love.forte.simbot.api.message.events.*;
 import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.api.sender.Setter;
@@ -50,17 +49,19 @@ public class MyPrivateListen {
     }
     @Listen(PrivateMsg.class)
     public void Privatemsglisten(PrivateMsg privateMsg, MsgGet msgGet, Sender sender) throws IOException, InterruptedException{
-        AccountInfo listenedinfo=privateMsg.getAccountInfo();
-        String gottenmsg2=privateMsg.getText();
-        gottenmsg2=gottenmsg2.replace(" ","%20");
-        String result =getApi("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg2,"content");
-        result=result.replace("{br}","\n");
-        result=result.replace("菲菲",privateMsg.getBotInfo().getBotName());
-        sender.sendPrivateMsg(listenedinfo, result);
-        Log_settler.writelog("OnPrivate"+String.valueOf(privateMsg.getBotInfo()));
-        Log_settler.writelog("bot:"+result);
-        Log_settler.writelog(String.valueOf(listenedinfo)+"\n\n\n");
-        Thread.sleep(3000);
+        if(!privateMsg.getText().equals("二次元")) {
+            AccountInfo listenedinfo = privateMsg.getAccountInfo();
+            String gottenmsg2 = privateMsg.getText();
+            gottenmsg2 = gottenmsg2.replace(" ", "%20");
+            String result = getApi("http://api.qingyunke.com/api.php?key=free&appid=0&msg=" + gottenmsg2, "content");
+            result = result.replace("{br}", "\n");
+            result = result.replace("菲菲", privateMsg.getBotInfo().getBotName());
+            sender.sendPrivateMsg(listenedinfo, result);
+            Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
+            Log_settler.writelog("bot:" + result);
+            Log_settler.writelog(String.valueOf(listenedinfo) + "\n\n\n");
+            Thread.sleep(3000);
+        }
     }
     @Listen(FriendAddRequest.class)
 

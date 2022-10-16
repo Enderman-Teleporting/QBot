@@ -1,16 +1,15 @@
 package love.simbot.example.tools;
-import net.mamoe.mirai.Bot;
 import java.io.*;
 import java.util.Properties;
 
 
 public class properties_settler {
-    public static void settle() throws IOException {
-        String fileName = ".\\cache\\property.properties";
+    public static void settle() {
+        String fileName = "./cache/property.properties";
         try {
             File f = new File(fileName);
             f.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new FileWriter(".\\cache\\property.properties"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("./cache/property.properties"));
             bw.write("Log=true\n");
             bw.close();
         } catch (IOException e) {

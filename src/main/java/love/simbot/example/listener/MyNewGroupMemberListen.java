@@ -131,7 +131,7 @@ public class MyNewGroupMemberListen {
 
     @OnGroup
     public void groupban(GroupMsg groupMsg,Setter setter,Sender sender) throws IOException {
-        if (length(groupMsg.getMsg())>=300&&read(".\\cache\\properties\\"+groupMsg.getBotInfo().getBotCode()+".properties","300WordsBan").equals("true")){
+        if (length(groupMsg.getText())>=300&&read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","300WordsBan").equals("true")){
             setter.setGroupBan(groupMsg.getGroupInfo(), groupMsg.getAccountInfo(), 300);
             MessageContentBuilder builder3=messageBuilderFactory.getMessageContentBuilder();
             MessageContent message=builder3
@@ -148,7 +148,7 @@ public class MyNewGroupMemberListen {
     @OnGroup
     @Filter(value="群名称 ",matchType = MatchType.STARTS_WITH)
     public void groupName(GroupMsg groupMsg,Setter setter,Sender sender) throws IOException {
-        if (read(".\\cache\\properties\\"+groupMsg.getBotInfo().getBotCode()+".properties","allowGroupNameChanging").equals("true")) {
+        if (read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","allowGroupNameChanging").equals("true")) {
             String msg = groupMsg.getText().replace("群名称 ", "");
             setter.setGroupName(groupMsg.getGroupInfo(),msg);
             MessageContentBuilder builder4=messageBuilderFactory.getMessageContentBuilder();
@@ -175,8 +175,8 @@ public class MyNewGroupMemberListen {
     }
     @OnGroup
     public void settle(GroupMsg groupMsg){
-        (new File(".\\cache\\properties")).mkdirs();
-        String fileName = ".\\cache\\properties\\"+ groupMsg.getBotInfo().getBotCode()+".properties";
+        (new File("./cache/properties")).mkdirs();
+        String fileName = "./cache/properties/"+ groupMsg.getBotInfo().getBotCode()+".properties";
         try {
             File f = new File(fileName);
             f.createNewFile();

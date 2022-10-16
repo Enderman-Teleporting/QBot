@@ -1,7 +1,6 @@
 package love.simbot.example.listener;
 
 import catcode.CatCodeUtil;
-import catcode.CodeBuilder;
 import catcode.Neko;
 import love.forte.common.ioc.annotation.Beans;
 import love.forte.common.ioc.annotation.Depend;
@@ -12,14 +11,12 @@ import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.MessageContentBuilder;
 import love.forte.simbot.api.message.containers.AccountInfo;
 import love.forte.simbot.api.message.containers.GroupAccountInfo;
-import love.forte.simbot.api.message.containers.GroupCodeContainer;
 import love.forte.simbot.api.message.containers.GroupInfo;
 import love.forte.simbot.api.message.events.GroupMsg;
 import love.forte.simbot.api.message.events.GroupMsgRecall;
 import love.forte.simbot.api.message.events.MsgGet;
 import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.filter.MatchType;
-import love.forte.simbot.listener.ListenerContext;
 import love.simbot.example.tools.Log_settler;
 import love.forte.simbot.api.message.MessageContentBuilderFactory;
 import java.io.IOException;
@@ -31,7 +28,7 @@ import static love.simbot.example.tools.properties_settler.read;
 
 @Beans
 public class MyGroupListen {
-    HashMap<String, String> renyunyiren= new HashMap<String, String>();
+    HashMap<String, String> renyunyiren= new HashMap<>();
     @Depend
     private MessageContentBuilderFactory messageBuilderFactory;
 
@@ -84,7 +81,7 @@ public class MyGroupListen {
         sender.sendGroupMsg(listenedgroupinfo,message12);
         Log_settler.writelog("OnGroup"+String.valueOf(groupMsg.getBotInfo()));
         Log_settler.writelog("bot:"+result);
-        Log_settler.writelog(String.valueOf(listenedgroupinfo)+"\n\n\n");
+        Log_settler.writelog(listenedgroupinfo +"\n\n\n");
         Thread.sleep(3000);
     }
     @Listen(GroupMsgRecall.class)
@@ -93,11 +90,11 @@ public class MyGroupListen {
         sender.sendGroupMsg(groupinforec, "快说,撤回了什么?!");
         Log_settler.writelog("OnGroup"+String.valueOf(groupMsgRecall.getBotInfo()));
         Log_settler.writelog("bot:"+"快说,撤回了什么?!");
-        Log_settler.writelog(String.valueOf(groupinforec)+"\n\n\n");
+        Log_settler.writelog(groupinforec +"\n\n\n");
     }
 
     @Listen(GroupMsg.class)
-    public void renyunyiyun(GroupMsg groupMsg, ListenerContext context,Sender sender){
+    public void renyunyiyun(GroupMsg groupMsg, Sender sender){
         if (renyunyiren.isEmpty()){
             renyunyiren.put("a",groupMsg.getMsg());
         }
@@ -119,7 +116,7 @@ public class MyGroupListen {
     @Listen(GroupMsg.class)
     @Filter(value = "二次元",matchType=MatchType.EQUALS)
     public void pic(GroupMsg groupMsg, Sender sender) throws IOException {
-        if (read(".\\cache\\properties\\"+groupMsg.getBotInfo().getBotCode()+".properties","Pic").equals("true")) {
+        if (read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","Pic").equals("true")) {
             GroupInfo groupInfo = groupMsg.getGroupInfo();
             final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
             String img = catUtil.toCat("image", true, "url=https://api.ococn.cn/api/img");

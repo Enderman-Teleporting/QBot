@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyNewGroupMemberListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyNewGroupMemberListen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyPrivateListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyPrivateListen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/tools/properties_settler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/tools/properties_settler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,6 +147,7 @@
       <workItem from="1664880277037" duration="74000" />
       <workItem from="1664882158236" duration="22000" />
       <workItem from="1664883342903" duration="73000" />
+      <workItem from="1665886568161" duration="983000" />
     </task>
     <servers />
   </component>
