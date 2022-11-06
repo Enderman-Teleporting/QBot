@@ -54,7 +54,6 @@ public class MyPrivateListen {
             String gottenmsg2 = privateMsg.getText();
             gottenmsg2 = gottenmsg2.replace(" ", "%20");
             String result = getApi("http://api.qingyunke.com/api.php?key=free&appid=0&msg=" + gottenmsg2, "content");
-            result = result.replace("{br}", "\n");
             result = result.replace("菲菲", privateMsg.getBotInfo().getBotName());
             sender.sendPrivateMsg(listenedinfo, result);
             Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));

@@ -166,12 +166,38 @@ public class MyNewGroupMemberListen {
     @OnGroup
     @Filter(value = "头衔 ",matchType = MatchType.STARTS_WITH)
     public void title(GroupMsg groupMsg,Setter setter,Sender sender) throws IOException{
-        String msg=groupMsg.getText().replace("头衔 ","");
-        setter.setGroupMemberSpecialTitle(groupMsg.getGroupInfo(),groupMsg.getAccountInfo(),msg);
-        sender.sendGroupMsg(groupMsg.getGroupInfo(),"已给予头衔");
-        Log_settler.writelog("OnGroup"+ groupMsg.getGroupInfo());
-        Log_settler.writelog(String.valueOf(groupMsg.getBotInfo()));
-        Log_settler.writelog("已给予头衔" +"\n\n\n");
+        if (read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","allowChangingTitle").equals("true")) {
+            String msg = groupMsg.getText().replace("头衔 ", "");
+            setter.setGroupMemberSpecialTitle(groupMsg.getGroupInfo(), groupMsg.getAccountInfo(), msg);
+            sender.sendGroupMsg(groupMsg.getGroupInfo(), "已给予头衔");
+            Log_settler.writelog("OnGroup" + groupMsg.getGroupInfo());
+            Log_settler.writelog(String.valueOf(groupMsg.getBotInfo()));
+            Log_settler.writelog("已给予头衔" + "\n\n\n");
+        }
+    }
+
+    @OnGroup
+    @Filter(value = "我要管理",matchType = MatchType.EQUALS)
+    public void Admin(GroupMsg groupMsg,Setter setter,Sender sender) throws IOException, InterruptedException {
+        if (read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","allowGroupNameChanging").equals("true")) {
+            setter.setGroupAdmin(groupMsg.getGroupInfo(),groupMsg.getAccountInfo(),true);
+            sender.sendGroupMsg(groupMsg.getGroupInfo(), "已给予权限");
+            Log_settler.writelog("OnGroup" + groupMsg.getGroupInfo());
+            Log_settler.writelog(String.valueOf(groupMsg.getBotInfo()));
+            Log_settler.writelog("已给予权限" + "\n\n\n");
+            Thread.sleep(60000);
+            setter.setGroupAdmin(groupMsg.getGroupInfo(),groupMsg.getAccountInfo(),true);
+            MessageContentBuilder builder=messageBuilderFactory.getMessageContentBuilder();
+            MessageContent message=builder
+                    .text("时间已到,收回")
+                    .at(groupMsg.getAccountInfo())
+                    .text("的权限")
+                    .build();
+            sender.sendGroupMsg(groupMsg.getGroupInfo(), message);
+            Log_settler.writelog("OnGroup" + groupMsg.getGroupInfo());
+            Log_settler.writelog(String.valueOf(groupMsg.getBotInfo()));
+            Log_settler.writelog(message + "\n\n\n");
+        }
     }
     @OnGroup
     public void settle(GroupMsg groupMsg){
@@ -182,7 +208,7 @@ public class MyNewGroupMemberListen {
             if (!f.exists()) {
                 f.createNewFile();
                 BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
-                bw.write("Pic=true\n300WordsBan=true\nallowGroupNameChanging=true\nallowChangeTitle=true\n");
+                bw.write("Pic=true\n300WordsBan=true\nallowGroupNameChanging=true\nallowChangeTitle=true\nallowGettingAdmin=false\n");
                 bw.close();
             }
         } catch (IOException e) {

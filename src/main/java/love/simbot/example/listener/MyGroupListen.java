@@ -71,7 +71,6 @@ public class MyGroupListen {
         String gottenmsg1=groupMsg.getText();
         gottenmsg1=gottenmsg1.replace(" ","%20");
         String result =getApi("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg1,"content");
-        result=result.replace("{br}","\n");
         result=result.replace("菲菲",groupMsg.getBotInfo().getBotName());
         MessageContentBuilder builder2=messageBuilderFactory.getMessageContentBuilder();
         MessageContent message12=builder2

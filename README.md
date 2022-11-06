@@ -11,7 +11,7 @@
  本项目使用的是ForteScarlet的simpler-robot项目及其demo项目作为框架:  
  https://github.com/ForteScarlet/simpler-robot  
  https://github.com/ForteScarlet/simple-robot-demo-project  
- api接口为青云客(https://qingyunke.com)  
+ api接口为: 文本消息: 青云客(https://qingyunke.com) 图片:https://api.ococn.cn  
  若要使用该机器人,请克隆库并且在.\src\resource里面找到后缀名为.bot的文件并按提示输入账号密码  
  并且去IntelliJ Idea使用Springboot(详见simpler-robot文档,必须是springboot)打成jar包使用Java指令启动  
  示例启动指令:java -Dfile.encoding=utf-8 -jar [路径]  
@@ -39,7 +39,8 @@
  图片api(获取功能消息格式:二次元)  
  消息超300字视为刷屏禁言(需机器人管理权限)  
  修改群名称(需要机器人管理权限,获取功能格式:群名称 (注意这个空格)+你要的群名称)  
- 自助群头衔(需机器人群主权限,获取功能格式:群名称 (注意这个空格)+你要的头衔)  
+ 自助群头衔(需机器人群主权限,获取功能格式:群头衔 (注意这个空格)+你要的头衔)  
+ 自助管理(需机器人群主权限,获取功能格式: 我要管理)(默认为false) 
 ------------------------以上可在".\cache\properties\机器人的QQ号.properties"修改,文件中各条与此处列的各条对应---------------------
  
   
@@ -55,5 +56,8 @@
  有关问题请联系作者小号2730482276(会忙,可能不会很快(甚至不会)回答)或者在该仓库issues中提问  
  或者加群:1170443108  
   
+  
+  
+ 暂时simbot3的东西没摸透,摸透会换到simbot3.x
 
 网页:https://enderman-teleporting.github.io/QBot/
