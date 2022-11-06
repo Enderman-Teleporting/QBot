@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/tools/API.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/tools/API.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/simbot-bots/yourBot1.bot" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/simbot-bots/yourBot1.bot" afterDir="false" />
-    </list>
+    <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

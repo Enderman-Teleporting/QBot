@@ -194,6 +194,7 @@ public class MyNewGroupMemberListen {
                     .text("的权限")
                     .build();
             sender.sendGroupMsg(groupMsg.getGroupInfo(), message);
+            setter.setGroupAdmin(groupMsg.getGroupInfo(),groupMsg.getAccountInfo(),false);
             Log_settler.writelog("OnGroup" + groupMsg.getGroupInfo());
             Log_settler.writelog(String.valueOf(groupMsg.getBotInfo()));
             Log_settler.writelog(message + "\n\n\n");
