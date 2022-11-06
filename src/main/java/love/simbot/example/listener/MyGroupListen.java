@@ -9,6 +9,7 @@ import love.forte.simbot.annotation.Listen;
 import love.forte.simbot.annotation.OnGroup;
 import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.MessageContentBuilder;
+import love.forte.simbot.api.message.MessageContentBuilderFactory;
 import love.forte.simbot.api.message.containers.AccountInfo;
 import love.forte.simbot.api.message.containers.GroupAccountInfo;
 import love.forte.simbot.api.message.containers.GroupInfo;
@@ -18,7 +19,7 @@ import love.forte.simbot.api.message.events.MsgGet;
 import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.filter.MatchType;
 import love.simbot.example.tools.Log_settler;
-import love.forte.simbot.api.message.MessageContentBuilderFactory;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;

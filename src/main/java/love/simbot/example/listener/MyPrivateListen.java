@@ -8,15 +8,20 @@ import love.forte.simbot.annotation.Listen;
 import love.forte.simbot.annotation.OnPrivate;
 import love.forte.simbot.api.message.MessageContent;
 import love.forte.simbot.api.message.containers.AccountInfo;
-import love.forte.simbot.api.message.events.*;
+import love.forte.simbot.api.message.events.FriendAddRequest;
+import love.forte.simbot.api.message.events.MsgGet;
+import love.forte.simbot.api.message.events.PrivateMsg;
+import love.forte.simbot.api.message.events.PrivateMsgRecall;
 import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.api.sender.Setter;
 import love.forte.simbot.filter.MatchType;
 import love.simbot.example.tools.Log_settler;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 import static love.simbot.example.tools.API.getApi;
 import static love.simbot.example.tools.properties_settler.read;
 
