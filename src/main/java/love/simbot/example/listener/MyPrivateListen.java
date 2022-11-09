@@ -3,10 +3,13 @@ package love.simbot.example.listener;
 import catcode.CatCodeUtil;
 import catcode.Neko;
 import love.forte.common.ioc.annotation.Beans;
+import love.forte.common.ioc.annotation.Depend;
 import love.forte.simbot.annotation.Filter;
 import love.forte.simbot.annotation.Listen;
 import love.forte.simbot.annotation.OnPrivate;
 import love.forte.simbot.api.message.MessageContent;
+import love.forte.simbot.api.message.MessageContentBuilder;
+import love.forte.simbot.api.message.MessageContentBuilderFactory;
 import love.forte.simbot.api.message.containers.AccountInfo;
 import love.forte.simbot.api.message.events.FriendAddRequest;
 import love.forte.simbot.api.message.events.MsgGet;
@@ -28,6 +31,8 @@ import static love.simbot.example.tools.properties_settler.read;
 @Beans
 public class MyPrivateListen {
     private static final Map<String, String> REQUEST_TEXT_MAP = new ConcurrentHashMap<>();
+    @Depend
+    private MessageContentBuilderFactory messageBuilderFactory;
     @OnPrivate
     public void onPrivateMsg(PrivateMsg privateMsg) throws IOException {
         Log_settler.writelog(privateMsg.getText());
@@ -53,16 +58,40 @@ public class MyPrivateListen {
         Log_settler.writelog(String.valueOf(privateMsgRecall.getAccountInfo())+"\n\n\n");
     }
     @Listen(PrivateMsg.class)
-    public void Privatemsglisten(PrivateMsg privateMsg, MsgGet msgGet, Sender sender) throws IOException, InterruptedException{
+    public void Privatemsglisten(PrivateMsg privateMsg, Sender sender) throws IOException, InterruptedException{
         if(!privateMsg.getText().equals("二次元")) {
             AccountInfo listenedinfo = privateMsg.getAccountInfo();
             String gottenmsg2 = privateMsg.getText();
             gottenmsg2 = gottenmsg2.replace(" ", "%20");
             String result = getApi("http://api.qingyunke.com/api.php?key=free&appid=0&msg=" + gottenmsg2, "content");
             result = result.replace("菲菲", privateMsg.getBotInfo().getBotName());
-            sender.sendPrivateMsg(listenedinfo, result);
+            String prev="",aft="",num="";
+            char[] MsgArray=result.toCharArray();
+            for (int i=1;MsgArray[i]!='{';i++){
+                prev+=MsgArray[i];
+            }
+            for (int j=1;j<MsgArray.length;j++){
+                if(MsgArray[j-1]==':'){
+                    for (int k=j;MsgArray[k+1]!='}';k++){
+                        num +=MsgArray[k];
+                    }
+                }
+                if(MsgArray[j-1]=='}'){
+                    for (int l=j;l<MsgArray.length;l++){
+                        aft+=MsgArray[l];
+                    }
+                }
+            }
+            MessageContentBuilder builder=messageBuilderFactory.getMessageContentBuilder();
+            MessageContent message=builder
+                    .text(prev)
+                    .face(Integer.parseInt(num))
+                    .text(aft)
+                    .at(listenedinfo)
+                    .build();
+            sender.sendPrivateMsg(listenedinfo,message);
             Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
-            Log_settler.writelog("bot:" + result);
+            Log_settler.writelog("bot:" + message);
             Log_settler.writelog(String.valueOf(listenedinfo) + "\n\n\n");
             Thread.sleep(3000);
         }

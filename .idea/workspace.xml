@@ -45,7 +45,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ender/Documents/GitHub/QBot&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/sorts/GitHub/QBot&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -75,11 +75,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="应用程序.SimbotExampleApplication" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -143,6 +138,11 @@
       <workItem from="1664883342903" duration="73000" />
       <workItem from="1665886568161" duration="1125000" />
       <workItem from="1665887848086" duration="90000" />
+      <workItem from="1667709669072" duration="844000" />
+      <workItem from="1667815404439" duration="617000" />
+      <workItem from="1667817230786" duration="802000" />
+      <workItem from="1667971220400" duration="855000" />
+      <workItem from="1667972135422" duration="1124000" />
     </task>
     <servers />
   </component>

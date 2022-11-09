@@ -11,7 +11,6 @@ import java.net.URL;
 
 public class API {
     public static String getApi(String url,String key) throws IOException {
-        String a="",b="";
         URL url1=new URL (url);
         InputStream is =url1.openStream();
         BufferedReader br=new BufferedReader(new InputStreamReader(is));
@@ -21,5 +20,6 @@ public class API {
         result = result.replace("{br}", "\n");
         return result;
     }
+
 
 }
