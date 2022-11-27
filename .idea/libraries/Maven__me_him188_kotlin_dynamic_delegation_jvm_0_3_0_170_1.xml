@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: me.him188:kotlin-dynamic-delegation-jvm:0.3.0-170.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/me/him188/kotlin-dynamic-delegation-jvm/0.3.0-170.1/kotlin-dynamic-delegation-jvm-0.3.0-170.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/me/him188/kotlin-dynamic-delegation-jvm/0.3.0-170.1/kotlin-dynamic-delegation-jvm-0.3.0-170.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/me/him188/kotlin-dynamic-delegation-jvm/0.3.0-170.1/kotlin-dynamic-delegation-jvm-0.3.0-170.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

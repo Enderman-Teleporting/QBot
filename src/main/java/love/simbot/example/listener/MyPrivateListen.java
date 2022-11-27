@@ -65,34 +65,42 @@ public class MyPrivateListen {
             gottenmsg2 = gottenmsg2.replace(" ", "%20");
             String result = getApi("http://api.qingyunke.com/api.php?key=free&appid=0&msg=" + gottenmsg2, "content");
             result = result.replace("菲菲", privateMsg.getBotInfo().getBotName());
-            String prev="",aft="",num="";
-            char[] MsgArray=result.toCharArray();
-            for (int i=1;MsgArray[i]!='{';i++){
-                prev+=MsgArray[i];
-            }
-            for (int j=1;j<MsgArray.length;j++){
-                if(MsgArray[j-1]==':'){
-                    for (int k=j;MsgArray[k+1]!='}';k++){
-                        num +=MsgArray[k];
+            if (result.contains("{")&&result.contains("}")) {
+                String prev = "", aft = "", num = "";
+                char[] MsgArray = result.toCharArray();
+                for (int i = 0; MsgArray[i] != '{'; i++) {
+                    prev += MsgArray[i];
+                }
+                for (int j = 1; j < MsgArray.length; j++) {
+                    if (MsgArray[j - 1] == ':') {
+                        for (int k = j; MsgArray[k + 1] != '}'; k++) {
+                            num += MsgArray[k];
+                        }
+                    }
+                    if (MsgArray[j - 1] == '}') {
+                        for (int l = j; l < MsgArray.length; l++) {
+                            aft += MsgArray[l];
+                        }
                     }
                 }
-                if(MsgArray[j-1]=='}'){
-                    for (int l=j;l<MsgArray.length;l++){
-                        aft+=MsgArray[l];
-                    }
-                }
+                MessageContentBuilder builder = messageBuilderFactory.getMessageContentBuilder();
+                MessageContent message = builder
+                        .text(prev)
+                        .face(Integer.parseInt(num))
+                        .text(aft)
+                        .at(listenedinfo)
+                        .build();
+                sender.sendPrivateMsg(listenedinfo, message);
+                Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
+                Log_settler.writelog("bot:" + message);
+                Log_settler.writelog(String.valueOf(listenedinfo) + "\n\n\n");
             }
-            MessageContentBuilder builder=messageBuilderFactory.getMessageContentBuilder();
-            MessageContent message=builder
-                    .text(prev)
-                    .face(Integer.parseInt(num))
-                    .text(aft)
-                    .at(listenedinfo)
-                    .build();
-            sender.sendPrivateMsg(listenedinfo,message);
-            Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
-            Log_settler.writelog("bot:" + message);
-            Log_settler.writelog(String.valueOf(listenedinfo) + "\n\n\n");
+            else{
+                sender.sendPrivateMsg(listenedinfo,result);
+                Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
+                Log_settler.writelog("bot:" + result);
+                Log_settler.writelog(String.valueOf(listenedinfo) + "\n\n\n");
+            }
             Thread.sleep(3000);
         }
     }

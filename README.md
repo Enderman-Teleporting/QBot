@@ -19,7 +19,7 @@
  cmd还需声明chcp 65001避免控制台乱码
  同时你也可以选择示例jar包(见release)  
  
-如果遇到你的账号需要滑动登录,最好的选择是https://github.com/mzdluo123/TxCaptchaHelper  
+如果遇到你的账号需要滑动登录,最好的选择是https://github.com/mzdluo123/TxCaptchaHelper 或 https://github.com/simple-robot/simbot-mirai-login-helper  
 
    
  包含功能:  

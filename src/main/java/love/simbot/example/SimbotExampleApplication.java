@@ -5,6 +5,7 @@ import love.forte.simbot.annotation.SimbotResource;
 import love.forte.simbot.core.SimbotApp;
 import love.simbot.example.tools.Log_settler;
 import love.simbot.example.tools.properties_settler;
+import net.mamoe.mirai.utils.BotConfiguration;
 
 import java.io.IOException;
 

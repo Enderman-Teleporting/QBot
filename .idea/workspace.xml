@@ -4,7 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes" />
+    <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__me_him188_kotlin_dynamic_delegation_jvm_0_3_0_170_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_api_2_4_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_api_2_5_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_component_mirai_2_4_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_component_mirai_2_5_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_core_2_4_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_core_2_5_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_http_client_core_2_4_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_http_client_core_2_5_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_http_client_ktor_2_4_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_http_client_ktor_2_5_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_serialization_json_core_2_4_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_serialization_json_core_2_5_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_serialization_json_fastjson_2_4_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_serialization_json_fastjson_2_5_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__me_him188_kotlin_jvm_blocking_bridge_runtime_jvm_2_0_0_162_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__me_him188_kotlin_jvm_blocking_bridge_runtime_jvm_2_1_0_170_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_console_compiler_annotations_jvm_2_11_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_console_compiler_annotations_jvm_2_13_0_RC2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_core_api_jvm_2_11_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_core_api_jvm_2_13_0_RC2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_core_jvm_2_11_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_core_jvm_2_13_0_RC2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_core_utils_jvm_2_11_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_core_utils_jvm_2_13_0_RC2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_common_1_6_21.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_common_1_7_10.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_atomicfu_jvm_0_17_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_atomicfu_jvm_0_18_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_kotlinx_coroutines_jdk8_1_6_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_kotlinx_coroutines_jdk8_1_6_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_kotlinx_io_0_1_16.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_kotlinx_io_jvm_0_1_16.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_kotlinx_serialization_core_jvm_1_3_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_kotlinx_serialization_core_jvm_1_3_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_kotlinx_serialization_json_jvm_1_3_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_kotlinx_serialization_json_jvm_1_3_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_kotlinx_serialization_protobuf_jvm_1_3_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_kotlinx_serialization_protobuf_jvm_1_3_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/simbot-mirai-demo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/simbot-mirai-demo.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyPrivateListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyPrivateListen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/simbot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/simbot.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,7 +83,8 @@
     &quot;project.structure.last.edited&quot;: &quot;库&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -143,11 +174,16 @@
       <workItem from="1667817230786" duration="802000" />
       <workItem from="1667971220400" duration="855000" />
       <workItem from="1667972135422" duration="1124000" />
+      <workItem from="1668911825743" duration="519000" />
+      <workItem from="1669545677597" duration="4697000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.bot" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
