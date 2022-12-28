@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_api_2_5_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_component_mirai_2_5_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_core_2_5_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_http_client_core_2_5_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_http_client_ktor_2_5_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_serialization_json_core_2_5_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simple_robot_serialization_json_fastjson_2_5_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_console_compiler_annotations_jvm_2_13_0_RC2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_core_api_jvm_2_13_0_RC2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_core_jvm_2_13_0_RC2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_mamoe_mirai_core_utils_jvm_2_13_0_RC2.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/simbot-mirai-demo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/simbot-mirai-demo.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/simbot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/simbot.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +48,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/sorts/GitHub/QBot&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/wyh/Documents/GitHub/QBot_v3&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -162,6 +150,23 @@
       <workItem from="1668911825743" duration="519000" />
       <workItem from="1669545677597" duration="4697000" />
       <workItem from="1671706527122" duration="303000" />
+      <workItem from="1671756431427" duration="11264000" />
+      <workItem from="1671784319320" duration="58000" />
+      <workItem from="1671784420555" duration="74000" />
+      <workItem from="1671784668432" duration="327000" />
+      <workItem from="1671786114562" duration="27000" />
+      <workItem from="1671786343245" duration="61000" />
+      <workItem from="1671789084638" duration="16000" />
+      <workItem from="1671795628054" duration="29000" />
+      <workItem from="1671799632994" duration="8000" />
+      <workItem from="1671849768851" duration="385000" />
+      <workItem from="1671850535325" duration="355000" />
+      <workItem from="1671857100997" duration="28000" />
+      <workItem from="1671860147062" duration="280000" />
+      <workItem from="1671861368710" duration="2279000" />
+      <workItem from="1671936307451" duration="103000" />
+      <workItem from="1672059664010" duration="42000" />
+      <workItem from="1672096707276" duration="14000" />
     </task>
     <servers />
   </component>
