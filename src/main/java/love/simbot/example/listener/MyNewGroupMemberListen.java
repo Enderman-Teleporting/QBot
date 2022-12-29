@@ -71,7 +71,7 @@ public class MyNewGroupMemberListen {
         sender.sendGroupMsg(groupInfo, msg);
         Log_settler.writelog("OnGroup"+String.valueOf(groupInfo));
         Log_settler.writelog(String.valueOf(groupMemberIncrease.getBotInfo()));
-        Log_settler.writelog(String.valueOf(msg)+"\n\n\n");
+        Log_settler.writelog(String.valueOf(msg));
     }
 
     @Listen(GroupMemberPermissionChanged.class)
@@ -105,7 +105,7 @@ public class MyNewGroupMemberListen {
             sender.sendGroupMsg(groupInfoC, message_);
             Log_settler.writelog("OnGroup"+ groupInfoC);
             Log_settler.writelog(String.valueOf(groupMemberPermissionChanged.getBotInfo()));
-            Log_settler.writelog(message_ +"\n\n\n");
+            Log_settler.writelog(String.valueOf(message_));
         }
         
     }
@@ -126,7 +126,7 @@ public class MyNewGroupMemberListen {
         sender.sendGroupMsg(groupInfoGMC,message1);
         Log_settler.writelog("OnGroup"+ groupInfoGMC);
         Log_settler.writelog(String.valueOf(groupNameChanged.getBotInfo()));
-        Log_settler.writelog(message1 +"\n\n\n");
+        Log_settler.writelog(String.valueOf(message1));
     }
 
     @OnGroup
@@ -141,7 +141,7 @@ public class MyNewGroupMemberListen {
             sender.sendGroupMsg(groupMsg.getGroupInfo(),message);
             Log_settler.writelog("OnGroup"+ groupMsg.getGroupInfo());
             Log_settler.writelog(String.valueOf(groupMsg.getBotInfo()));
-            Log_settler.writelog(message +"\n\n\n");
+            Log_settler.writelog(String.valueOf(message));
         }
     }
 
@@ -160,7 +160,7 @@ public class MyNewGroupMemberListen {
             sender.sendGroupMsg(groupMsg.getGroupInfo(),message);
             Log_settler.writelog("OnGroup"+ groupMsg.getGroupInfo());
             Log_settler.writelog(String.valueOf(groupMsg.getBotInfo()));
-            Log_settler.writelog(message +"\n\n\n");
+            Log_settler.writelog(String.valueOf(message));
         }
     }
     @OnGroup
@@ -172,7 +172,7 @@ public class MyNewGroupMemberListen {
             sender.sendGroupMsg(groupMsg.getGroupInfo(), "已给予头衔");
             Log_settler.writelog("OnGroup" + groupMsg.getGroupInfo());
             Log_settler.writelog(String.valueOf(groupMsg.getBotInfo()));
-            Log_settler.writelog("已给予头衔" + "\n\n\n");
+            Log_settler.writelog("已给予头衔");
         }
     }
 
@@ -197,7 +197,7 @@ public class MyNewGroupMemberListen {
             setter.setGroupAdmin(groupMsg.getGroupInfo(),groupMsg.getAccountInfo(),false);
             Log_settler.writelog("OnGroup" + groupMsg.getGroupInfo());
             Log_settler.writelog(String.valueOf(groupMsg.getBotInfo()));
-            Log_settler.writelog(message + "\n\n\n");
+            Log_settler.writelog(String.valueOf(message));
         }
     }
     @OnGroup

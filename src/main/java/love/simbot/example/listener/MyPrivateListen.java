@@ -12,7 +12,6 @@ import love.forte.simbot.api.message.MessageContentBuilder;
 import love.forte.simbot.api.message.MessageContentBuilderFactory;
 import love.forte.simbot.api.message.containers.AccountInfo;
 import love.forte.simbot.api.message.events.FriendAddRequest;
-import love.forte.simbot.api.message.events.MsgGet;
 import love.forte.simbot.api.message.events.PrivateMsg;
 import love.forte.simbot.api.message.events.PrivateMsgRecall;
 import love.forte.simbot.api.sender.Sender;
@@ -48,14 +47,13 @@ public class MyPrivateListen {
         Log_settler.writelog("OnPrivate\n"+accountInfo.getAccountCode());
         Log_settler.writelog(accountInfo.getAccountNickname());
         Log_settler.writelog(String.valueOf(privateMsg.getAccountInfo()));
-        Log_settler.writelog("\n\n");
     }
     @Listen(PrivateMsgRecall.class)
     public void message(PrivateMsgRecall privateMsgRecall, Sender sender) throws IOException {
         sender.sendPrivateMsg(privateMsgRecall, "快说,撤回了什么?!");
         Log_settler.writelog("OnPrivate"+String.valueOf(privateMsgRecall.getBotInfo()));
         Log_settler.writelog("bot:"+"快说,撤回了什么?!");
-        Log_settler.writelog(String.valueOf(privateMsgRecall.getAccountInfo())+"\n\n\n");
+        Log_settler.writelog(String.valueOf(privateMsgRecall.getAccountInfo()));
     }
     @Listen(PrivateMsg.class)
     public void Privatemsglisten(PrivateMsg privateMsg, Sender sender) throws IOException, InterruptedException{
@@ -93,13 +91,13 @@ public class MyPrivateListen {
                 sender.sendPrivateMsg(listenedinfo, message);
                 Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
                 Log_settler.writelog("bot:" + message);
-                Log_settler.writelog(String.valueOf(listenedinfo) + "\n\n\n");
+                Log_settler.writelog(String.valueOf(listenedinfo));
             }
             else{
                 sender.sendPrivateMsg(listenedinfo,result);
                 Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
                 Log_settler.writelog("bot:" + result);
-                Log_settler.writelog(String.valueOf(listenedinfo) + "\n\n\n");
+                Log_settler.writelog(String.valueOf(listenedinfo));
             }
             Thread.sleep(3000);
         }
@@ -127,7 +125,7 @@ public class MyPrivateListen {
             String img = catUtil.toCat("image", true, "url=https://api.ococn.cn/api/img");
             sender.sendPrivateMsg(info, img);
             Log_settler.writelog("OnPrivate");
-            Log_settler.writelog("bot"+img+"\n\n\n\n");
+            Log_settler.writelog("bot"+img);
         }
     }
     

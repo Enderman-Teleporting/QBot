@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/simbot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/simbot.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyNewGroupMemberListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyNewGroupMemberListen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyPrivateListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyPrivateListen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,26 +46,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/wyh/Documents/GitHub/QBot_v3&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;库&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/wyh/Documents/GitHub/QBot-v1-and-v2/cache",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "库",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\wyh\Documents\GitHub\QBot-v1-and-v2\cache" />
+      <recent name="C:\Users\wyh\Documents\GitHub\QBot-v1-and-v2" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\wyh\Documents\GitHub\QBot-v1-and-v2" />
       <recent name="C:\Users\wyh\Documents\GitHub\QBot\src\main\resources\simbot-bots" />
     </key>
   </component>
@@ -79,6 +88,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="应用程序.SimbotExampleApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -167,6 +181,10 @@
       <workItem from="1671936307451" duration="103000" />
       <workItem from="1672059664010" duration="42000" />
       <workItem from="1672096707276" duration="14000" />
+      <workItem from="1672231036060" duration="1501000" />
+      <workItem from="1672235794635" duration="534000" />
+      <workItem from="1672237730321" duration="372000" />
+      <workItem from="1672270012155" duration="16697000" />
     </task>
     <servers />
   </component>
@@ -194,6 +212,51 @@
           <properties class="java.io.FileNotFoundException" package="java.io" />
           <option name="timeStamp" value="10" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

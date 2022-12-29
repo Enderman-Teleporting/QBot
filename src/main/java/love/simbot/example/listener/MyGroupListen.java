@@ -51,7 +51,6 @@ public class MyGroupListen {
         Log_settler.writelog(String.valueOf(groupMsg.getGroupInfo()));
         Log_settler.writelog(groupInfo.getGroupCode());
         Log_settler.writelog(groupInfo.getGroupName());
-        Log_settler.writelog("\n\n");
     }
     @Listen(GroupMsg.class)
     public void beCalled(GroupMsg groupmsg,Sender sender) throws IOException {
@@ -60,7 +59,7 @@ public class MyGroupListen {
             sender.sendGroupMsg(groupInfo1, "是谁在叫" + groupmsg.getBotInfo().getAccountNickname() + "啊");
             Log_settler.writelog("OnGroup" + String.valueOf(groupmsg.getBotInfo()));
             Log_settler.writelog(String.valueOf(groupInfo1));
-            Log_settler.writelog("bot:是谁在叫" + groupmsg.getBotInfo().getAccountNickname() + "呀\n\n\n");
+            Log_settler.writelog("bot:是谁在叫" + groupmsg.getBotInfo().getAccountNickname() + "呀");
         }
     }
 
@@ -107,7 +106,7 @@ public class MyGroupListen {
             sender.sendGroupMsg(listenedgroupinfo, result);
             Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
             Log_settler.writelog("bot:"+result);
-            Log_settler.writelog(listenedgroupinfo+ "\n\n\n");
+            Log_settler.writelog(String.valueOf(listenedgroupinfo));
         }
         Thread.sleep(3000);
     }
@@ -117,7 +116,7 @@ public class MyGroupListen {
         sender.sendGroupMsg(groupinforec, "快说,撤回了什么?!");
         Log_settler.writelog("OnGroup"+String.valueOf(groupMsgRecall.getBotInfo()));
         Log_settler.writelog("bot:"+"快说,撤回了什么?!");
-        Log_settler.writelog(groupinforec +"\n\n\n");
+        Log_settler.writelog(String.valueOf(groupinforec));
     }
 
     @Listen(GroupMsg.class)
@@ -149,7 +148,7 @@ public class MyGroupListen {
             String img = catUtil.toCat("image", true, "url=https://api.ococn.cn/api/img");
             sender.sendGroupMsg(groupInfo, img);
             Log_settler.writelog("OnGroup");
-            Log_settler.writelog("bot"+img+"\n\n\n\n");
+            Log_settler.writelog("bot"+img);
         }
     }
 

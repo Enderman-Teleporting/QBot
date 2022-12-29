@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>simbot.example</groupId>
-    <artifactId>simbot-mirai-demo</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>QBot</artifactId>
+    <version>v2.5</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
