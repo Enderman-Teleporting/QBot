@@ -94,6 +94,11 @@ public class MyPrivateListen {
                 Log_settler.writelog(String.valueOf(listenedinfo));
             }
             else{
+                MessageContentBuilder builder=messageBuilderFactory.getMessageContentBuilder();
+                MessageContent content=builder
+                        .text(result)
+                        .at(listenedinfo)
+                        .build();
                 sender.sendPrivateMsg(listenedinfo,result);
                 Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
                 Log_settler.writelog("bot:" + result);
@@ -119,10 +124,10 @@ public class MyPrivateListen {
     @Listen(PrivateMsg.class)
     @Filter(value = "二次元",matchType= MatchType.EQUALS)
     public void pic(PrivateMsg privateMsg, Sender sender) throws IOException {
-        if (read(".\\cache\\properties\\"+privateMsg.getBotInfo().getBotCode()+".properties","Pic").equals("true")) {
+        if (read("./cache/properties/"+privateMsg.getBotInfo().getBotCode()+".properties","Pic").equals("true")) {
             AccountInfo info = privateMsg.getAccountInfo();
             final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
-            String img = catUtil.toCat("image", true, "url=https://api.ococn.cn/api/img");
+            String img = catUtil.toCat("image", true, "url=https://www.dmoe.cc/random.php");
             sender.sendPrivateMsg(info, img);
             Log_settler.writelog("OnPrivate");
             Log_settler.writelog("bot"+img);

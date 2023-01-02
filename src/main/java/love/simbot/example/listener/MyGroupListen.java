@@ -100,12 +100,17 @@ public class MyGroupListen {
             sender.sendGroupMsg(listenedgroupinfo, message);
             Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
             Log_settler.writelog("bot:" + message);
-            Log_settler.writelog(listenedgroupinfo + "\n\n\n");
+            Log_settler.writelog(String.valueOf(listenedgroupinfo));
         }
         else{
-            sender.sendGroupMsg(listenedgroupinfo, result);
+            MessageContentBuilder builder = messageBuilderFactory.getMessageContentBuilder();
+            MessageContent content = builder
+                    .text(result)
+                    .at(accountInfoabc)
+                    .build();
+            sender.sendGroupMsg(listenedgroupinfo, content);
             Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
-            Log_settler.writelog("bot:"+result);
+            Log_settler.writelog("bot:"+content);
             Log_settler.writelog(String.valueOf(listenedgroupinfo));
         }
         Thread.sleep(3000);
@@ -145,10 +150,22 @@ public class MyGroupListen {
         if (read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","Pic").equals("true")) {
             GroupInfo groupInfo = groupMsg.getGroupInfo();
             final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
-            String img = catUtil.toCat("image", true, "url=https://api.ococn.cn/api/img");
+            String img = catUtil.toCat("image", true, "url=https://www.dmoe.cc/random.php");
             sender.sendGroupMsg(groupInfo, img);
             Log_settler.writelog("OnGroup");
-            Log_settler.writelog("bot"+img);
+            Log_settler.writelog("bot:"+img);
+        }
+    }
+    @Listen(GroupMsg.class)
+    @Filter(value = "MC好图",matchType=MatchType.EQUALS)
+    public void mc(GroupMsg groupMsg, Sender sender) throws IOException {
+        if (read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","MCPic").equals("true")) {
+            GroupInfo groupInfo = groupMsg.getGroupInfo();
+            final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
+            String img = catUtil.toCat("image", true, "url=https://api.lantianyun.tk");
+            sender.sendGroupMsg(groupInfo, img);
+            Log_settler.writelog("OnGroup");
+            Log_settler.writelog("bot:"+img);
         }
     }
 

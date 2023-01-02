@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyGroupListen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyNewGroupMemberListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyNewGroupMemberListen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyPrivateListen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/listener/MyPrivateListen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/love/simbot/example/tools/Log_settler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/love/simbot/example/tools/Log_settler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +59,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "库",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
@@ -184,7 +187,23 @@
       <workItem from="1672231036060" duration="1501000" />
       <workItem from="1672235794635" duration="534000" />
       <workItem from="1672237730321" duration="372000" />
-      <workItem from="1672270012155" duration="16697000" />
+      <workItem from="1672270012155" duration="17617000" />
+      <workItem from="1672315601460" duration="15000" />
+      <workItem from="1672324296662" duration="152000" />
+      <workItem from="1672324674666" duration="108000" />
+      <workItem from="1672325747652" duration="5000" />
+      <workItem from="1672326275647" duration="18000" />
+      <workItem from="1672326376378" duration="252000" />
+      <workItem from="1672359780548" duration="849000" />
+      <workItem from="1672360719823" duration="706000" />
+      <workItem from="1672387430603" duration="774000" />
+      <workItem from="1672398569033" duration="57000" />
+      <workItem from="1672398883415" duration="297000" />
+      <workItem from="1672400297954" duration="232000" />
+      <workItem from="1672401168693" duration="1349000" />
+      <workItem from="1672402826408" duration="87000" />
+      <workItem from="1672583494252" duration="14000" />
+      <workItem from="1672639978223" duration="1300000" />
     </task>
     <servers />
   </component>
@@ -214,17 +233,17 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java</url>
-          <line>25</line>
+          <line>26</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java</url>
-          <line>24</line>
+          <line>25</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java</url>
-          <line>23</line>
+          <line>24</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

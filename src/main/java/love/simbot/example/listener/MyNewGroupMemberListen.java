@@ -166,7 +166,7 @@ public class MyNewGroupMemberListen {
     @OnGroup
     @Filter(value = "头衔 ",matchType = MatchType.STARTS_WITH)
     public void title(GroupMsg groupMsg,Setter setter,Sender sender) throws IOException{
-        if (read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","allowChangingTitle").equals("true")) {
+        if (read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","allowChangeTitle").equals("true")) {
             String msg = groupMsg.getText().replace("头衔 ", "");
             setter.setGroupMemberSpecialTitle(groupMsg.getGroupInfo(), groupMsg.getAccountInfo(), msg);
             sender.sendGroupMsg(groupMsg.getGroupInfo(), "已给予头衔");
@@ -184,7 +184,7 @@ public class MyNewGroupMemberListen {
             sender.sendGroupMsg(groupMsg.getGroupInfo(), "已给予权限");
             Log_settler.writelog("OnGroup" + groupMsg.getGroupInfo());
             Log_settler.writelog(String.valueOf(groupMsg.getBotInfo()));
-            Log_settler.writelog("已给予权限" + "\n\n\n");
+            Log_settler.writelog("已给予权限");
             Thread.sleep(60000);
             setter.setGroupAdmin(groupMsg.getGroupInfo(),groupMsg.getAccountInfo(),true);
             MessageContentBuilder builder=messageBuilderFactory.getMessageContentBuilder();
@@ -209,7 +209,7 @@ public class MyNewGroupMemberListen {
             if (!f.exists()) {
                 f.createNewFile();
                 BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
-                bw.write("Pic=true\n300WordsBan=true\nallowGroupNameChanging=true\nallowChangeTitle=true\nallowGettingAdmin=false\n");
+                bw.write("Pic=true\n300WordsBan=true\nallowGroupNameChanging=true\nallowChangeTitle=true\nallowGettingAdmin=false\nMCPic=true\n");
                 bw.close();
             }
         } catch (IOException e) {

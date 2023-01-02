@@ -16,7 +16,7 @@ public class Log_settler {
     public static void writelog(String content) throws IOException {
         Log_settler lt= new Log_settler();
         Logger log = lt.getMylog();
-        if (read("cache\\property.properties","Log").equals("true")){
+        if (read("./cache/property.properties","Log").equals("true")){
             log.info(content);
         }
 
