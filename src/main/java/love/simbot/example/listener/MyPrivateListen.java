@@ -133,5 +133,16 @@ public class MyPrivateListen {
             Log_settler.writelog("bot"+img);
         }
     }
-    
+    @Listen(PrivateMsg.class)
+    @Filter(value = "MC好图",matchType= MatchType.EQUALS)
+    public void MC(PrivateMsg privateMsg, Sender sender) throws IOException {
+        if (read("./cache/properties/"+privateMsg.getBotInfo().getBotCode()+".properties","MCPic").equals("true")) {
+            AccountInfo info = privateMsg.getAccountInfo();
+            final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
+            String img = catUtil.toCat("image", true, "url=https://api.lantianyun.tk");
+            sender.sendPrivateMsg(info, img);
+            Log_settler.writelog("OnPrivate");
+            Log_settler.writelog("bot"+img);
+        }
+    }
 }
