@@ -57,16 +57,53 @@ public class MyPrivateListen {
     }
     @Listen(PrivateMsg.class)
     public void Privatemsglisten(PrivateMsg privateMsg, Sender sender) throws IOException, InterruptedException{
-        if(!(privateMsg.getText().equals("二次元")||privateMsg.getText().equals("MC好图"))) {
+        if(!privateMsg.getText().equals("二次元")) {
             AccountInfo listenedinfo = privateMsg.getAccountInfo();
-            String gottenmsg1=privateMsg.getText();
-            gottenmsg1=gottenmsg1.replace(" ","%20");
-            String result =getApi("https://api.ownthink.com/bot?userid="+privateMsg.getAccountInfo().getAccountCode()+"&spoken="+gottenmsg1);
-            result=result.replace("小思",privateMsg.getBotInfo().getBotName());
-            sender.sendPrivateMsg(listenedinfo, result);
-            Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
-            Log_settler.writelog("bot:" + result);
-            Log_settler.writelog(String.valueOf(listenedinfo));
+            String gottenmsg2 = privateMsg.getText();
+            gottenmsg2 = gottenmsg2.replace(" ", "%20");
+            String result = getApi("http://api.qingyunke.com/api.php?key=free&appid=0&msg=" + gottenmsg2, "content");
+            result = result.replace("菲菲", privateMsg.getBotInfo().getBotName());
+            if (result.contains("{")&&result.contains("}")) {
+                String prev = "", aft = "", num = "";
+                char[] MsgArray = result.toCharArray();
+                for (int i = 0; MsgArray[i] != '{'; i++) {
+                    prev += MsgArray[i];
+                }
+                for (int j = 1; j < MsgArray.length; j++) {
+                    if (MsgArray[j - 1] == ':') {
+                        for (int k = j; MsgArray[k + 1] != '}'; k++) {
+                            num += MsgArray[k];
+                        }
+                    }
+                    if (MsgArray[j - 1] == '}') {
+                        for (int l = j; l < MsgArray.length; l++) {
+                            aft += MsgArray[l];
+                        }
+                    }
+                }
+                MessageContentBuilder builder = messageBuilderFactory.getMessageContentBuilder();
+                MessageContent message = builder
+                        .text(prev)
+                        .face(Integer.parseInt(num))
+                        .text(aft)
+                        .at(listenedinfo)
+                        .build();
+                sender.sendPrivateMsg(listenedinfo, message);
+                Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
+                Log_settler.writelog("bot:" + message);
+                Log_settler.writelog(String.valueOf(listenedinfo));
+            }
+            else{
+                MessageContentBuilder builder=messageBuilderFactory.getMessageContentBuilder();
+                MessageContent content=builder
+                        .text(result)
+                        .at(listenedinfo)
+                        .build();
+                sender.sendPrivateMsg(listenedinfo,result);
+                Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
+                Log_settler.writelog("bot:" + result);
+                Log_settler.writelog(String.valueOf(listenedinfo));
+            }
             Thread.sleep(3000);
         }
     }
