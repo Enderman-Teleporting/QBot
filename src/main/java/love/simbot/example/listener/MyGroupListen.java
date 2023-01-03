@@ -65,54 +65,22 @@ public class MyGroupListen {
 
     @Listen(GroupMsg.class)
     @Filter(atBot=true,matchType=MatchType.CONTAINS)
-    public void Groupmsglisten(GroupMsg groupMsg, MsgGet msgGet, Sender sender) throws IOException, InterruptedException{
+    public void Groupmsglisten(GroupMsg groupMsg, Sender sender) throws IOException, InterruptedException{
         GroupInfo listenedgroupinfo=groupMsg.getGroupInfo();
         AccountInfo accountInfoabc=groupMsg.getAccountInfo();
         String gottenmsg1=groupMsg.getText();
         gottenmsg1=gottenmsg1.replace(" ","%20");
-        String result =getApi("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+gottenmsg1,"content");
-        result=result.replace("菲菲",groupMsg.getBotInfo().getBotName());
-        if (result.contains("{")&&result.contains("}")) {
-            String prev = "", aft = "", num = "";
-            char[] MsgArray = result.toCharArray();
-            for (int i = 0; MsgArray[i] != '{'; i++) {
-                prev += MsgArray[i];
-            }
-            for (int j = 1; j < MsgArray.length; j++) {
-                if (MsgArray[j - 1] == ':') {
-                    for (int k = j; MsgArray[k + 1] != '}'; k++) {
-                        num += MsgArray[k];
-                    }
-                }
-                if (MsgArray[j - 1] == '}') {
-                    for (int l = j; l < MsgArray.length; l++) {
-                        aft += MsgArray[l];
-                    }
-                }
-            }
-            MessageContentBuilder builder = messageBuilderFactory.getMessageContentBuilder();
-            MessageContent message = builder
-                    .text(prev)
-                    .face(Integer.parseInt(num))
-                    .text(aft)
-                    .at(accountInfoabc)
-                    .build();
-            sender.sendGroupMsg(listenedgroupinfo, message);
-            Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
-            Log_settler.writelog("bot:" + message);
-            Log_settler.writelog(String.valueOf(listenedgroupinfo));
-        }
-        else{
-            MessageContentBuilder builder = messageBuilderFactory.getMessageContentBuilder();
-            MessageContent content = builder
-                    .text(result)
-                    .at(accountInfoabc)
-                    .build();
-            sender.sendGroupMsg(listenedgroupinfo, content);
-            Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
-            Log_settler.writelog("bot:"+content);
-            Log_settler.writelog(String.valueOf(listenedgroupinfo));
-        }
+        String result =getApi("https://api.ownthink.com/bot?userid="+groupMsg.getGroupInfo().getGroupCode()+"+"+groupMsg.getAccountInfo().getAccountCode()+"&spoken="+gottenmsg1);
+        result=result.replace("小思",groupMsg.getBotInfo().getBotName());
+        MessageContentBuilder builder = messageBuilderFactory.getMessageContentBuilder();
+        MessageContent message = builder
+                .text(result)
+                .at(accountInfoabc)
+                .build();
+        sender.sendGroupMsg(listenedgroupinfo, message);
+        Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
+        Log_settler.writelog("bot:" + message);
+        Log_settler.writelog(String.valueOf(listenedgroupinfo));
         Thread.sleep(3000);
     }
     @Listen(GroupMsgRecall.class)

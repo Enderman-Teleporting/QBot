@@ -31,7 +31,6 @@
     <orderEntry type="library" name="Maven: com.squareup.okhttp3:okhttp:4.9.3" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okio:okio:2.8.0" level="project" />
     <orderEntry type="library" name="Maven: cn.hutool:hutool-crypto:5.7.19" level="project" />
-    <orderEntry type="library" name="Maven: cn.hutool:hutool-core:5.7.19" level="project" />
     <orderEntry type="library" name="Maven: net.mamoe:mirai-core-jvm:2.13.2" level="project" />
     <orderEntry type="library" name="Maven: net.mamoe:mirai-core-api-jvm:2.13.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: net.mamoe:mirai-console-compiler-annotations-jvm:2.13.2" level="project" />
@@ -57,8 +56,6 @@
     <orderEntry type="library" name="Maven: love.forte.common:ioc:1.0.7" level="project" />
     <orderEntry type="library" name="Maven: love.forte.common:configuration:1.0.7" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.5" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.12.5" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.12.5" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.27" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.12.5" level="project" />
     <orderEntry type="library" name="Maven: love.forte.common:log:1.0.7" level="project" />
@@ -70,5 +67,14 @@
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.5" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="Maven: net.sf.ezmorph:ezmorph:1.0.3" level="project" />
+    <orderEntry type="library" name="Maven: com.github.plexpt:chatgpt:1.1.2" level="project" />
+    <orderEntry type="library" name="Maven: net.dreamlu:mica-http:2.7.6" level="project" />
+    <orderEntry type="library" name="Maven: net.dreamlu:mica-core:2.7.6" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.13.4.2" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.4" level="project" />
+    <orderEntry type="library" name="Maven: com.squareup.okhttp3:logging-interceptor:4.10.0" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba.fastjson2:fastjson2:2.0.20" level="project" />
+    <orderEntry type="library" name="Maven: cn.hutool:hutool-core:5.8.10" level="project" />
+    <orderEntry type="library" name="Maven: cn.hutool:hutool-http:5.8.10" level="project" />
   </component>
 </module>
