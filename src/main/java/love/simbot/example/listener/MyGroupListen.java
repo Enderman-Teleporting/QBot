@@ -26,6 +26,7 @@ import java.util.List;
 
 import static love.simbot.example.tools.API.getApi;
 import static love.simbot.example.tools.properties_settler.read;
+import static love.simbot.example.tools.serverSearching.search;
 
 @Beans
 public class MyGroupListen {
@@ -166,6 +167,39 @@ public class MyGroupListen {
             sender.sendGroupMsg(groupInfo, img);
             Log_settler.writelog("OnGroup");
             Log_settler.writelog("bot:"+img);
+        }
+    }
+    @OnGroup
+    @Filter(value = "查服 ",matchType = MatchType.STARTS_WITH)
+    public void MCServerStat (GroupMsg groupMsg, Sender sender) throws IOException {
+        if(read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","MCPic").equals("true")) {
+            final var info = groupMsg.getGroupInfo();
+            var content = groupMsg.getText().replace("查服 ", "");
+            String[] contents;
+            if (content.contains(":")) {
+                try {
+                    contents = content.split(":");
+                    sender.sendGroupMsg(info, search(contents[0], Integer.parseInt(contents[1])));
+                    Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
+                    Log_settler.writelog("bot:" + search(contents[0], Integer.parseInt(contents[1])));
+                    Log_settler.writelog(String.valueOf(info));
+                } catch (Exception e) {
+                    sender.sendGroupMsg(info, "yee~,你是不是输错了");
+                    Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
+                    Log_settler.writelog("bot:" + "yee~,你是不是输错了");
+                    Log_settler.writelog(String.valueOf(info));
+                }
+            } else if (content.contains("：")) {
+                sender.sendGroupMsg(info, "冒号是英文冒号哦");
+                Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
+                Log_settler.writelog("bot:" + "冒号是英文冒号哦");
+                Log_settler.writelog(String.valueOf(info));
+            } else {
+                sender.sendGroupMsg(info, search(content));
+                Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
+                Log_settler.writelog("bot:" + search(content));
+                Log_settler.writelog(String.valueOf(info));
+            }
         }
     }
 

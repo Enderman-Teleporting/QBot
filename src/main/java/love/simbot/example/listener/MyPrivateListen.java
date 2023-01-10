@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static love.simbot.example.tools.API.getApi;
 import static love.simbot.example.tools.properties_settler.read;
+import static love.simbot.example.tools.serverSearching.search;
 
 @Beans
 public class MyPrivateListen {
@@ -57,7 +58,7 @@ public class MyPrivateListen {
     }
     @Listen(PrivateMsg.class)
     public void Privatemsglisten(PrivateMsg privateMsg, Sender sender) throws IOException, InterruptedException{
-        if(!privateMsg.getText().equals("二次元")) {
+        if(!(privateMsg.getText().equals("二次元")||privateMsg.getText().equals("MC好图")||privateMsg.getText().startsWith("查服 "))) {
             AccountInfo listenedinfo = privateMsg.getAccountInfo();
             String gottenmsg2 = privateMsg.getText();
             gottenmsg2 = gottenmsg2.replace(" ", "%20");
@@ -137,12 +138,44 @@ public class MyPrivateListen {
     @Filter(value = "MC好图",matchType= MatchType.EQUALS)
     public void MC(PrivateMsg privateMsg, Sender sender) throws IOException {
         if (read("./cache/properties/"+privateMsg.getBotInfo().getBotCode()+".properties","MCPic").equals("true")) {
-            AccountInfo info = privateMsg.getAccountInfo();
+            final AccountInfo info = privateMsg.getAccountInfo();
             final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
             String img = catUtil.toCat("image", true, "url=https://api.lantianyun.tk");
             sender.sendPrivateMsg(info, img);
             Log_settler.writelog("OnPrivate");
             Log_settler.writelog("bot"+img);
+        }
+    }
+    @OnPrivate
+    @Filter(value = "查服 ",matchType = MatchType.STARTS_WITH)
+    public void MCServerStat (PrivateMsg privateMsg,Sender sender) throws IOException {
+        if(read("./cache/properties/"+privateMsg.getBotInfo().getBotCode()+".properties","MCPic").equals("true")) {
+            final var info = privateMsg.getAccountInfo();
+            var content = privateMsg.getText().replace("查服 ", "");
+            String[] contents;
+            if (content.contains(":")) {
+                try {
+                    contents = content.split(":");
+                    sender.sendPrivateMsg(info, search(contents[0], Integer.parseInt(contents[1])));
+                    Log_settler.writelog("OnPrivate");
+                    Log_settler.writelog("bot" + search(contents[0], Integer.parseInt(contents[1])));
+                }
+                catch (Exception e) {
+                    sender.sendPrivateMsg(info, "yee~,你是不是输错了");
+                    Log_settler.writelog("OnPrivate");
+                    Log_settler.writelog("bot" + "yee~,你是不是输错了");
+                }
+            }
+            else if (content.contains("：")) {
+                sender.sendPrivateMsg(info, "冒号是英文冒号哦");
+                Log_settler.writelog("OnPrivate");
+                Log_settler.writelog("bot" + "冒号是英文冒号哦");
+            }
+            else {
+                sender.sendPrivateMsg(info, search(content));
+                Log_settler.writelog("OnPrivate");
+                Log_settler.writelog("bot" + search(content));
+            }
         }
     }
 }

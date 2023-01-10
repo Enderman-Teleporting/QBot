@@ -6,7 +6,7 @@
 
     <groupId>simbot.example</groupId>
     <artifactId>QBot</artifactId>
-    <version>v2.5</version>
+    <version>v2.7</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -56,9 +56,11 @@
             <artifactId>ezmorph</artifactId>
             <version>1.0.3</version>
         </dependency>
-
-
-
+        <dependency>
+            <groupId>io.github.fragland</groupId>
+            <artifactId>MineStat</artifactId>
+            <version>3.0.4</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -79,6 +81,14 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>10</source>
+                    <target>10</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

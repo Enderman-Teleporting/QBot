@@ -1,10 +1,8 @@
 package love.simbot.example;
 
-import love.forte.common.ioc.annotation.Depend;
 import love.forte.simbot.annotation.SimbotApplication;
 import love.forte.simbot.annotation.SimbotResource;
 import love.forte.simbot.bot.Bot;
-import love.forte.simbot.bot.BotManager;
 import love.forte.simbot.core.SimbotApp;
 import love.forte.simbot.core.SimbotContext;
 import love.simbot.example.tools.Log_settler;

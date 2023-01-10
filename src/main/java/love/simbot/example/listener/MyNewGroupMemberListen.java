@@ -209,7 +209,7 @@ public class MyNewGroupMemberListen {
             if (!f.exists()) {
                 f.createNewFile();
                 BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
-                bw.write("Pic=true\n300WordsBan=true\nallowGroupNameChanging=true\nallowChangeTitle=true\nallowGettingAdmin=false\nMCPic=true\n");
+                bw.write("Pic=true\n300WordsBan=true\nallowGroupNameChanging=true\nallowChangeTitle=true\nallowGettingAdmin=false\nMCPic=true\nMCServerStat=false\n");
                 bw.close();
             }
         } catch (IOException e) {
