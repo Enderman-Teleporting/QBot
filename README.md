@@ -11,7 +11,8 @@
  本项目使用的是`ForteScarlet`的`simpler-robot`项目及其demo项目作为框架:  
  https://github.com/ForteScarlet/simpler-robot-v2  
  https://github.com/ForteScarlet/simple-robot-demo-project  
- api接口为: 文本消息: 青云客(https://qingyunke.com) 图片:www.dmoe.cc 及 api.lantianyun.tk
+ api接口为: 文本消息: 青云客(https://qingyunke.com) 图片:www.dmoe.cc 及 api.lantianyun.tk  
+ 查服SDK:https://github.com/FragLand/minestat  
 
  若要使用该机器人,请克隆库并且在`.\src\resource`里面找到后缀名为`.bot`的文件并按提示输入账号密码  
  并且去IntelliJ Idea使用Springboot(详见simpler-robot文档,必须是springboot)打成jar包使用Java指令启动  
