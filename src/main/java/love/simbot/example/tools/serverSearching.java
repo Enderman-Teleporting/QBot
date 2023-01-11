@@ -17,8 +17,8 @@ public class serverSearching {
                                 "最大玩家数: " + mineStat.getMaximumPlayers() + "\n" +
                                 "模式: " + mineStat.getGameMode() + "\n" +
                                 "Motd: " + mineStat.getMotd() + "\n" +
-                                "开服时间: " + mineStat.getLatency() + "ms\n" +
-                                "连接方式: " + mineStat.getRequestType();
+                                "延迟: " + mineStat.getLatency() + "ms\n" +
+                                "协议: " + mineStat.getRequestType();
             } else {
                 result = "服务器不在线或者不存在,或许检查一下?";
             }
@@ -40,8 +40,8 @@ public class serverSearching {
                                 "最大玩家数: " + mineStat.getMaximumPlayers() + "\n" +
                                 "模式: " + mineStat.getGameMode() + "\n" +
                                 "Motd: " + mineStat.getMotd() + "\n" +
-                                "开服时间: " + mineStat.getLatency() + "ms\n" +
-                                "连接方式: " + mineStat.getRequestType();
+                                "延迟: " + mineStat.getLatency() + "ms\n" +
+                                "协议: " + mineStat.getRequestType();
             } else {
                 result = "服务器不在线或者不存在,或许检查一下?";
             }

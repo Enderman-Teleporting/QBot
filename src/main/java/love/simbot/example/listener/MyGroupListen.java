@@ -30,7 +30,7 @@ import static love.simbot.example.tools.serverSearching.search;
 
 @Beans
 public class MyGroupListen {
-    HashMap<String, String> renyunyiren= new HashMap<>();
+    HashMap<String, String> renyunyiren= new HashMap<String, String>();
     @Depend
     private MessageContentBuilderFactory messageBuilderFactory;
 

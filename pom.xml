@@ -6,7 +6,7 @@
 
     <groupId>simbot.example</groupId>
     <artifactId>QBot</artifactId>
-    <version>v2.7</version>
+    <version>v2.8</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -59,7 +59,7 @@
         <dependency>
             <groupId>io.github.fragland</groupId>
             <artifactId>MineStat</artifactId>
-            <version>3.0.4</version>
+            <version>3.0.5</version>
         </dependency>
     </dependencies>
 
