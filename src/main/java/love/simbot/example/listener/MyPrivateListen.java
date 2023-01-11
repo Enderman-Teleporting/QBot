@@ -149,7 +149,7 @@ public class MyPrivateListen {
     @OnPrivate
     @Filter(value = "查服 ",matchType = MatchType.STARTS_WITH)
     public void MCServerStat (PrivateMsg privateMsg,Sender sender) throws IOException {
-        if(read("./cache/properties/"+privateMsg.getBotInfo().getBotCode()+".properties","MCPic").equals("true")) {
+        if(read("./cache/properties/"+privateMsg.getBotInfo().getBotCode()+".properties","MCServerStat").equals("true")) {
             final var info = privateMsg.getAccountInfo();
             var content = privateMsg.getText().replace("查服 ", "");
             String[] contents;

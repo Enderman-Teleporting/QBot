@@ -172,7 +172,7 @@ public class MyGroupListen {
     @OnGroup
     @Filter(value = "查服 ",matchType = MatchType.STARTS_WITH)
     public void MCServerStat (GroupMsg groupMsg, Sender sender) throws IOException {
-        if(read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","MCPic").equals("true")) {
+        if(read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","MCServerStat").equals("true")) {
             final var info = groupMsg.getGroupInfo();
             var content = groupMsg.getText().replace("查服 ", "");
             String[] contents;
