@@ -14,14 +14,17 @@
  api接口为: 文本消息: 青云客(https://qingyunke.com) 图片:www.dmoe.cc 及 api.lantianyun.tk  
  查服SDK:https://github.com/FragLand/minestat  
 
- 若要使用该机器人,请克隆库并且在`.\src\resource`里面找到后缀名为`.bot`的文件并按提示输入账号密码  
+ ### 机器人配制方法(IDE+打包)
+ 若要使用该机器人,请克隆库并且在`./src/main/resource`里面找到后缀名为`.bot`的文件并按提示输入账号密码  
  并且去IntelliJ Idea使用Springboot(详见simpler-robot文档,必须是springboot)打成jar包使用Java指令启动  
  示例启动指令:`java -Dfile.encoding=utf-8 -jar [路径]`  
  PS:必须要`-Dfile.encoding`,不然会乱码  
- cmd还需声明`chcp 65001`避免控制台乱码
+ cmd还需声明`chcp 65001`避免控制台乱码  
  同时你也可以选择示例jar包(见release)  
- 
-如果遇到你的账号需要滑动登录,最好的选择是https://github.com/mzdluo123/TxCaptchaHelper ~~或 https://github.com/simple-robot/simbot-mirai-login-helper~~ (仅对Simbot v3有效)  
+ ### 示例jar包的配制方法:
+ 使用7zip或Vim进入jar包的`/BOOT-INF/classes/simbot-bots/yourBot1.bot`文件按提示配制  
+
+ 如果遇到你的账号需要滑动登录,最好的选择是https://github.com/mzdluo123/TxCaptchaHelper ~~或 https://github.com/simple-robot/simbot-mirai-login-helper~~ (仅对Simbot v3有效)  
 
    
  # 包含功能 
