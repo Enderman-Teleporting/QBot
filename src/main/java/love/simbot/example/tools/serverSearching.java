@@ -18,7 +18,8 @@ public class serverSearching {
                                 "模式: " + mineStat.getGameMode() + "\n" +
                                 "Motd: " + mineStat.getMotd() + "\n" +
                                 "延迟: " + mineStat.getLatency() + "ms\n" +
-                                "协议: " + mineStat.getRequestType();
+                                "协议: " + mineStat.getRequestType()+"\n"+
+                                "图标:\n"+mineStat.getFavicon();
             } else {
                 result = "服务器不在线或者不存在,或许检查一下?";
             }
@@ -41,7 +42,8 @@ public class serverSearching {
                                 "模式: " + mineStat.getGameMode() + "\n" +
                                 "Motd: " + mineStat.getMotd() + "\n" +
                                 "延迟: " + mineStat.getLatency() + "ms\n" +
-                                "协议: " + mineStat.getRequestType();
+                                "协议: " + mineStat.getRequestType()+"\n"+
+                                "图标:\n"+mineStat.getFavicon();
             } else {
                 result = "服务器不在线或者不存在,或许检查一下?";
             }
