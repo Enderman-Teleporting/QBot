@@ -156,9 +156,9 @@ public class MyPrivateListen {
             if (content.contains(":")) {
                 try {
                     contents = content.split(":");
-                    sender.sendPrivateMsg(info, search(contents[0], Integer.parseInt(contents[1])));
+                    //sender.sendPrivateMsg(info, search(contents[0], Integer.parseInt(contents[1])));
                     Log_settler.writelog("OnPrivate");
-                    Log_settler.writelog("bot" + search(contents[0], Integer.parseInt(contents[1])));
+                    //Log_settler.writelog("bot" + search(contents[0], Integer.parseInt(contents[1])));
                 }
                 catch (Exception e) {
                     sender.sendPrivateMsg(info, "yee~,你是不是输错了");
@@ -172,9 +172,9 @@ public class MyPrivateListen {
                 Log_settler.writelog("bot" + "冒号是英文冒号哦");
             }
             else {
-                sender.sendPrivateMsg(info, search(content));
+                //sender.sendPrivateMsg(info, search(content));
                 Log_settler.writelog("OnPrivate");
-                Log_settler.writelog("bot" + search(content));
+                //Log_settler.writelog("bot" + search(content));
             }
         }
     }

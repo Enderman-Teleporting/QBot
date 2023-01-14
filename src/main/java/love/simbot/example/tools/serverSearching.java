@@ -2,10 +2,14 @@ package love.simbot.example.tools;
 
 import me.dilley.MineStat;
 
+import java.io.IOException;
+
+import static love.simbot.example.tools.ImageUtil.toImage;
+
 public class serverSearching {
     static String result;
-    public static String search(String ip,int port){
-        try {
+    public static String search(String ip, int port, String uuid) throws IOException {
+        //try {
             MineStat mineStat = new MineStat(ip, port);
             if (mineStat.isServerUp()) {
                 result =
@@ -18,18 +22,18 @@ public class serverSearching {
                                 "模式: " + mineStat.getGameMode() + "\n" +
                                 "Motd: " + mineStat.getMotd() + "\n" +
                                 "延迟: " + mineStat.getLatency() + "ms\n" +
-                                "协议: " + mineStat.getRequestType()+"\n"+
-                                "图标:\n"+mineStat.getFavicon();
+                                "协议: " + mineStat.getRequestType()+"\n";
+                toImage(mineStat.getFaviconB64(), uuid);
             } else {
                 result = "服务器不在线或者不存在,或许检查一下?";
             }
-        }
-        catch(Exception e){
-            result = "出了点小错...有没有一种可能,服务器不在线或者不存在?";
-        }
+        //}
+        //catch(Exception e){
+            //result = "出了点小错...有没有一种可能,服务器不在线或者不存在?";
+        //}
         return result;
     }
-    public static String search(String ip){
+    public static String search(String ip,String uuid) throws IOException {
         try {
             MineStat mineStat = new MineStat(ip);
             if (mineStat.isServerUp()) {
@@ -42,8 +46,8 @@ public class serverSearching {
                                 "模式: " + mineStat.getGameMode() + "\n" +
                                 "Motd: " + mineStat.getMotd() + "\n" +
                                 "延迟: " + mineStat.getLatency() + "ms\n" +
-                                "协议: " + mineStat.getRequestType()+"\n"+
-                                "图标:\n"+mineStat.getFavicon();
+                                "协议: " + mineStat.getRequestType()+"\n";
+                toImage(mineStat.getFaviconB64(), uuid);
             } else {
                 result = "服务器不在线或者不存在,或许检查一下?";
             }
