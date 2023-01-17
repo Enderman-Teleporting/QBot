@@ -11,7 +11,7 @@
  本项目使用的是`ForteScarlet`的`simpler-robot`项目及其demo项目作为框架:  
  https://github.com/ForteScarlet/simpler-robot-v2  
  https://github.com/ForteScarlet/simple-robot-demo-project  
- api接口为: 文本消息: 青云客(https://qingyunke.com) 图片:www.dmoe.cc 及 api.lantianyun.tk  
+ api接口为: 文本消息: 青云客(https://qingyunke.com) 图片:www.dmoe.cc (最近该接口寄了) 及 api.lantianyun.tk  
  查服SDK:https://github.com/FragLand/minestat  
 
  ### 机器人配制方法(IDE+打包)
