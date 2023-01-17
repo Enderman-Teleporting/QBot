@@ -20,11 +20,9 @@ import love.forte.simbot.api.sender.Sender;
 import love.forte.simbot.filter.MatchType;
 import love.simbot.example.tools.Log_settler;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import static love.simbot.example.tools.API.getApi;
 import static love.simbot.example.tools.properties_settler.read;
@@ -173,35 +171,18 @@ public class MyGroupListen {
     }
     @OnGroup
     @Filter(value = "查服 ",matchType = MatchType.STARTS_WITH)
-    public void MCServerStat (GroupMsg groupMsg, Sender sender) throws IOException, InterruptedException {
+    public void MCServerStat (GroupMsg groupMsg, Sender sender) throws IOException {
         if(read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","MCServerStat").equals("true")) {
-            String uuid = UUID.randomUUID().toString();
             final var info = groupMsg.getGroupInfo();
             var content = groupMsg.getText().replace("查服 ", "");
             String[] contents;
             if (content.contains(":")) {
                 try {
                     contents = content.split(":");
-                    String serverInfo=search(contents[0], Integer.parseInt(contents[1]),uuid);
-                    if (!(serverInfo.equals("服务器不在线或者不存在,或许检查一下?")||serverInfo.equals("出了点小错...有没有一种可能,服务器不在线或者不存在?"))) {
-                        MessageContentBuilder builder = messageBuilderFactory.getMessageContentBuilder();
-                        MessageContent messageContent = builder
-                                .text(serverInfo)
-                                .image("./cache/temp/images/" + uuid + ".jpg")
-                                .build();
-                        sender.sendGroupMsg(info, messageContent);
-                        Thread.sleep(5000);
-                        new File("./cache/temp/images/" + uuid + ".jpg").delete();
-                        Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
-                        Log_settler.writelog("bot:" + messageContent);
-                        Log_settler.writelog(String.valueOf(info));
-                    }
-                    else{
-                        sender.sendGroupMsg(info, serverInfo);
-                        Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
-                        Log_settler.writelog("bot:" + serverInfo);
-                        Log_settler.writelog(String.valueOf(info));
-                    }
+                    sender.sendGroupMsg(info, search(contents[0], Integer.parseInt(contents[1])));
+                    Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
+                    Log_settler.writelog("bot:" + search(contents[0], Integer.parseInt(contents[1])));
+                    Log_settler.writelog(String.valueOf(info));
                 } catch (Exception e) {
                     sender.sendGroupMsg(info, "yee~,你是不是输错了");
                     Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
@@ -214,26 +195,10 @@ public class MyGroupListen {
                 Log_settler.writelog("bot:" + "冒号是英文冒号哦");
                 Log_settler.writelog(String.valueOf(info));
             } else {
-                String serverInfo=search(content,uuid);
-                if (!(serverInfo.equals("服务器不在线或者不存在,或许检查一下?")||serverInfo.equals("出了点小错...有没有一种可能,服务器不在线或者不存在?"))) {
-                    MessageContentBuilder builder = messageBuilderFactory.getMessageContentBuilder();
-                    MessageContent messageContent = builder
-                            .text(serverInfo)
-                            .image("./cache/temp/images/" + uuid + ".jpg")
-                            .build();
-                    sender.sendGroupMsg(info, messageContent);
-                    Thread.sleep(5000);
-                    new File("./cache/temp/images/" + uuid + ".jpg").delete();
-                    Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
-                    Log_settler.writelog("bot:" + messageContent);
-                    Log_settler.writelog(String.valueOf(info));
-                }
-                else{
-                    sender.sendGroupMsg(info, serverInfo);
-                    Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
-                    Log_settler.writelog("bot:" + serverInfo);
-                    Log_settler.writelog(String.valueOf(info));
-                }
+                sender.sendGroupMsg(info, search(content));
+                Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
+                Log_settler.writelog("bot:" + search(content));
+                Log_settler.writelog(String.valueOf(info));
             }
         }
     }
