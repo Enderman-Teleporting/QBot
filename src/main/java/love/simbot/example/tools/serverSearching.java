@@ -18,8 +18,7 @@ public class serverSearching {
                                 "模式: " + mineStat.getGameMode() + "\n" +
                                 "Motd: " + mineStat.getMotd() + "\n" +
                                 "延迟: " + mineStat.getLatency() + "ms\n" +
-                                "协议: " + mineStat.getRequestType()+"\n"+
-                                "图标:\n"+mineStat.getFavicon();
+                                "协议: " + mineStat.getRequestType()+"\n";
             } else {
                 result = "服务器不在线或者不存在,或许检查一下?";
             }
@@ -28,6 +27,9 @@ public class serverSearching {
             result = "出了点小错...有没有一种可能,服务器不在线或者不存在?";
         }
         return result;
+    }
+    public static byte[] searchImg(String ip,int port){
+        return ImageUtil.toImage(new MineStat(ip,port).getFaviconB64());
     }
     public static String search(String ip){
         try {
@@ -40,10 +42,9 @@ public class serverSearching {
                                 "在线人数: " + mineStat.getCurrentPlayers() + "\n" +
                                 "最大玩家数: " + mineStat.getMaximumPlayers() + "\n" +
                                 "模式: " + mineStat.getGameMode() + "\n" +
-                                "Motd: " + mineStat.getMotd() + "\n" +
+                                "Motd: " + mineStat.getStrippedMotd() + "\n" +
                                 "延迟: " + mineStat.getLatency() + "ms\n" +
-                                "协议: " + mineStat.getRequestType()+"\n"+
-                                "图标:\n"+mineStat.getFavicon();
+                                "协议: " + mineStat.getRequestType()+"\n";
             } else {
                 result = "服务器不在线或者不存在,或许检查一下?";
             }
@@ -52,5 +53,8 @@ public class serverSearching {
             result = "出了点小错...有没有一种可能,服务器不在线或者不存在?";
         }
         return result;
+    }
+    public static byte[] searchImg(String ip){
+        return ImageUtil.toImage(new MineStat(ip).getFaviconB64());
     }
 }

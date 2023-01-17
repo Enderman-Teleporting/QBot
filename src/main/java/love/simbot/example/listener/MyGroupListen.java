@@ -27,6 +27,7 @@ import java.util.List;
 import static love.simbot.example.tools.API.getApi;
 import static love.simbot.example.tools.properties_settler.read;
 import static love.simbot.example.tools.serverSearching.search;
+import static love.simbot.example.tools.serverSearching.searchImg;
 
 @Beans
 public class MyGroupListen {
@@ -179,10 +180,24 @@ public class MyGroupListen {
             if (content.contains(":")) {
                 try {
                     contents = content.split(":");
-                    sender.sendGroupMsg(info, search(contents[0], Integer.parseInt(contents[1])));
-                    Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
-                    Log_settler.writelog("bot:" + search(contents[0], Integer.parseInt(contents[1])));
-                    Log_settler.writelog(String.valueOf(info));
+                    var a=search(contents[0],Integer.parseInt(contents[1]));
+                    if(searchImg(contents[0],Integer.parseInt(contents[1]))==null) {
+                        sender.sendGroupMsg(info, a);
+                        Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
+                        Log_settler.writelog("bot:" + a);
+                        Log_settler.writelog(String.valueOf(info));
+                    }
+                    else{
+                        MessageContentBuilder builder = messageBuilderFactory.getMessageContentBuilder();
+                        MessageContent msgContent = builder
+                                .text(a)
+                                .image(searchImg(contents[0], Integer.parseInt(contents[1])))
+                                .build();
+                        sender.sendGroupMsg(info, msgContent);
+                        Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
+                        Log_settler.writelog("bot:" + msgContent);
+                        Log_settler.writelog(String.valueOf(info));
+                    }
                 } catch (Exception e) {
                     sender.sendGroupMsg(info, "yee~,你是不是输错了");
                     Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
@@ -195,10 +210,24 @@ public class MyGroupListen {
                 Log_settler.writelog("bot:" + "冒号是英文冒号哦");
                 Log_settler.writelog(String.valueOf(info));
             } else {
-                sender.sendGroupMsg(info, search(content));
-                Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
-                Log_settler.writelog("bot:" + search(content));
-                Log_settler.writelog(String.valueOf(info));
+                var a=search(content);
+                if (searchImg(content)==null) {
+                    sender.sendGroupMsg(info, a);
+                    Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
+                    Log_settler.writelog("bot:" + a);
+                    Log_settler.writelog(String.valueOf(info));
+                }
+                else{
+                    MessageContentBuilder builder= messageBuilderFactory.getMessageContentBuilder();
+                    MessageContent msgContent=builder
+                            .text(a)
+                            .image(searchImg(content))
+                            .build();
+                    sender.sendGroupMsg(info, msgContent);
+                    Log_settler.writelog("OnGroup" + String.valueOf(groupMsg.getBotInfo()));
+                    Log_settler.writelog("bot:" + msgContent);
+                    Log_settler.writelog(String.valueOf(info));
+                }
             }
         }
     }

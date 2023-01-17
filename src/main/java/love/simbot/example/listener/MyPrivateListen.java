@@ -27,6 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static love.simbot.example.tools.API.getApi;
 import static love.simbot.example.tools.properties_settler.read;
 import static love.simbot.example.tools.serverSearching.search;
+import static love.simbot.example.tools.serverSearching.searchImg;
 
 @Beans
 public class MyPrivateListen {
@@ -87,7 +88,6 @@ public class MyPrivateListen {
                         .text(prev)
                         .face(Integer.parseInt(num))
                         .text(aft)
-                        .at(listenedinfo)
                         .build();
                 sender.sendPrivateMsg(listenedinfo, message);
                 Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
@@ -98,7 +98,6 @@ public class MyPrivateListen {
                 MessageContentBuilder builder=messageBuilderFactory.getMessageContentBuilder();
                 MessageContent content=builder
                         .text(result)
-                        .at(listenedinfo)
                         .build();
                 sender.sendPrivateMsg(listenedinfo,result);
                 Log_settler.writelog("OnPrivate" + String.valueOf(privateMsg.getBotInfo()));
@@ -156,9 +155,22 @@ public class MyPrivateListen {
             if (content.contains(":")) {
                 try {
                     contents = content.split(":");
-                    sender.sendPrivateMsg(info, search(contents[0], Integer.parseInt(contents[1])));
-                    Log_settler.writelog("OnPrivate");
-                    Log_settler.writelog("bot" + search(contents[0], Integer.parseInt(contents[1])));
+                    var a=search(contents[0], Integer.parseInt(contents[1]));
+                    if(searchImg(contents[0],Integer.parseInt(contents[1]))==null) {
+                        sender.sendPrivateMsg(info, a);
+                        Log_settler.writelog("OnPrivate");
+                        Log_settler.writelog("bot" +a);
+                    }
+                    else{
+                        MessageContentBuilder builder =messageBuilderFactory.getMessageContentBuilder();
+                        MessageContent MsgContent = builder
+                                .text(a)
+                                .image(searchImg(contents[0],Integer.parseInt(contents[1])))
+                                .build();
+                        sender.sendPrivateMsg(info,MsgContent);
+                        Log_settler.writelog("OnPrivate");
+                        Log_settler.writelog("bot" + MsgContent);
+                    }
                 }
                 catch (Exception e) {
                     sender.sendPrivateMsg(info, "yee~,你是不是输错了");
@@ -172,9 +184,22 @@ public class MyPrivateListen {
                 Log_settler.writelog("bot" + "冒号是英文冒号哦");
             }
             else {
-                sender.sendPrivateMsg(info, search(content));
-                Log_settler.writelog("OnPrivate");
-                Log_settler.writelog("bot" + search(content));
+                var a=search(content);
+                if (searchImg(content)==null) {
+                    sender.sendPrivateMsg(info, a);
+                    Log_settler.writelog("OnPrivate");
+                    Log_settler.writelog("bot" + a);
+                }
+                else{
+                    MessageContentBuilder builder= messageBuilderFactory.getMessageContentBuilder();
+                    MessageContent MsgContent = builder
+                            .text(a)
+                            .image(searchImg(content))
+                            .build();
+                    sender.sendPrivateMsg(info,MsgContent);
+                    Log_settler.writelog("OnPrivate");
+                    Log_settler.writelog("bot" + MsgContent);
+                }
             }
         }
     }
