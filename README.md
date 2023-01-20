@@ -8,8 +8,8 @@
    
  ### 请先下载`Java`并确保加入了环境变量使指令可以使用  
   
- 本项目使用的是`ForteScarlet`的`simpler-robot`项目及其demo项目作为框架:  
- https://github.com/ForteScarlet/simpler-robot-v2  
+ 本项目使用的是**@ForteScarlet**的`simpler-robot`项目及其demo项目作为框架:  
+ https://github.com/ForteScarlet/simple-robot-v2  
  https://github.com/ForteScarlet/simple-robot-demo-project  
  api接口为: 文本消息: 青云客(https://qingyunke.com) 图片:www.dmoe.cc (最近该接口寄了) 及 api.lantianyun.tk  
  查服SDK:https://github.com/FragLand/minestat  
@@ -51,22 +51,20 @@
 ------以上可在".\cache\properties\机器人的QQ号.properties"修改,文件中各条与此处列的各条对应------
  ### 另有:
 指令功能,请在控制台输入help
-  
- 功能不多,可能作者上大学以后会有一次大更新  
    
  ## 预计会实现的功能  
- - 日程  
- - 娱乐  
- - 问答  
- - 人云亦云功能(+1)代码层翻新   
- ...  
+ [] 日程  
+ [] 娱乐  
+ [] 问答  
+ [] 人云亦云功能(+1)代码层翻新   
+ ...（这些看接下来v3的啦）  
 
 ## 注意
 由于框架越来越老旧的原因,一旦你QQ机器人登陆成功,请妥善保管你的cache文件夹以及device.json,里面包含着重要的登录及设备信息,否则你再次登录将难以登录!    
   
   
- 有关问题请联系作者小号2730482276(会忙,可能不会很快(甚至不会)回答)或者在该仓库issues中提问  
- 或者加群:1170443108  
+ 在该仓库issues中提问  
+ 或者加群讨论:1170443108  
 
 ## 支持作者
   害,我怎么会有赞助渠道,请给这个项目点亮你的星星吧!
