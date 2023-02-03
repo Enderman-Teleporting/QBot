@@ -1,6 +1,0 @@
-simbot:
-  core:
-    bot-resource-type: RESOURCE_FIRST
-  component:
-    mirai:
-      protocol: IPAD
