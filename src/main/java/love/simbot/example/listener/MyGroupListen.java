@@ -152,7 +152,7 @@ public class MyGroupListen {
         if (read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","Pic").equals("true")) {
             GroupInfo groupInfo = groupMsg.getGroupInfo();
             final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
-            String img = catUtil.toCat("image", true, "url=https://www.dmoe.cc/random.php");
+            String img = catUtil.toCat("image", true, "url=https://px2.rainchan.win/random/");
             sender.sendGroupMsg(groupInfo, img);
             Log_settler.writelog("OnGroup");
             Log_settler.writelog("bot:"+img);
