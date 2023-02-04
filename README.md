@@ -11,7 +11,7 @@
  本项目使用的是**@ForteScarlet**的`simpler-robot`项目及其demo项目作为框架:  
  https://github.com/ForteScarlet/simple-robot-v2  
  https://github.com/ForteScarlet/simple-robot-demo-project  
- api接口为: 文本消息: 青云客(https://qingyunke.com) 图片:https://px2.rainchan.win/ 及 api.lantianyun.tk  
+ api接口为: 文本消息: 青云客(https://qingyunke.com) 图片:https://px2.rainchan.win/ 及 api.lantianyun.tk (后者已寄)  
  查服SDK:https://github.com/FragLand/minestat  
 
  ### 机器人配制方法(IDE+打包)
@@ -46,7 +46,7 @@
  - 修改群名称(需要机器人管理权限,获取功能格式:群名称 (注意这个空格)+你要的群名称)  
  - 自助群头衔(需机器人群主权限,获取功能格式:群头衔 (注意这个空格)+你要的头衔)  
  - 自助管理(需机器人群主权限,获取功能格式: 我要管理)(默认为false) 
- - MC图片API(获取功能消息格式:MC好图)  
+ - MC图片API(获取功能消息格式:MC好图)(寄)  
  - MC服务器状态查询(获取功能消息格式:查服 IP:端口)(默认为false)
 ------以上可在".\cache\properties\机器人的QQ号.properties"修改,文件中各条与此处列的各条对应------
  ### 另有:
