@@ -7,10 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="simbot-mirai-demo" />
+        <module name="QBot" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="QBot" target="1.8" />
+      <module name="QBot" target="10" />
       <module name="simbot-mirai-demo" target="17" />
     </bytecodeTargetLevel>
   </component>
