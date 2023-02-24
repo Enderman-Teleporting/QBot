@@ -1,4 +1,4 @@
-package com.bot.qbot.tools;
+package com.tools;
 import java.io.*;
 import java.util.Properties;
 

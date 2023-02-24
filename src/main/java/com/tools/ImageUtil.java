@@ -1,4 +1,4 @@
-package com.bot.qbot.tools;
+package com.tools;
 
 import cn.hutool.core.codec.Base64Decoder;
 

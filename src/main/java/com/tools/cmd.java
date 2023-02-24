@@ -1,4 +1,4 @@
-package com.bot.qbot.tools;
+package com.tools;
 
 /*package com.bot.qbot.tools;
 

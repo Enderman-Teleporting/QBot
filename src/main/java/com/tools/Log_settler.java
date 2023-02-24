@@ -1,4 +1,4 @@
-package com.bot.qbot.tools;
+package com.tools;
 
 import java.io.File;
 import java.io.IOException;
