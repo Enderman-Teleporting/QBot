@@ -4,18 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3023603c-327d-468f-8340-b73829abe03a" name="变更" comment="变更">
+    <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/simbot-bots/bot.bot" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/simbot-bots/bot.bot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/cn/hutool/hutool-core/5.7.19/hutool-core-5.7.19-sources.jar!/cn/hutool/core/codec/Base64Decoder.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -27,53 +36,210 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectId" id="2JO9FzkYPxGwR9tNitQgNbO9LDm" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2CsHU149IU8iEzERlrNi6fjCLkO" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/wyh/Documents/GitHub/QBot-v2-ChatGPT&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;0bf7d688655de0856996a85f67989e14&quot;
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;库&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\wyh\Documents\GitHub\QBot-v1-and-v2\cache" />
+      <recent name="C:\Users\wyh\Documents\GitHub\QBot-v1-and-v2" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\wyh\Documents\GitHub\QBot-v1-and-v2" />
+      <recent name="C:\Users\wyh\Documents\GitHub\QBot\src\main\resources\simbot-bots" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <option name="ACTIVE_PROFILES" />
-      <module name="Simbot-V3-Maven-Java-Demo" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="simbot.example.Application" />
+    <configuration name="SimbotExampleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="love.simbot.example.SimbotExampleApplication" />
+      <module name="simbot-mirai-demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="love.simbot.example.tools.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="应用程序.SimbotExampleApplication" />
+      </list>
+    </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="默认任务">
-      <changelist id="3023603c-327d-468f-8340-b73829abe03a" name="变更" comment="" />
-      <created>1671938169311</created>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="" />
+      <created>1659584388100</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1671938169311</updated>
-      <workItem from="1671938173998" duration="908000" />
-      <workItem from="1674466699183" duration="858000" />
-      <workItem from="1674467975824" duration="27000" />
+      <updated>1659584388100</updated>
+      <workItem from="1660282491402" duration="102000" />
+      <workItem from="1660285247039" duration="142000" />
+      <workItem from="1660285757096" duration="495000" />
+      <workItem from="1660286258239" duration="505000" />
+      <workItem from="1660350598694" duration="745000" />
+      <workItem from="1660395390183" duration="4000" />
+      <workItem from="1660395755549" duration="40000" />
+      <workItem from="1660441687234" duration="665000" />
+      <workItem from="1660442387427" duration="1438000" />
+      <workItem from="1660448960560" duration="4558000" />
+      <workItem from="1660453782360" duration="187000" />
+      <workItem from="1660454238049" duration="514000" />
+      <workItem from="1660454856091" duration="11000" />
+      <workItem from="1660478578479" duration="20000" />
+      <workItem from="1660521736268" duration="111000" />
+      <workItem from="1660524138305" duration="4324000" />
+      <workItem from="1660528593324" duration="1588000" />
+      <workItem from="1660530221928" duration="25000" />
+      <workItem from="1660530461818" duration="3768000" />
+      <workItem from="1660550212495" duration="1583000" />
+      <workItem from="1660701774979" duration="21000" />
+      <workItem from="1660702134412" duration="527000" />
+      <workItem from="1660702776073" duration="34000" />
+      <workItem from="1660719496811" duration="3000" />
+      <workItem from="1660787596639" duration="337000" />
+      <workItem from="1660788853143" duration="415000" />
+      <workItem from="1660790442180" duration="84000" />
+      <workItem from="1660794008007" duration="68000" />
+      <workItem from="1661734488873" duration="566000" />
+      <workItem from="1661735086129" duration="92000" />
+      <workItem from="1661756171080" duration="29000" />
+      <workItem from="1662251579735" duration="7000" />
+      <workItem from="1662251641337" duration="9000" />
+      <workItem from="1662255028063" duration="460000" />
+      <workItem from="1662721262376" duration="2261000" />
+      <workItem from="1662724482325" duration="3920000" />
+      <workItem from="1662730069635" duration="836000" />
+      <workItem from="1662731478750" duration="649000" />
+      <workItem from="1662777067028" duration="56000" />
+      <workItem from="1662887999379" duration="776000" />
+      <workItem from="1662888992954" duration="878000" />
+      <workItem from="1662890667383" duration="367000" />
+      <workItem from="1664700265748" duration="65000" />
+      <workItem from="1664756660921" duration="13476000" />
+      <workItem from="1664799470655" duration="963000" />
+      <workItem from="1664865005440" duration="1811000" />
+      <workItem from="1664879087265" duration="189000" />
+      <workItem from="1664879407225" duration="543000" />
+      <workItem from="1664880022551" duration="31000" />
+      <workItem from="1664880277037" duration="74000" />
+      <workItem from="1664882158236" duration="22000" />
+      <workItem from="1664883342903" duration="73000" />
+      <workItem from="1665886568161" duration="1125000" />
+      <workItem from="1665887848086" duration="90000" />
+      <workItem from="1667709669072" duration="844000" />
+      <workItem from="1667815404439" duration="617000" />
+      <workItem from="1667817230786" duration="802000" />
+      <workItem from="1667971220400" duration="855000" />
+      <workItem from="1667972135422" duration="1124000" />
+      <workItem from="1668911825743" duration="519000" />
+      <workItem from="1669545677597" duration="4697000" />
+      <workItem from="1671706527122" duration="303000" />
+      <workItem from="1671756431427" duration="11264000" />
+      <workItem from="1671784319320" duration="58000" />
+      <workItem from="1671784420555" duration="74000" />
+      <workItem from="1671784668432" duration="327000" />
+      <workItem from="1671786114562" duration="27000" />
+      <workItem from="1671786343245" duration="61000" />
+      <workItem from="1671789084638" duration="16000" />
+      <workItem from="1671795628054" duration="29000" />
+      <workItem from="1671799632994" duration="8000" />
+      <workItem from="1671849768851" duration="385000" />
+      <workItem from="1671850535325" duration="355000" />
+      <workItem from="1671857100997" duration="28000" />
+      <workItem from="1671860147062" duration="280000" />
+      <workItem from="1671861368710" duration="2279000" />
+      <workItem from="1671936307451" duration="103000" />
+      <workItem from="1672059664010" duration="42000" />
+      <workItem from="1672096707276" duration="14000" />
+      <workItem from="1672231036060" duration="1501000" />
+      <workItem from="1672235794635" duration="534000" />
+      <workItem from="1672237730321" duration="372000" />
+      <workItem from="1672270012155" duration="17617000" />
+      <workItem from="1672315601460" duration="15000" />
+      <workItem from="1672324296662" duration="152000" />
+      <workItem from="1672324674666" duration="108000" />
+      <workItem from="1672325747652" duration="5000" />
+      <workItem from="1672326275647" duration="18000" />
+      <workItem from="1672326376378" duration="252000" />
+      <workItem from="1672359780548" duration="849000" />
+      <workItem from="1672360719823" duration="706000" />
+      <workItem from="1672387430603" duration="774000" />
+      <workItem from="1672398569033" duration="57000" />
+      <workItem from="1672398883415" duration="297000" />
+      <workItem from="1672400297954" duration="232000" />
+      <workItem from="1672401168693" duration="1349000" />
+      <workItem from="1672402826408" duration="87000" />
+      <workItem from="1672583494252" duration="14000" />
+      <workItem from="1672639978223" duration="2409000" />
+      <workItem from="1672807835686" duration="153000" />
+      <workItem from="1672814116498" duration="23000" />
+      <workItem from="1672814160979" duration="10000" />
+      <workItem from="1672920723288" duration="636000" />
+      <workItem from="1672923042730" duration="213000" />
+      <workItem from="1672924342168" duration="172000" />
+      <workItem from="1672999639664" duration="44000" />
+      <workItem from="1673268960104" duration="1091000" />
+      <workItem from="1673349083672" duration="3259000" />
+      <workItem from="1673354074347" duration="63000" />
+      <workItem from="1673354822853" duration="79000" />
+      <workItem from="1673355011545" duration="36000" />
+      <workItem from="1673355143190" duration="219000" />
+      <workItem from="1673355657671" duration="826000" />
+      <workItem from="1673356544170" duration="303000" />
+      <workItem from="1673356990744" duration="570000" />
+      <workItem from="1673432467885" duration="34000" />
+      <workItem from="1673433051827" duration="909000" />
+      <workItem from="1673434611453" duration="274000" />
+      <workItem from="1673438223669" duration="62000" />
+      <workItem from="1673444377455" duration="89000" />
+      <workItem from="1673518084389" duration="189000" />
+      <workItem from="1673527373349" duration="41000" />
+      <workItem from="1673528117516" duration="314000" />
+      <workItem from="1673529193833" duration="23000" />
+      <workItem from="1673529510238" duration="343000" />
+      <workItem from="1673530595819" duration="239000" />
+      <workItem from="1673531750626" duration="743000" />
+      <workItem from="1673615004921" duration="2521000" />
+      <workItem from="1673943080068" duration="167000" />
+      <workItem from="1673944060382" duration="138000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.bot" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -85,5 +251,65 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.io.FileNotFoundException" package="java.io" />
+          <option name="timeStamp" value="10" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/SimbotExampleApplication.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/love/simbot/example/tools/cmd.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/QBot$SimbotExampleApplication.ic" NAME="SimbotExampleApplication Coverage Results" MODIFIED="1660351144386" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>love.simbot.example.*</FILTER>
+    </SUITE>
   </component>
 </project>

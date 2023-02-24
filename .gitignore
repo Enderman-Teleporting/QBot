@@ -22,4 +22,13 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
-target
+src/main/resources/simbot-bots/yourBot1.bot
+*.bot
+src/main/resources/simbot-bots/yourBot2.bot
+target/classes/simbot-bots/yourBot1.bot
+target/classes/simbot-bots/yourBot2.bot
+src/main/resources/simbot-bots/yourBot1.bot
+*.bot
+/target/
+*.bot
+*.secrets

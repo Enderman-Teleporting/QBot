@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: love.forte:catcode:1.0.0-BETA.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/love/forte/catcode/1.0.0-BETA.1/catcode-1.0.0-BETA.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/love/forte/catcode/1.0.0-BETA.1/catcode-1.0.0-BETA.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/love/forte/catcode/1.0.0-BETA.1/catcode-1.0.0-BETA.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
