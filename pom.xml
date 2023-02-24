@@ -4,24 +4,36 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>simbot.example</groupId>
+    <groupId>com.bot.qbot</groupId>
     <artifactId>QBot</artifactId>
-    <version>v2.9</version>
+    <version>3d0qb2</version>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <simbot.version>2.5.1</simbot.version>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <simbot.version>3.0.0-RC.3</simbot.version>
+        <simbot-mirai.version>3.0.0.0-M5</simbot-mirai.version>
     </properties>
 
+
     <dependencies>
-        <!-- 使用 mirai 组件。 -->
         <dependency>
-            <groupId>love.forte.simple-robot</groupId>
-            <artifactId>component-mirai</artifactId>
-            <version>${simbot.version}</version><!--vv-->
+            <groupId>love.forte.simbot.boot</groupId>
+            <artifactId>simboot-core</artifactId>
+            <version>${simbot.version}</version>
         </dependency>
-        <!--json-lib-->
+
+        <dependency>
+            <groupId>love.forte.simbot.component</groupId>
+            <artifactId>simbot-component-mirai-core</artifactId>
+            <version>${simbot-mirai.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.0.2</version>
+        </dependency>
         <dependency>
             <groupId>net.sf.json-lib</groupId>
             <artifactId>json-lib</artifactId>
@@ -61,6 +73,16 @@
             <artifactId>MineStat</artifactId>
             <version>3.0.5</version>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>1.8.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -72,7 +94,7 @@
                 <version>2.5.3</version>
                 <configuration>
                     <!-- main方法所在类。 -->
-                    <mainClass>love.simbot.example.SimbotExampleApplication</mainClass>
+                    <mainClass>com.bot.qbot.SimbotExampleApplicationKt</mainClass>
                 </configuration>
                 <executions>
                     <execution>
@@ -92,8 +114,4 @@
             </plugin>
         </plugins>
     </build>
-
-
-
-
 </project>
