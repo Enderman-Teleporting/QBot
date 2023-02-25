@@ -1,11 +1,12 @@
 package com.bot.qbot.events
 
 import com.tools.Log_settler
+import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Listener
 import net.mamoe.mirai.event.events.MemberPermissionChangeEvent
 import org.springframework.stereotype.Component
 
-@Component
+@Beans
 class PermissionChange {
     @Listener
     suspend fun MemberPermissionChangeEvent.permit(){
