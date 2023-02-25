@@ -139,7 +139,7 @@ public class MyPrivateListen {
         if (read("./cache/properties/"+privateMsg.getBotInfo().getBotCode()+".properties","MCPic").equals("true")) {
             final AccountInfo info = privateMsg.getAccountInfo();
             final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
-            String img = catUtil.toCat("image", true, "url=https://api.lantianyun.tk");
+            String img = catUtil.toCat("image", true, "url=https://enderman-teleporting.github.io/RandomMinecraftPics/img.html");
             sender.sendPrivateMsg(info, img);
             Log_settler.writelog("OnPrivate");
             Log_settler.writelog("bot"+img);
