@@ -4,6 +4,9 @@ import com.tools.Log_settler
 import com.tools.properties_settler
 import love.forte.simboot.core.SimbootApp
 import love.forte.simboot.core.SimbootApplication
+import love.forte.simbot.bot.BotManager
+import love.forte.simbot.bot.OriginBotManager
+import love.forte.simbot.component.mirai.MiraiComponent
 
 @SimbootApplication
 class Main
