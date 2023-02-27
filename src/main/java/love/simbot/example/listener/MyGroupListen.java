@@ -164,7 +164,7 @@ public class MyGroupListen {
         if (read("./cache/properties/"+groupMsg.getBotInfo().getBotCode()+".properties","MCPic").equals("true")) {
             GroupInfo groupInfo = groupMsg.getGroupInfo();
             final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
-            String img = catUtil.toCat("image", true, "url=https://enderman-teleporting.github.io/RandomMinecraftPics/img.html");
+            String img = catUtil.toCat("image", true, "url=https://enderman-teleporting.github.io/RandomMinecraftPics/api/img/"+(int)Math.ceil(Math.random()*100)+".jpeg");
             sender.sendGroupMsg(groupInfo, img);
             Log_settler.writelog("OnGroup");
             Log_settler.writelog("bot:"+img);
