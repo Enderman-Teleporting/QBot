@@ -14,7 +14,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <simbot.version>3.0.0-RC.3</simbot.version>
         <simbot-mirai.version>3.0.0.0-RC</simbot-mirai.version>
-        <kotlin.version>1.8.0</kotlin.version>
+        <kotlin.version>1.6.21</kotlin.version>
     </properties>
 
 
@@ -72,7 +72,7 @@
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
@@ -92,7 +92,7 @@
                 <executions>
                     <execution>
                         <id>compile</id>
-                        <phase>compile</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
