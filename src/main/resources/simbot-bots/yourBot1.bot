@@ -3,7 +3,7 @@
     "code": Your Code,
     "passwordInfo": {
         "type": "text",
-        "md5": "Your Password"
+        "text": "Your Password"
     },
     config{
         "protocol": "IPAD",
