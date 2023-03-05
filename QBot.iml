@@ -57,7 +57,7 @@
     <orderEntry type="library" name="Maven: love.forte.simbot.util:simbot-util-di-core:3.0.0-RC.3" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-reflect:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: love.forte.simbot.util:simbot-util-annotation-tool:3.0.0-RC.3" level="project" />
-    <orderEntry type="library" name="Maven: love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-M5" level="project" />
+    <orderEntry type="library" name="Maven: love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-RC" level="project" />
     <orderEntry type="library" name="Maven: net.mamoe:mirai-core-jvm:2.14.0" level="project" />
     <orderEntry type="library" name="Maven: net.mamoe:mirai-core-api-jvm:2.14.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: net.mamoe:mirai-console-compiler-annotations-jvm:2.14.0" level="project" />

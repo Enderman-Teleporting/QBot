@@ -5,9 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/chatter/Private.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/events/Recall.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_component_simbot_component_mirai_core_3_0_0_0_M5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_component_simbot_component_mirai_core_3_0_0_0_RC.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/QBot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/Accepter/group.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/Accepter/group.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/Accepter/private.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/Accepter/private.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/SimbotExampleApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/SimbotExampleApplication.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/events/GroupNameChange.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/events/GroupNameChange.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/events/MemberChange.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/events/MemberChange.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/events/PermissionChange.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/events/PermissionChange.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/events/TalkativeChange.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/events/TalkativeChange.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/events/TooLongMsgEvent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/events/TooLongMsgEvent.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/requests/GroupRequests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/requests/GroupRequests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/simbot-bots/yourBot1.bot" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/simbot-bots/yourBot1.bot" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +37,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/cn/hutool/hutool-core/5.7.19/hutool-core-5.7.19-sources.jar!/cn/hutool/core/codec/Base64Decoder.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

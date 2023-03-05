@@ -4,7 +4,6 @@ import com.tools.Log_settler
 import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Listener
 import net.mamoe.mirai.event.events.GroupNameChangeEvent
-import org.springframework.stereotype.Component
 
 @Beans
 class GroupNameChange {

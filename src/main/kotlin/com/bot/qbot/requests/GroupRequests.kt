@@ -8,7 +8,6 @@ import love.forte.simboot.annotation.Listener
 import love.forte.simboot.filter.MatchType
 import love.forte.simbot.component.mirai.event.MiraiGroupMessageEvent
 import love.forte.simbot.event.GroupMessageEvent
-import org.springframework.stereotype.Component
 
 @Beans
 class GroupRequests {

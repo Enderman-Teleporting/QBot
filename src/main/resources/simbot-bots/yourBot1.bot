@@ -1,2 +1,14 @@
-code=账号
-password=密码
+{
+    "component": "simbot.mirai",
+    "code": Your Code,
+    "passwordInfo": {
+        "type": "text",
+        "md5": "Your Password"
+    },
+    config{
+        "protocol": "IPAD",
+        "deviceInfo": {
+            "type": "auto"
+        }
+    }
+}

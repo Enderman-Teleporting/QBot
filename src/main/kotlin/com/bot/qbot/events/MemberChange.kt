@@ -7,7 +7,6 @@ import love.forte.simbot.event.FriendDecreaseEvent
 import love.forte.simbot.event.FriendIncreaseEvent
 import love.forte.simbot.event.GroupMemberDecreaseEvent
 import love.forte.simbot.event.GroupMemberIncreaseEvent
-import org.springframework.stereotype.Component
 
 @Beans
 class MemberChange {

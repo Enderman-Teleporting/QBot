@@ -13,7 +13,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <simbot.version>3.0.0-RC.3</simbot.version>
-        <simbot-mirai.version>3.0.0.0-M5</simbot-mirai.version>
+        <simbot-mirai.version>3.0.0.0-RC</simbot-mirai.version>
         <kotlin.version>1.8.0</kotlin.version>
     </properties>
 
@@ -41,16 +41,7 @@
             <version>2.1</version>
             <classifier>jdk15</classifier>
         </dependency>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.1</version>
-        </dependency>
+
         <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
         <dependency>
             <groupId>commons-lang</groupId>

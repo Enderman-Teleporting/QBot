@@ -5,7 +5,6 @@ import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Listener
 import love.forte.simbot.ExperimentalSimbotApi
 import love.forte.simbot.event.FriendAddRequestEvent
-import org.springframework.stereotype.Component
 
 @Beans
 class private {
