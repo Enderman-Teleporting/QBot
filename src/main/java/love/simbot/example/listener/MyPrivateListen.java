@@ -139,10 +139,16 @@ public class MyPrivateListen {
         if (read("./cache/properties/"+privateMsg.getBotInfo().getBotCode()+".properties","MCPic").equals("true")) {
             final AccountInfo info = privateMsg.getAccountInfo();
             final CatCodeUtil catUtil = CatCodeUtil.INSTANCE;
-            String img = catUtil.toCat("image", true, "url=https://enderman-teleporting.github.io/RandomMinecraftPics/api/img/"+(int)Math.ceil(Math.random()*100)+".jpeg");
-            sender.sendPrivateMsg(info, img);
-            Log_settler.writelog("OnPrivate");
-            Log_settler.writelog("bot"+img);
+            try {
+                String img = catUtil.toCat("image", true, "url=https://enderman-teleporting.github.io/RandomMinecraftPics/api/img/"+(int)Math.ceil(Math.random()*100)+".jpeg");
+                sender.sendPrivateMsg(info, img);
+                Log_settler.writelog("OnPrivate");
+                Log_settler.writelog("bot"+img);
+            }
+            catch (Exception e){
+                sender.sendPrivateMsg(info,"请求超时");
+            }
+
         }
     }
     @OnPrivate
