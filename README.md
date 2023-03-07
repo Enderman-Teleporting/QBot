@@ -52,7 +52,7 @@
 * 使用7zip/文件归档管理器打开launcher.jar和2d9qb12.jar 找到目录/BOOT-INF/simbot-bots/，编辑yourBot1.bot文件，将“账号”“密码”改为你QQ号、密码（如果被文字引号包围，千万不要删掉引号！）
 * 在cmd/终端中`cd [你解压的位置]`
 * 运行`java -jar launcher.jar`
-* 运行后会弹出一个GUI 复制GUI第一栏中的网址 打开mirai login solver sakura 软件 输入这个网址 进行滑动验证 获取key复制 将key粘贴至GUI第二栏 回车
+* 运行后会输出许多东西,复制最下面的网址网址 打开mirai login solver sakura 软件 输入这个网址 进行滑动验证 获取ticket复制 将ticket粘贴至控制台 回车
 * 如果有短信登录/扫码登录，按照提示干就对了
 * Ctrl+C结束程序运行
 * 如果你不小心把cmd/终端窗口退了，你需要重新打开并且cd至你解压的位置
