@@ -43,11 +43,11 @@
 
 * Java17 <small>建议OpenJDK17   确保你在cmd（Windows） 终端（Linux）中能使用`java`命令</small>
 * 7ZIP（Windows环境） Linux直接文件归档管理器就行
-* 安卓软件：mirai login solver sakura （https://github.com/KasukuSakura/mirai-login-solver-sakura，进入Releases下载APK）（辅助滑动验证用）
+* 安卓软件：mirai login solver sakura （https://github.com/KasukuSakura/mirai-login-solver-sakura ，进入Releases下载APK）（辅助滑动验证用）
 
 ## 2.登录配置
 
-* 下载2d9qb12版本zip（进入https://github.com/Enderman-Teleporting/QBot/releases/tag/2d9qb2，点击QBot.zip即可下载）
+* 下载2d9qb12版本zip（进入https://github.com/Enderman-Teleporting/QBot/releases/tag/2d9qb12 ，点击QBot.zip即可下载）
 * 解压zip
 * 使用7zip/文件归档管理器打开launcher.jar和QBot-2d9qb12.jar 找到目录/BOOT-INF/classes/simbot-bots/，编辑yourBot1.bot文件，将“账号”“密码”改为你QQ号、密码（如果被文字引号包围，千万不要删掉引号！）
 * 在cmd/终端中`cd [你解压的位置]`
