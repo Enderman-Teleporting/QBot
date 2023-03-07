@@ -49,7 +49,7 @@
 
 * 下载2d9qb12版本zip（进入https://github.com/Enderman-Teleporting/QBot/releases/tag/2d9qb2，点击QBot.zip即可下载）
 * 解压zip
-* 使用7zip/文件归档管理器打开launcher.jar和2d9qb12.jar 找到目录/BOOT-INF/simbot-bots/，编辑yourBot1.bot文件，将“账号”“密码”改为你QQ号、密码（如果被文字引号包围，千万不要删掉引号！）
+* 使用7zip/文件归档管理器打开launcher.jar和2d9qb12.jar 找到目录/BOOT-INF/classes/simbot-bots/，编辑yourBot1.bot文件，将“账号”“密码”改为你QQ号、密码（如果被文字引号包围，千万不要删掉引号！）
 * 在cmd/终端中`cd [你解压的位置]`
 * 运行`java -jar launcher.jar`
 * 运行后会输出许多东西,复制最下面的网址网址 打开mirai login solver sakura 软件 输入这个网址 进行滑动验证 获取ticket复制 将ticket粘贴至控制台 回车
