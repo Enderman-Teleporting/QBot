@@ -27,7 +27,7 @@ class Public{
     }
 
     @Listener
-    @Filter()
+    @Filter(targets=Filter.Targets(atBot=true), matchType = MatchType.REGEX_CONTAINS)
     suspend fun GroupMessageEvent.chat(){
             var originalMsg= messageContent.plainText
             originalMsg = originalMsg.replace(" ", "%20")
@@ -61,7 +61,7 @@ class Public{
                     text(prev)
                     face(num.toInt().ID)
                     text(aft)
-                    at(author())
+                    at(author().id)
                 }
                 group().send(message)
             } else {
