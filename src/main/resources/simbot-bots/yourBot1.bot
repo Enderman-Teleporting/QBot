@@ -6,7 +6,7 @@
         "text": "Your Password"
     },
     config:{
-        "protocol": "IPAD",
+        "protocol": "MACOS",
         "deviceInfo": {
             "type": "auto"
         }

@@ -14,7 +14,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <simbot.version>3.0.0-RC.3</simbot.version>
         <simbot-mirai.version>3.0.0.0-RC</simbot-mirai.version>
-        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version>1.8.0</kotlin.version>
     </properties>
 
 
@@ -29,6 +29,12 @@
             <groupId>love.forte.simbot.component</groupId>
             <artifactId>simbot-component-mirai-core</artifactId>
             <version>${simbot-mirai.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>love.forte.simbot</groupId>
+                    <artifactId>simbot-logger</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -68,7 +74,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.11</version>
+            <version>5.8.15</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

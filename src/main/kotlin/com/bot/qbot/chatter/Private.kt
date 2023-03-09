@@ -8,7 +8,6 @@ import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Filter
 import love.forte.simboot.annotation.Listener
 import love.forte.simboot.filter.MatchType
-import love.forte.simbot.Api4J
 import love.forte.simbot.ID
 import love.forte.simbot.event.FriendMessageEvent
 import love.forte.simbot.message.Image.Key.toImage
@@ -28,7 +27,6 @@ class Private {
         }
     }
 
-    @OptIn(Api4J::class)
     @Listener
     suspend fun FriendMessageEvent.privateReply() {
         if (messageContent.plainText != "二次元" || messageContent.plainText!="MC好图"|| !messageContent.plainText.startsWith("查服 ")) {
