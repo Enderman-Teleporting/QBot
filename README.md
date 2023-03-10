@@ -14,7 +14,7 @@
 
 
 
- <a href="https://github.com/ForteScarlet/simpler-robot/releases/latest"><img alt="release" src="https://img.shields.io/github/v/release/Enderman-Teleporting/qbot" /></a>
+ <a href="https://github.com/Enderman-Teleporting/qbot/releases/latest"><img alt="release" src="https://img.shields.io/github/v/release/Enderman-Teleporting/qbot" /></a>
 
    <hr>
    <img alt="stars" src="https://img.shields.io/github/stars/Enderman-Teleporting/qbot" />
