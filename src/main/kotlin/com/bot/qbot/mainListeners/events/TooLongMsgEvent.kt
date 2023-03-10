@@ -1,4 +1,4 @@
-package com.bot.qbot.events
+package com.bot.qbot.mainListeners.events
 
 import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Listener
@@ -16,7 +16,7 @@ class TooLongMsgEvent {
                 at(author().id)
                 text("发言过长,下次注意")
             }
-            group.send(message)
+            group().send(message)
         }
     }
 }

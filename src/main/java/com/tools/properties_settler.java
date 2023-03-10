@@ -5,7 +5,7 @@ import java.util.Properties;
 
 public class properties_settler {
     public static void settle() {
-        String fileName = "./cache/property.properties";
+        String fileName = "./cache/properties/property.properties";
         try {
             File f = new File(fileName);
             if(!f.exists()){

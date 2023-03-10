@@ -1,4 +1,4 @@
-package com.bot.qbot.requests
+package com.bot.qbot.mainListeners.requests
 
 import com.tools.Log_settler
 import com.tools.properties_settler.read
@@ -40,6 +40,7 @@ class GroupRequests {
             Thread.sleep(60000)
             author().modifyAdmin(false)
             send("时间已到，收回管理权限")
+            Log_settler.writelog("Processed one admin request")
         }
     }
 }

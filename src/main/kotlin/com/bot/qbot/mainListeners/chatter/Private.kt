@@ -1,9 +1,10 @@
-package com.bot.qbot.chatter
+package com.bot.qbot.mainListeners.chatter
 
 import com.tools.API.getApi
 import com.tools.Log_settler
 import com.tools.properties_settler.read
-import com.tools.serverSearching.*
+import com.tools.serverSearching.search
+import com.tools.serverSearching.searchImg
 import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Filter
 import love.forte.simboot.annotation.Listener
@@ -25,6 +26,7 @@ class Private {
         if(messageContent.plainText == bot.username){
             friend().send("是谁在叫"+bot.username+"呀")
         }
+        Log_settler.writelog("Handled one Private Msg Event, Listener func: beCalled")
     }
 
     @Listener
@@ -67,6 +69,7 @@ class Private {
             } else {
                 friend.send(result)
             }
+            Log_settler.writelog("Handled one Private Msg Event, Listener func: privateReply")
             Thread.sleep(3000)
         }
     }
@@ -125,6 +128,7 @@ class Private {
                     friend().send(MsgContent)
                 }
             }
+            Log_settler.writelog("Handled one Private Msg Event, Listener func: MCServerStat")
         }
     }
 }

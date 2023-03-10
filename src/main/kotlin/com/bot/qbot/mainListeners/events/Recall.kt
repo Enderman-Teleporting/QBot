@@ -1,4 +1,4 @@
-package com.bot.qbot.events
+package com.bot.qbot.mainListeners.events
 
 import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Listener

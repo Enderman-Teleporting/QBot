@@ -1,4 +1,4 @@
-package com.bot.qbot.events
+package com.bot.qbot.mainListeners.events
 
 import com.tools.Log_settler
 import love.forte.di.annotation.Beans

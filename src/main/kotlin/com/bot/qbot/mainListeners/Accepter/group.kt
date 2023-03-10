@@ -1,4 +1,4 @@
-package com.bot.qbot.Accepter
+package com.bot.qbot.mainListeners.Accepter
 
 import com.tools.Log_settler
 import love.forte.di.annotation.Beans

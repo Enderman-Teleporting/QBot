@@ -14,8 +14,22 @@ public class Log_settler {
     public static void writelog(String content) throws IOException {
         Log_settler lt= new Log_settler();
         Logger log = lt.getMylog();
-        if (properties_settler.read("./cache/property.properties","Log").equals("true")){
+        if (properties_settler.read("./cache/properties/property.properties","Log").equals("true")){
             log.info(content);
+        }
+        else{
+            System.out.println(content);
+        }
+
+    }
+    public static void writelogError(String content) throws IOException {
+        Log_settler lt= new Log_settler();
+        Logger log = lt.getMylog();
+        if (properties_settler.read("./cache/properties/property.properties","Log").equals("true")){
+            log.severe(content);
+        }
+        else{
+            System.err.println(content);
         }
 
     }
