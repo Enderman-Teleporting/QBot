@@ -12,7 +12,6 @@ import java.io.IOException
 class Bots{
     @Listener
     fun GroupMessageEvent.settle() {
-        File("./cache/properties").mkdirs()
         val fileName = "./cache/properties/${bot.id}.properties"
         try {
             val f = File(fileName)

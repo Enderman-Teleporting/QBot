@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="QBot" target="10" />
+      <module name="QBot" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
