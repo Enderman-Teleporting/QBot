@@ -83,6 +83,7 @@
 - 呼叫（机器人昵称）回复
 - 新人欢迎
 - 退群监听
+- ~~控制台命令~~（v3暂寄)
 
 ### 全局功能（可以在./cache/properties/property.properties内修改）
 
