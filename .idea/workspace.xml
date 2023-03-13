@@ -7,8 +7,6 @@
     <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/QBot.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tools/properties_settler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tools/properties_settler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/botRegestration/Bots.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/botRegestration/Bots.kt" afterDir="false" />
@@ -30,9 +28,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$MAVEN_REPOSITORY$/cn/hutool/hutool-core/5.7.19/hutool-core-5.7.19-sources.jar!/cn/hutool/core/codec/Base64Decoder.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
