@@ -84,6 +84,7 @@
 - 新人欢迎
 - 退群监听
 - ~~控制台命令~~（v3暂寄)
+- 消息统计(发送"消息统计")
 
 ### 全局功能（可以在./cache/properties/property.properties内修改）
 

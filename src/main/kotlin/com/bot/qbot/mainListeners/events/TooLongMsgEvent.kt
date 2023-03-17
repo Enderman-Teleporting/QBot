@@ -4,9 +4,10 @@ import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Listener
 import love.forte.simbot.event.GroupMessageEvent
 import love.forte.simbot.message.buildMessages
+import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
 
-@Beans
+@Component
 class TooLongMsgEvent {
     @Listener
     suspend fun GroupMessageEvent.tooLong(){

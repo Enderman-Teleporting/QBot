@@ -1,15 +1,16 @@
 package com.bot.qbot.mainListeners.requests
 
-import com.tools.Log_settler
-import com.tools.properties_settler.read
+import tools.Log_settler
+import tools.properties_settler.read
 import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Filter
 import love.forte.simboot.annotation.Listener
 import love.forte.simboot.filter.MatchType
 import love.forte.simbot.component.mirai.event.MiraiGroupMessageEvent
 import love.forte.simbot.event.GroupMessageEvent
+import org.springframework.stereotype.Component
 
-@Beans
+@Component
 class GroupRequests {
     @Listener
     @Filter(value = "群名称 ",matchType=MatchType.TEXT_STARTS_WITH)

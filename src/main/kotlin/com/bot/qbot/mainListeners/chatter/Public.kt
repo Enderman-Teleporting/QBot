@@ -1,9 +1,9 @@
 package com.bot.qbot.mainListeners.chatter;
 
-import com.tools.API.getApi
-import com.tools.Log_settler
-import com.tools.properties_settler
-import com.tools.serverSearching
+import tools.API.getApi
+import tools.Log_settler
+import tools.properties_settler
+import tools.serverSearching
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import love.forte.di.annotation.Beans
@@ -16,12 +16,13 @@ import love.forte.simbot.message.Image.Key.toImage
 import love.forte.simbot.message.MessageContent
 import love.forte.simbot.message.buildMessages
 import love.forte.simbot.resources.Resource.Companion.toResource
+import org.springframework.stereotype.Component
 import java.net.URL
 import java.util.*
 import kotlin.math.ceil
 
 
-@Beans
+@Component
 class Public{
     private val plusOne_:HashMap<String,MessageContent> =HashMap<String,MessageContent>()
     @Listener
@@ -128,11 +129,11 @@ class Public{
                     contents = content.split(":").toTypedArray()
                     val a= serverSearching.search(contents[0], contents[1].toInt())
                     if (serverSearching.searchImg(contents[0], contents[1].toInt()) == null) {
-                        group().send(a)
+                        group().send(a!!)
                     } else {
                         val messageContent = buildMessages {
-                            text(a)
-                            image(serverSearching.searchImg(contents[0], contents[1].toInt()).toResource(UUID.randomUUID().toString()))
+                            text(a!!)
+                            image(serverSearching.searchImg(contents[0], contents[1].toInt())!!.toResource(UUID.randomUUID().toString()))
                         }
                         group().send(messageContent)
                     }
@@ -146,11 +147,11 @@ class Public{
             } else {
                 val a= serverSearching.search(content)
                 if (serverSearching.searchImg(content) == null) {
-                    group().send(a)
+                    group().send(a!!)
                 } else {
                     val MsgContent = buildMessages {
-                        text(a)
-                        image(serverSearching.searchImg(content).toResource(UUID.randomUUID().toString()))
+                        text(a!!)
+                        image(serverSearching.searchImg(content)!!.toResource(UUID.randomUUID().toString()))
                     }
                     group().send(MsgContent)
                 }

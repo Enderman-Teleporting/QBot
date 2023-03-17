@@ -3,12 +3,13 @@ package com.bot.qbot.botRegestration
 import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Listener
 import love.forte.simbot.event.GroupMessageEvent
+import org.springframework.stereotype.Component
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-@Beans
+@Component
 class Bots{
     @Listener
     fun GroupMessageEvent.settle() {

@@ -1,6 +1,6 @@
 package com.bot.qbot.mainListeners.events
 
-import com.tools.Log_settler
+import tools.Log_settler
 import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Listener
 import love.forte.simbot.FragileSimbotApi
@@ -9,8 +9,9 @@ import love.forte.simbot.bot.Bot
 import love.forte.simbot.bot.OriginBotManager
 import love.forte.simbot.message.buildMessages
 import net.mamoe.mirai.event.events.GroupTalkativeChangeEvent
+import org.springframework.stereotype.Component
 
-@Beans
+@Component
 class TalkativeChange {
     @OptIn(FragileSimbotApi::class)
     @Listener

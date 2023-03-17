@@ -1,12 +1,18 @@
 package com.bot.qbot
 
-import com.tools.Log_settler
-import com.tools.properties_settler
+import tools.Log_settler
+import tools.properties_settler
 import love.forte.simboot.core.SimbootApp
 import love.forte.simboot.core.SimbootApplication
+import love.forte.simboot.spring.autoconfigure.EnableSimbot
 import love.forte.simbot.application.bots
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.scheduling.annotation.EnableScheduling
 
-@SimbootApplication
+
+@SpringBootApplication
+@EnableSimbot
+@EnableScheduling
 class SimbotExampleApplication
 
 suspend fun main(args: Array<String>) {

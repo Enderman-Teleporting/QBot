@@ -1,10 +1,10 @@
 package com.bot.qbot.mainListeners.chatter
 
-import com.tools.API.getApi
-import com.tools.Log_settler
-import com.tools.properties_settler.read
-import com.tools.serverSearching.search
-import com.tools.serverSearching.searchImg
+import tools.API.getApi
+import tools.Log_settler
+import tools.properties_settler.read
+import tools.serverSearching.search
+import tools.serverSearching.searchImg
 import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Filter
 import love.forte.simboot.annotation.Listener
@@ -14,12 +14,13 @@ import love.forte.simbot.event.FriendMessageEvent
 import love.forte.simbot.message.Image.Key.toImage
 import love.forte.simbot.message.buildMessages
 import love.forte.simbot.resources.Resource.Companion.toResource
+import org.springframework.stereotype.Component
 import java.net.URL
 import java.util.*
 import kotlin.math.ceil
 
 
-@Beans
+@Component
 class Private {
     @Listener
     suspend fun FriendMessageEvent.beCalled(){
@@ -101,11 +102,11 @@ class Private {
                     contents = content.split(":").toTypedArray()
                     val a= search(contents[0], contents[1].toInt())
                     if (searchImg(contents[0], contents[1].toInt()) == null) {
-                        friend().send(a)
+                        friend().send(a!!)
                     } else {
                         val messageContent = buildMessages {
-                            text(a)
-                            image(searchImg(contents[0], contents[1].toInt()).toResource(UUID.randomUUID().toString()))
+                            text(a!!)
+                            image(searchImg(contents[0], contents[1].toInt())!!.toResource(UUID.randomUUID().toString()))
                         }
                         friend().send(messageContent)
                     }
@@ -119,11 +120,11 @@ class Private {
             } else {
                 val a= search(content)
                 if (searchImg(content) == null) {
-                    friend().send(a)
+                    friend().send(a!!)
                 } else {
                     val MsgContent = buildMessages {
-                        text(a)
-                        image(searchImg(content).toResource(UUID.randomUUID().toString()))
+                        text(a!!)
+                        image(searchImg(content)!!.toResource(UUID.randomUUID().toString()))
                     }
                     friend().send(MsgContent)
                 }
