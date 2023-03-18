@@ -66,7 +66,7 @@ class Public{
             }
             val message = buildMessages {
                 text(prev)
-                face(num.toInt().ID)
+                emoji(num.toInt().ID)
                 text(aft)
                 at(author().id)
             }

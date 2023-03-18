@@ -14,13 +14,13 @@ class MsgCounts {
     @Listener
     @Filter(value="消息统计", matchType = MatchType.TEXT_EQUALS)
     suspend fun GroupMessageEvent.msgCountGroup(){
-        group().send("${bot.contactCount()}")
+        group().send("共处理消息：${bot.contactCount()}")
         Log_settler.writelog("Handled one Group Msg Event, Listener func: msgCountGroup")
     }
     @Listener
     @Filter(value="消息统计", matchType = MatchType.TEXT_EQUALS)
     suspend fun FriendMessageEvent.msgCountPrivate(){
-        friend().send("${bot.contactCount()}")
+        friend().send("共处理消息：${bot.contactCount()}")
         Log_settler.writelog("Handled one Private Msg Event, Listener func: msgCountPrivate")
     }
 }
