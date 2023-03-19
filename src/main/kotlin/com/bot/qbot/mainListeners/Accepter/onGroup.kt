@@ -1,14 +1,15 @@
 package com.bot.qbot.mainListeners.Accepter
 
-import tools.Log_settler
 import love.forte.di.annotation.Beans
+import tools.Log_settler
 import love.forte.simboot.annotation.Listener
 import love.forte.simbot.ExperimentalSimbotApi
 import love.forte.simbot.event.GroupJoinRequestEvent
+import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 
 @Component
-class group {
+class onGroup {
     @OptIn(ExperimentalSimbotApi::class)
     @Listener
     suspend fun GroupJoinRequestEvent.Accept(){

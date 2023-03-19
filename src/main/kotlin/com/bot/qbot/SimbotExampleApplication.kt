@@ -7,6 +7,7 @@ import love.forte.simboot.core.SimbootApplication
 import love.forte.simboot.spring.autoconfigure.EnableSimbot
 import love.forte.simbot.application.bots
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
 import org.springframework.scheduling.annotation.EnableScheduling
 
 
@@ -19,8 +20,7 @@ suspend fun main(args: Array<String>) {
         Log_settler.settle()
         properties_settler.settle()
         try {
-                val a = SimbootApp.run(SimbotExampleApplication::class, *args)
-                a.join()
+                val a = runApplication<SimbotExampleApplication>(*args)
                 if(a.isActive){
                         Log_settler.writelog("Bot Registration Successful!")
                 }

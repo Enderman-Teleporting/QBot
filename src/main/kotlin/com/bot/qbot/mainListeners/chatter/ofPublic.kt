@@ -23,7 +23,7 @@ import kotlin.math.ceil
 
 
 @Component
-class Public{
+class ofPublic{
     private val plusOne_:HashMap<String,MessageContent> =HashMap<String,MessageContent>()
     @Listener
     suspend fun GroupMessageEvent.beCalled(){

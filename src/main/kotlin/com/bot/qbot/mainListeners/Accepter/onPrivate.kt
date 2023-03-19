@@ -1,14 +1,14 @@
 package com.bot.qbot.mainListeners.Accepter
 
-import tools.Log_settler
 import love.forte.di.annotation.Beans
+import tools.Log_settler
 import love.forte.simboot.annotation.Listener
 import love.forte.simbot.ExperimentalSimbotApi
 import love.forte.simbot.event.FriendAddRequestEvent
 import org.springframework.stereotype.Component
 
 @Component
-class private {
+class onPrivate {
     @OptIn(ExperimentalSimbotApi::class)
     @Listener
     suspend fun FriendAddRequestEvent.acceptRequest(){

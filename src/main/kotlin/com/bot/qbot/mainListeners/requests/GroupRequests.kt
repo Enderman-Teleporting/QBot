@@ -17,7 +17,7 @@ class GroupRequests {
     suspend fun GroupMessageEvent.groupName() {
         if (read("./cache/properties/" + bot.id + ".properties", "allowGroupNameChanging").equals("true")) {
             val msg = messageContent.plainText.replace("群名称 ", "")
-            TODO("The framework hasn't supported such function")
+            TODO("We hasn't supported such function")
 
         }
     }

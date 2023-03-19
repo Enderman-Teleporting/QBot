@@ -1,11 +1,11 @@
 package com.bot.qbot.mainListeners.chatter
 
+import love.forte.di.annotation.Beans
 import tools.API.getApi
 import tools.Log_settler
 import tools.properties_settler.read
 import tools.serverSearching.search
 import tools.serverSearching.searchImg
-import love.forte.di.annotation.Beans
 import love.forte.simboot.annotation.Filter
 import love.forte.simboot.annotation.Listener
 import love.forte.simboot.filter.MatchType
@@ -21,7 +21,7 @@ import kotlin.math.ceil
 
 
 @Component
-class Private {
+class ofPrivate {
     @Listener
     suspend fun FriendMessageEvent.beCalled(){
         if(messageContent.plainText == bot.username){
