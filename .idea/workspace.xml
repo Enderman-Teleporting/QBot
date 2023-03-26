@@ -5,8 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/mainListeners/events/GroupNameChange.kt.disabled" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/mainListeners/events/PermissionChange.kt.disabled" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/mainListeners/events/Recall.kt.disabled" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/mainListeners/events/TalkativeChange.kt.disabled" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_boot_simboot_api_3_0_0_RC_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_boot_simboot_core_3_0_0_RC_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_boot_simboot_core_annotation_3_0_0_RC_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_boot_simboot_core_spring_boot_starter_3_0_0_RC_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_component_simbot_component_mirai_core_3_0_0_0_RC.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_simbot_api_3_0_0_RC_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_simbot_core_3_0_0_RC_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_simbot_logger_jvm_3_0_0_RC_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_util_simbot_util_annotation_tool_3_0_0_RC_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_util_simbot_util_di_api_3_0_0_RC_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__love_forte_simbot_util_simbot_util_di_core_3_0_0_RC_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlinx_kotlinx_serialization_core_jvm_1_5_0_RC.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/QBot.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/mainListeners/chatter/ofPrivate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/mainListeners/chatter/ofPrivate.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/mainListeners/events/GroupNameChange.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/mainListeners/events/PermissionChange.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/mainListeners/events/Recall.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/bot/qbot/mainListeners/events/TalkativeChange.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,13 +61,16 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2CsHU149IU8iEzERlrNi6fjCLkO" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -257,7 +282,8 @@
       <workItem from="1679225562634" duration="80000" />
       <workItem from="1679228291262" duration="160000" />
       <workItem from="1679808411488" duration="371000" />
-      <workItem from="1679808893795" duration="342000" />
+      <workItem from="1679808893795" duration="2411000" />
+      <workItem from="1679827415563" duration="480000" />
     </task>
     <servers />
   </component>
@@ -277,6 +303,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

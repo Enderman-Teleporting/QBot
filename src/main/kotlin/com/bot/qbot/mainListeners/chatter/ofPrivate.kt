@@ -68,7 +68,7 @@ class ofPrivate {
                 }
                 friend().send(message)
             } else {
-                friend.send(result)
+                friend().send(result)
             }
             Log_settler.writelog("Handled one Private Msg Event, Listener func: privateReply")
             Thread.sleep(3000)
