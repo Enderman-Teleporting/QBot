@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/src/main/resources/simbot-bots/yourBot1.bot" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/simbot-bots/yourBot1.bot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,6 +255,9 @@
       <workItem from="1679206599894" duration="69000" />
       <workItem from="1679223345158" duration="1112000" />
       <workItem from="1679225562634" duration="80000" />
+      <workItem from="1679228291262" duration="160000" />
+      <workItem from="1679808411488" duration="371000" />
+      <workItem from="1679808893795" duration="342000" />
     </task>
     <servers />
   </component>
