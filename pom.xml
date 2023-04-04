@@ -20,7 +20,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <simbot.version>3.0.0-RC.3</simbot.version>
         <simbot-mirai.version>3.0.0.0.preview.13.0</simbot-mirai.version>
-        <kotlin.version>1.8.0</kotlin.version>
+        <kotlin.version>1.8.20</kotlin.version>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
 
