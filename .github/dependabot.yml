@@ -1,8 +1,7 @@
 version: 2
 updates:
-  - package-ecosystem: "Maven"
-    directory: "/"
+  - package-ecosystem: maven
+    directory: /
+    target-branch: "v3-dev"
     schedule:
-      interval: "daily"
-
-
+      interval: daily
