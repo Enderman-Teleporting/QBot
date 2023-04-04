@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="62d381e6-eca7-4cfb-aa99-4ade80150869" name="Changes" comment="Changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependabot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/dependabot.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,11 +76,11 @@
       <recent name="C:\Users\wyh\Documents\GitHub\QBot-v1-and-v2" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\wyh\Documents\GitHub\QBot\.github" />
       <recent name="C:\Users\wyh\Documents\GitHub\QBot\src\main\kotlin\com\bot\qbot" />
       <recent name="C:\Users\wyh\Documents\GitHub\QBot\src\main\kotlin\com\bot" />
       <recent name="$PROJECT_DIR$/src/main/Kotlin/com.bot.qbot" />
       <recent name="C:\Users\wyh\Documents\GitHub\QBot-v1-and-v2" />
-      <recent name="C:\Users\wyh\Documents\GitHub\QBot\src\main\resources\simbot-bots" />
     </key>
   </component>
   <component name="RunAnythingCache">
