@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.30'
+}
+
+group 'io.github.et'
+version '4.0-pre1'
+
+repositories {
+    mavenCentral()
+}
+
+jar{
+    manifest {
+        attributes 'Main-Class':'io.github.et.Main'
+    }
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.30'
+    implementation 'io.github.fragland:MineStat:3.0.5'
+    implementation 'net.mamoe:mirai-core:2.15.0-RC'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+sourceSets {
+    main.kotlin.srcDirs += 'src/main/kotlin'
+    main.java.srcDirs += 'src/main/java'
+}
+
+test {
+    useJUnitPlatform()
+}
