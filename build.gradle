@@ -1,6 +1,7 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.5.21'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.10'
 }
 
 group 'io.github.et'
@@ -10,16 +11,18 @@ repositories {
     mavenCentral()
 }
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'io.github.et.Main'
-    }
+tasks.withType(JavaCompile){
+    options.encoding='UTF-8'
+}
+shadowJar{
+    manifest.attributes.put("Main-Class",'io.github.et.Main')
 }
 
 dependencies {
     implementation 'net.sf.json-lib:json-lib:2.4:jdk15'
     implementation 'cn.hutool:hutool-all:5.8.11'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21'
+    implementation 'io.github.enderman-tping:ETToolset:1.0.0-pre3'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10'
     implementation 'io.github.fragland:MineStat:3.0.5'
     implementation 'net.mamoe:mirai-core:2.15.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
