@@ -1,4 +1,4 @@
-package tools;
+package io.github.et.tools;
 
 import me.dilley.MineStat;
 

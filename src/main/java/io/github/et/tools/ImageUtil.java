@@ -1,4 +1,4 @@
-package tools;
+package io.github.et.tools;
 
 import cn.hutool.core.codec.Base64Decoder;
 

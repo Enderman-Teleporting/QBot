@@ -1,4 +1,4 @@
-package tools;
+package io.github.et.tools;
 
 /*import love.forte.common.ioc.annotation.Beans;
 import love.forte.simbot.bot.Bot;*/
