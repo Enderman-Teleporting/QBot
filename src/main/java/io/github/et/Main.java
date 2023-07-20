@@ -1,8 +1,11 @@
 package io.github.et;
 
+import io.github.et.eventListener.ApplicationPasser;
+import io.github.et.eventListener.GroupTalkativeChange;
 import io.github.et.exceptions.BotInfoNotFoundException;
 import io.github.et.messager.Nudger;
 import io.github.et.messager.Repeater;
+import io.github.et.messager.Replier;
 import io.github.ettoolset.tools.deamon.Deamon;
 import io.github.ettoolset.tools.deamon.RunMethod;
 import io.github.ettoolset.tools.logger.LevelNotMatchException;
@@ -19,7 +22,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 public class Main {
-    public static void main(String[] args) throws IOException, BotInfoNotFoundException, RepeatedLoggerDeclarationException {
+    public static void main(String[] args) throws IOException, BotInfoNotFoundException, RepeatedLoggerDeclarationException, LevelNotMatchException {
         Logger logger=new Logger(Logger.Levels.DEBUG,null);
         Deamon.runDeamon(RunMethod.CONSOLE);
         Properties botInfo;
@@ -50,7 +53,15 @@ public class Main {
         });
         bot.login();
         bot.getEventChannel().registerListenerHost(new Nudger());
+        logger.fine("Registered listener Nudger");
         bot.getEventChannel().registerListenerHost(new Repeater());
+        logger.fine("Registered Listener Repeater");
+        bot.getEventChannel().registerListenerHost(new Replier());
+        logger.fine("Registered listener Replier");
+        bot.getEventChannel().registerListenerHost(new ApplicationPasser());
+        logger.fine("Registered listener ApplicationPasser");
+        bot.getEventChannel().registerListenerHost(new GroupTalkativeChange());
+        logger.fine("Registered listener GroupTalkativeChange");
         bot.join();
 
     }
