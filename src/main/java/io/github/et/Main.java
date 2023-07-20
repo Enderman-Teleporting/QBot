@@ -1,8 +1,11 @@
 package io.github.et;
 
 import io.github.et.exceptions.BotInfoNotFoundException;
+import io.github.et.messager.Nudger;
+import io.github.et.messager.Repeater;
 import io.github.ettoolset.tools.deamon.Deamon;
 import io.github.ettoolset.tools.deamon.RunMethod;
+import io.github.ettoolset.tools.logger.LevelNotMatchException;
 import io.github.ettoolset.tools.logger.Logger;
 import io.github.ettoolset.tools.logger.RepeatedLoggerDeclarationException;
 import net.mamoe.mirai.Bot;
@@ -17,7 +20,7 @@ import java.io.IOException;
 import java.util.Properties;
 public class Main {
     public static void main(String[] args) throws IOException, BotInfoNotFoundException, RepeatedLoggerDeclarationException {
-        Logger logger=new Logger();
+        Logger logger=new Logger(Logger.Levels.DEBUG,null);
         Deamon.runDeamon(RunMethod.CONSOLE);
         Properties botInfo;
         logger.info("Trying to load bot info from ./botInfo.properties");
@@ -25,10 +28,13 @@ public class Main {
             botInfo=new Properties();
             botInfo.load(new BufferedReader(new FileReader("./botInfo.properties")));
             logger.info("Successfully loaded bot info");
+            logger.fine("");
         }catch(IOException e){
             new File("./botInfo.properties").createNewFile();
-            logger.fatal();
+            logger.fatal("Bot loading error occurred. Error info as follows:");
             throw new BotInfoNotFoundException("Cannot load bot info from file: ./botInfo.properties");
+        } catch (LevelNotMatchException e) {
+            throw new RuntimeException(e);
         }
         Bot bot= BotFactory.INSTANCE.newBot(Long.parseLong(botInfo.getProperty("qq")), BotAuthorization.byQRCode(),botConfiguration -> {
             botConfiguration.setProtocol(BotConfiguration.MiraiProtocol.MACOS);
@@ -43,7 +49,8 @@ public class Main {
 
         });
         bot.login();
-        Runner.runAll(bot);
+        bot.getEventChannel().registerListenerHost(new Nudger());
+        bot.getEventChannel().registerListenerHost(new Repeater());
         bot.join();
 
     }

@@ -3,7 +3,6 @@ package io.github.et.tools;
 /*import love.forte.common.ioc.annotation.Beans;
 import love.forte.simbot.bot.Bot;*/
 
-import java.io.Console;
 //@Beans
 public class cmd {
     /*public static String getCommand(){

@@ -19,6 +19,7 @@ shadowJar{
 }
 
 dependencies {
+    implementation 'org.asynchttpclient:async-http-client:2.12.3'
     implementation 'net.sf.json-lib:json-lib:2.4:jdk15'
     implementation 'cn.hutool:hutool-all:5.8.11'
     implementation 'io.github.enderman-tping:ETToolset:1.0.0-pre3'
