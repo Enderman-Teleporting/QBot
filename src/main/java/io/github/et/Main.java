@@ -4,6 +4,7 @@ import io.github.et.eventListener.ApplicationPasser;
 import io.github.et.eventListener.GroupTalkativeChange;
 import io.github.et.exceptions.BotInfoNotFoundException;
 import io.github.et.messager.Nudger;
+import io.github.et.messager.Pic2;
 import io.github.et.messager.Repeater;
 import io.github.et.messager.Replier;
 import io.github.ettoolset.tools.deamon.Deamon;
@@ -40,7 +41,7 @@ public class Main {
             throw new RuntimeException(e);
         }
         Bot bot= BotFactory.INSTANCE.newBot(Long.parseLong(botInfo.getProperty("qq")), BotAuthorization.byQRCode(),botConfiguration -> {
-            botConfiguration.setProtocol(BotConfiguration.MiraiProtocol.MACOS);
+            botConfiguration.setProtocol(BotConfiguration.MiraiProtocol.ANDROID_WATCH);
             botConfiguration.setHeartbeatStrategy(BotConfiguration.HeartbeatStrategy.REGISTER);
             botConfiguration.setWorkingDir(new File("."));
             botConfiguration.setCacheDir(new File("cache"));
@@ -62,6 +63,8 @@ public class Main {
         logger.fine("Registered listener ApplicationPasser");
         bot.getEventChannel().registerListenerHost(new GroupTalkativeChange());
         logger.fine("Registered listener GroupTalkativeChange");
+        bot.getEventChannel().registerListenerHost(new Pic2());
+        logger.fine("Registered listener Pic2");
         bot.join();
 
     }
