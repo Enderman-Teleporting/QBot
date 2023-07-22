@@ -20,7 +20,7 @@ shadowJar{
 
 dependencies {
     implementation 'net.sf.json-lib:json-lib:2.4:jdk15'
-    implementation 'cn.hutool:hutool-all:5.8.11'
+    implementation 'cn.hutool:hutool-all:5.8.20'
     implementation 'io.github.enderman-tping:ETToolset:1.0.0-pre3'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10'
     implementation 'io.github.fragland:MineStat:3.0.5'
