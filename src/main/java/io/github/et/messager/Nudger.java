@@ -18,7 +18,7 @@ public class Nudger extends SimpleListenerHost {
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         try{
             Logger logger= Logger.getDeclaredLogger();
-            logger.error("Exception occurred when handling a repeating operation, error info as follows:");
+            logger.error("Exception occurred when handling a nudging operation, error info as follows:");
         } catch (LoggerNotDeclaredException e) {
             throw new RuntimeException(e);
         }

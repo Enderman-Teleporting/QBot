@@ -24,7 +24,7 @@ public class Replier extends SimpleListenerHost {
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         try {
             Logger logger = Logger.getDeclaredLogger();
-            logger.error("Exception occurred when handling a repeating operation, error info as follows:");
+            logger.error("Exception occurred when handling a reply operation, error info as follows:");
         } catch (LoggerNotDeclaredException e) {
             throw new RuntimeException(e);
         }
@@ -77,7 +77,7 @@ public class Replier extends SimpleListenerHost {
 
     }
     @EventHandler
-    public void privateTalk(FriendMessageEvent msgEvent) throws IOException {
+    public void privateTalk(FriendMessageEvent msgEvent) throws IOException, LoggerNotDeclaredException {
         String msg = msgEvent.getMessage().contentToString();
         msg = msg.replace(" ", "%20");
         String result = getApi("https://api.qingyunke.com/api.php?key=free&appid=0&msg=" + msg, "content");
@@ -113,6 +113,8 @@ public class Replier extends SimpleListenerHost {
                     .append(result)
                     .build();
         }
+        Logger logger=Logger.getDeclaredLogger();
+        logger.info("Handled message reply at"+msgEvent.getSubject().getId());
     }
 
 }

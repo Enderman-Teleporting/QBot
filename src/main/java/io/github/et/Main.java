@@ -1,16 +1,14 @@
 package io.github.et;
 
-import io.github.et.eventListener.ApplicationPasser;
-import io.github.et.eventListener.GroupTalkativeChange;
+import io.github.et.eventListener.*;
 import io.github.et.exceptions.BotInfoNotFoundException;
-import io.github.et.messager.Nudger;
-import io.github.et.messager.Pic2;
-import io.github.et.messager.Repeater;
-import io.github.et.messager.Replier;
+import io.github.et.messager.*;
+import io.github.et.tools.CommandConsole;
 import io.github.ettoolset.tools.deamon.Deamon;
 import io.github.ettoolset.tools.deamon.RunMethod;
 import io.github.ettoolset.tools.logger.LevelNotMatchException;
 import io.github.ettoolset.tools.logger.Logger;
+import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import io.github.ettoolset.tools.logger.RepeatedLoggerDeclarationException;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.BotFactory;
@@ -24,22 +22,19 @@ import java.io.IOException;
 import java.util.Properties;
 public class Main {
     public static void main(String[] args) throws IOException, BotInfoNotFoundException, RepeatedLoggerDeclarationException, LevelNotMatchException {
-        Logger logger=new Logger(Logger.Levels.DEBUG,null);
-        Deamon.runDeamon(RunMethod.CONSOLE);
+        System.out.println("Trying to load bot info from ./botInfo.properties");
         Properties botInfo;
-        logger.info("Trying to load bot info from ./botInfo.properties");
         try{
             botInfo=new Properties();
             botInfo.load(new BufferedReader(new FileReader("./botInfo.properties")));
-            logger.info("Successfully loaded bot info");
-            logger.fine("");
-        }catch(IOException e){
+            System.out.println("Successfully loaded bot info");
+        }catch(IOException e) {
             new File("./botInfo.properties").createNewFile();
-            logger.fatal("Bot loading error occurred. Error info as follows:");
             throw new BotInfoNotFoundException("Cannot load bot info from file: ./botInfo.properties");
-        } catch (LevelNotMatchException e) {
-            throw new RuntimeException(e);
         }
+        Logger logger=new Logger(Logger.Levels.DEBUG,botInfo.getProperty("Log"));
+        logger.debug("Initialized logger");
+        Deamon.runDeamon(RunMethod.CONSOLE);
         Bot bot= BotFactory.INSTANCE.newBot(Long.parseLong(botInfo.getProperty("qq")), BotAuthorization.byQRCode(),botConfiguration -> {
             botConfiguration.setProtocol(BotConfiguration.MiraiProtocol.ANDROID_WATCH);
             botConfiguration.setHeartbeatStrategy(BotConfiguration.HeartbeatStrategy.REGISTER);
@@ -53,18 +48,60 @@ public class Main {
 
         });
         bot.login();
-        bot.getEventChannel().registerListenerHost(new Nudger());
-        logger.fine("Registered listener Nudger");
-        bot.getEventChannel().registerListenerHost(new Repeater());
-        logger.fine("Registered Listener Repeater");
-        bot.getEventChannel().registerListenerHost(new Replier());
-        logger.fine("Registered listener Replier");
-        bot.getEventChannel().registerListenerHost(new ApplicationPasser());
-        logger.fine("Registered listener ApplicationPasser");
-        bot.getEventChannel().registerListenerHost(new GroupTalkativeChange());
-        logger.fine("Registered listener GroupTalkativeChange");
-        bot.getEventChannel().registerListenerHost(new Pic2());
-        logger.fine("Registered listener Pic2");
+        if(botInfo.get("DoReplyNudgeEvent").equals("true")){
+            bot.getEventChannel().registerListenerHost(new Nudger());
+            logger.fine("Registered listener Nudger");
+        }
+        if(botInfo.get("Repeat").equals("true")){
+            bot.getEventChannel().registerListenerHost(new Repeater());
+            logger.fine("Registered Listener Repeater");
+        }
+        if(botInfo.get("Reply").equals("true")){
+            bot.getEventChannel().registerListenerHost(new Replier());
+            logger.fine("Registered listener Replier");
+        }
+        if(botInfo.get("PassAddRequest").equals("true")){
+            bot.getEventChannel().registerListenerHost(new ApplicationPasser());
+            logger.fine("Registered listener ApplicationPasser");
+        }
+        if(botInfo.get("GroupTalkative").equals("true")){
+            bot.getEventChannel().registerListenerHost(new GroupTalkativeChange());
+            logger.fine("Registered listener GroupTalkativeChange");
+        }
+        if(botInfo.get("MineServerStat").equals("true")){
+            bot.getEventChannel().registerListenerHost(new ServerSearcher());
+            logger.fine("Registered listener ServerSearcher");
+        }
+        if(botInfo.get("Admin").equals("true")){
+            bot.getEventChannel().registerListenerHost(new AdminBuffet());
+            logger.fine("Registered listener AdminBuffet");
+        }
+        if(botInfo.get("GroupNameChange").equals("true")){
+            bot.getEventChannel().registerListenerHost(new ChangeGroupName());
+            logger.fine("Registered listener ChangeGroupName");
+        }
+        if(botInfo.get("GroupName").equals("true")){
+            bot.getEventChannel().registerListenerHost(new GroupNameChangeEvent());
+            logger.fine("Registered listener GroupNameChangeEvent");
+        }
+        if(botInfo.get("Exit").equals("true")){
+            bot.getEventChannel().registerListenerHost(new LeaverListener());
+            logger.fine("Registered listener LeaverListener");
+        }
+
+        Thread thread=new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        CommandConsole.handle(bot);
+                    } catch (LoggerNotDeclaredException | LevelNotMatchException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
         bot.join();
 
     }

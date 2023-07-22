@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/QBot.main.iml" filepath="$PROJECT_DIR$/.idea/modules/QBot.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/QBot.test.iml" filepath="$PROJECT_DIR$/.idea/modules/QBot.test.iml" />
     </modules>
   </component>
 </project>

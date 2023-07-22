@@ -2,7 +2,7 @@ package io.github.et.tools;
 
 import me.dilley.MineStat;
 
-public class serverSearching {
+public class ServerSearching {
     static String result;
     public static String search(String ip,int port){
         try {
@@ -28,9 +28,7 @@ public class serverSearching {
         }
         return result;
     }
-    public static byte[] searchImg(String ip,int port){
-        return ImageUtil.toImage(new MineStat(ip,port).getFaviconB64());
-    }
+
     public static String search(String ip){
         try {
             MineStat mineStat = new MineStat(ip);
@@ -53,8 +51,5 @@ public class serverSearching {
             result = "出了点小错...有没有一种可能,服务器不在线或者不存在?";
         }
         return result;
-    }
-    public static byte[] searchImg(String ip){
-        return ImageUtil.toImage(new MineStat(ip).getFaviconB64());
     }
 }
