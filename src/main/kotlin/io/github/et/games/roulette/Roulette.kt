@@ -3,6 +3,8 @@ package io.github.et.games.roulette
 import io.github.et.exceptions.GameCrashedException
 import io.github.et.games.Player
 import io.github.ettoolset.tools.logger.Logger
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.ListeningStatus
 import net.mamoe.mirai.event.SimpleListenerHost
@@ -37,13 +39,13 @@ class Roulette: SimpleListenerHost() {
                     game.player1=Player(group.id,sender.id)
                     game.gun=Gun(bulletCount)
                     game.bulletArray= game.gun!!.initialize()
-                    Thread {
-                        Thread.sleep(30000)
+                    launch{
+                        delay(30000)
                         if (game.player2 == null) {
                             games.remove(group.id)
                             game.isGameRunning=false
                         }
-                    }.start()
+                    }
                     return ListeningStatus.LISTENING
                 }
             }
