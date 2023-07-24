@@ -2,6 +2,8 @@ package io.github.et;
 
 import io.github.et.eventListener.*;
 import io.github.et.exceptions.BotInfoNotFoundException;
+import io.github.et.games.roulette.Roulette;
+import io.github.et.games.roulette.RussianPistol;
 import io.github.et.messager.*;
 import io.github.et.tools.CommandConsole;
 import io.github.ettoolset.tools.deamon.Deamon;
@@ -87,6 +89,10 @@ public class Main {
         if(botInfo.get("Exit").equals("true")){
             bot.getEventChannel().registerListenerHost(new LeaverListener());
             logger.fine("Registered listener LeaverListener");
+        }
+        if(botInfo.get("Pistol").equals("true")){
+            bot.getEventChannel().registerListenerHost(new Roulette());
+            logger.fine("Registered listener Roulette");
         }
 
         Thread thread=new Thread(new Runnable() {
