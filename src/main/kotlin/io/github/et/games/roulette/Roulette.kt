@@ -42,11 +42,12 @@ class Roulette: SimpleListenerHost() {
                     launch{
                         delay(30000)
                         if (game.player2 == null) {
-                            games.remove(group.id)
-                            game.isGameRunning=false
+                            game.resetGame()
                         }
                     }
                     return ListeningStatus.LISTENING
+                }else{
+                    sender.sendMessage("子弹数量只能是1到5,一共也才6个子弹槽")
                 }
             }
             message.contentToString()=="接受挑战"->{

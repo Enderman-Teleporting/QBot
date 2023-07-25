@@ -3,7 +3,6 @@ package io.github.et;
 import io.github.et.eventListener.*;
 import io.github.et.exceptions.BotInfoNotFoundException;
 import io.github.et.games.roulette.Roulette;
-import io.github.et.games.roulette.RussianPistol;
 import io.github.et.messager.*;
 import io.github.et.tools.CommandConsole;
 import io.github.ettoolset.tools.deamon.Deamon;
@@ -22,8 +21,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+
 public class Main {
     public static void main(String[] args) throws IOException, BotInfoNotFoundException, RepeatedLoggerDeclarationException, LevelNotMatchException {
+        Logger logger;
         System.out.println("Trying to load bot info from ./botInfo.properties");
         Properties botInfo;
         try{
@@ -34,7 +35,12 @@ public class Main {
             new File("./botInfo.properties").createNewFile();
             throw new BotInfoNotFoundException("Cannot load bot info from file: ./botInfo.properties");
         }
-        Logger logger=new Logger(Logger.Levels.DEBUG,botInfo.getProperty("Log"));
+        if(botInfo.getProperty("Log").equals("null")){
+            logger=new Logger(Logger.Levels.DEBUG,null);
+        }else{
+            logger=new Logger(Logger.Levels.DEBUG,botInfo.getProperty("Log"));
+        }
+
         logger.debug("Initialized logger");
         Deamon.runDeamon(RunMethod.CONSOLE);
         Bot bot= BotFactory.INSTANCE.newBot(Long.parseLong(botInfo.getProperty("qq")), BotAuthorization.byQRCode(),botConfiguration -> {
@@ -95,16 +101,12 @@ public class Main {
             logger.fine("Registered listener Roulette");
         }
 
-        Thread thread=new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                while(true){
-                    try {
-                        CommandConsole.handle(bot);
-                    } catch (LoggerNotDeclaredException | LevelNotMatchException e) {
-                        throw new RuntimeException(e);
-                    }
+        Thread thread=new Thread(() -> {
+            while(true){
+                try {
+                    CommandConsole.handle(bot);
+                } catch (LoggerNotDeclaredException | LevelNotMatchException e) {
+                    throw new RuntimeException(e);
                 }
             }
         });
