@@ -1,7 +1,8 @@
 package io.github.et.games.iAmAWolf
 
 data class Game(var playerNum:Int){
-    var players:Array<Player>?=null
+    var host:Player?=null
+    var players:ArrayList<Player> =ArrayList()
     var isGameRunning:Boolean = false
     var wolf:Int = 0
     var doubleClawDoubleWolfCrow:Int = 0
@@ -16,25 +17,26 @@ data class Game(var playerNum:Int){
     var fool:Int = 0
     var hunter:Int = 0
     var knight:Int = 0
-    var currentStatus=Status.GETTING_READY
-    var wolfMembers:Array<Player>?=null
-    var doubleClawDoubleWolfCrowMembers:Array<Player>?=null
-    var invisibleWolfMembers:Array<Player>?=null
-    var gargoyleMembers:Array<Player>?=null
-    var wolfKingMembers:Array<Player>?=null
-    var whiteWolfKingMembers:Array<Player>?=null
-    var villagerMembers:Array<Player>?=null
-    var guardianMembers:Array<Player>?=null
-    var witchMembers:Array<Player>?=null
-    var predictorMembers:Array<Player>?=null
-    var foolMembers:Array<Player>? =null
-    var hunterMembers:Array<Player>? = null
-    var knightMembers: Array<Player>? = null
+    var currentStatus=Status.PRE_GAME
+    var wolfMembers:ArrayList<Player> =ArrayList()
+    var doubleClawDoubleWolfCrowMembers:ArrayList<Player> =ArrayList()
+    var invisibleWolfMembers:ArrayList<Player> =ArrayList()
+    var gargoyleMembers:ArrayList<Player> =ArrayList()
+    var wolfKingMembers:ArrayList<Player>?=ArrayList()
+    var whiteWolfKingMembers:ArrayList<Player> =ArrayList()
+    var villagerMembers:ArrayList<Player> =ArrayList()
+    var guardianMembers:ArrayList<Player> =ArrayList()
+    var witchMembers:ArrayList<Player> =ArrayList()
+    var predictorMembers:ArrayList<Player> =ArrayList()
+    var foolMembers:ArrayList<Player> =ArrayList()
+    var hunterMembers:ArrayList<Player> = ArrayList()
+    var knightMembers: ArrayList<Player> = ArrayList()
     var currentPolice:Player? = null
 
     fun resetGame(){
+        host=null
         playerNum=0
-        players=null
+        players=ArrayList()
         isGameRunning= false
         wolf = 0
         doubleClawDoubleWolfCrow= 0
@@ -49,21 +51,21 @@ data class Game(var playerNum:Int){
         fool= 0
         hunter = 0
         knight = 0
-        currentStatus=Status.GETTING_READY
-        players= emptyArray()
-        wolfMembers=null
-        doubleClawDoubleWolfCrowMembers=null
-        invisibleWolfMembers=null
-        gargoyleMembers=null
-        wolfKingMembers=null
-        whiteWolfKingMembers=null
-        villagerMembers=null
-        guardianMembers=null
-        witchMembers=null
-        predictorMembers=null
-        foolMembers=null
-        hunterMembers= null
-        knightMembers= null
+        currentStatus=Status.PRE_GAME
+        players= ArrayList()
+        wolfMembers=ArrayList()
+        doubleClawDoubleWolfCrowMembers=ArrayList()
+        invisibleWolfMembers=ArrayList()
+        gargoyleMembers=ArrayList()
+        wolfKingMembers=ArrayList()
+        whiteWolfKingMembers=ArrayList()
+        villagerMembers=ArrayList()
+        guardianMembers=ArrayList()
+        witchMembers=ArrayList()
+        predictorMembers=ArrayList()
+        foolMembers=ArrayList()
+        hunterMembers= ArrayList()
+        knightMembers= ArrayList()
         currentPolice=null
     }
 }
