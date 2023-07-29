@@ -59,7 +59,11 @@ class IAmAWolf : SimpleListenerHost() {
                     ListeningStatus.LISTENING
                 }
             }
+            message.contentToString().startsWith("队伍配置：")->{
+
+            }
         }
+        return ListeningStatus.LISTENING
     }
     
 }
