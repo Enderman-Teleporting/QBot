@@ -6,7 +6,6 @@ import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
-import net.mamoe.mirai.event.events.NewFriendRequestEvent;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
@@ -25,6 +24,7 @@ public class GroupNameChangeEvent extends SimpleListenerHost {
     }
     @EventHandler
     public void detectChange(net.mamoe.mirai.event.events.GroupNameChangeEvent event) throws LoggerNotDeclaredException {
+        assert event.getOperator() != null;
         MessageChain message= new MessageChainBuilder()
                 .append(new At(event.getOperator().getId()))
                 .append("把群名从")

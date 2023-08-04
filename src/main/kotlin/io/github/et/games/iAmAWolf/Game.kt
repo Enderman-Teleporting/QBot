@@ -1,9 +1,10 @@
 package io.github.et.games.iAmAWolf
 
 data class Game(var playerNum:Int){
+    var currentWolfNumber:Int=0
+    var currentGoodNumber:Int=0
     var host:Player?=null
     var players:ArrayList<Player> =ArrayList()
-    var isGameRunning:Boolean = false
     var wolf:Int = 0
     var doubleClawDoubleWolfCrow:Int = 0
     var invisibleWolf:Int = 0
@@ -34,10 +35,11 @@ data class Game(var playerNum:Int){
     var currentPolice:Player? = null
 
     fun resetGame(){
+        currentWolfNumber=0
+        currentGoodNumber=0
         host=null
         playerNum=0
         players=ArrayList()
-        isGameRunning= false
         wolf = 0
         doubleClawDoubleWolfCrow= 0
         invisibleWolf= 0

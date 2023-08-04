@@ -1,14 +1,12 @@
 package io.github.et.eventListener;
 
 import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
-import io.github.et.tools.ServerSearching;
 import io.github.ettoolset.tools.logger.Logger;
 import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
-import net.mamoe.mirai.event.events.MessageEvent;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")

@@ -1,7 +1,6 @@
 package io.github.et.eventListener;
 
 import io.github.et.exceptions.messageExceptions.IllegalEventHandlingException;
-import io.github.et.exceptions.messageExceptions.IllegalNudgeDealingException;
 import io.github.ettoolset.tools.logger.Logger;
 import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
@@ -9,11 +8,7 @@ import net.mamoe.mirai.contact.NormalMember;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
-import net.mamoe.mirai.event.events.NudgeEvent;
-import net.mamoe.mirai.message.action.Nudge;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Random;
 
 
 @SuppressWarnings("unused")

@@ -24,6 +24,10 @@ class IAmAWolf : SimpleListenerHost() {
         when{
             message.contentToString().startsWith("狼人杀 ")->{
                 if (game.currentStatus==Status.PRE_GAME) {
+                    if(!bot.friends.contains(sender.id)){
+                        subject.sendMessage("你还不是我的好友哦 请先添加好友")
+                        return ListeningStatus.LISTENING
+                    }
                     val msg:Int
                     try {
                         msg = message.contentToString().replace("狼人杀 ", "").toInt()
@@ -35,8 +39,8 @@ class IAmAWolf : SimpleListenerHost() {
                         subject.sendMessage("最少四个人开始玩")
                         return ListeningStatus.LISTENING
                     }else{
-                        game.host= Player(group.id,sender.id,false)
-                        game.players.add(Player(group.id,sender.id,false))
+                        game.host= Player(group.id,sender.id,false,true)
+                        game.players.add(Player(group.id,sender.id,false,true))
                         game.currentStatus=Status.GETTING_READY
                         game.playerNum=msg
                         subject.sendMessage("""已开启${msg}人狼人杀游戏,请发起者按以下格式配制游戏:
@@ -47,7 +51,7 @@ class IAmAWolf : SimpleListenerHost() {
                             """.trimIndent())
                         launch {
                             delay(1200000)
-                            if(game.currentStatus!=Status.ENGAGING){
+                            if(game.currentStatus==Status.GETTING_READY){
                                 subject.sendMessage("两分钟了,等不及了,如果你还想玩的话重新开吧")
                                 game.resetGame()
                             }
@@ -60,7 +64,58 @@ class IAmAWolf : SimpleListenerHost() {
                 }
             }
             message.contentToString().startsWith("队伍配置：")->{
+                if (game.currentStatus==Status.GETTING_READY&&sender.id==game.host!!.playerId) {
+                    try {
+                        var teamArray=message.contentToString().replace("队伍配置：","").split(" ")
+                        game.wolf=teamArray[0].toInt()
+                        game.doubleClawDoubleWolfCrow=teamArray[1].toInt()
+                        game.invisibleWolf=teamArray[2].toInt()
+                        game.gargoyle=teamArray[3].toInt()
+                        game.wolfKing=teamArray[4].toInt()
+                        game.whiteWolfKing=teamArray[5].toInt()
+                        game.villager=teamArray[6].toInt()
+                        game.guardian=teamArray[7].toInt()
+                        game.witch=teamArray[8].toInt()
+                        game.predictor=teamArray[9].toInt()
+                        game.fool=teamArray[10].toInt()
+                        game.hunter=teamArray[11].toInt()
+                        game.knight=teamArray[12].toInt()
+                        game.currentWolfNumber=teamArray[0].toInt()+teamArray[1].toInt()+teamArray[2].toInt()+teamArray[3].toInt()+teamArray[4].toInt()+teamArray[5].toInt()
+                        game.currentGoodNumber=teamArray[6].toInt()+teamArray[7].toInt()+teamArray[8].toInt()+teamArray[9].toInt()+teamArray[10].toInt()+teamArray[11].toInt()+teamArray[12].toInt()
+                        if (game.currentWolfNumber<1||game.currentGoodNumber<2){
+                            subject.sendMessage("你这配置咋玩啊 请重新开始游戏")
+                            game.resetGame()
+                            return ListeningStatus.LISTENING
+                        }
+                        subject.sendMessage("配置完成！发送“加入游戏”即可加入")
+                        game.currentStatus=Status.ENGAGING
+                    }catch(e:Exception){
+                        subject.sendMessage("非法配置，请重新输入")
+                        return ListeningStatus.LISTENING
+                    }
 
+
+                }
+
+
+            }
+            message.contentToString() == "加入游戏" ->{
+                if(game.currentStatus==Status.ENGAGING) {
+                    if (game.players.size < game.playerNum) {
+                        if(bot.friends.contains(sender.id)){
+                            game.players.add(Player(group.id, sender.id, false, true))
+                            subject.sendMessage("加入成功")
+                            return ListeningStatus.LISTENING
+                        } else{
+                            subject.sendMessage("你还不是我好友哦，玩的时候是要有私聊消息的")
+                            return ListeningStatus.LISTENING
+                        }
+                    } else {
+                        subject.sendMessage("游戏满人了哦")
+                        return ListeningStatus.LISTENING
+                    }
+
+                }
             }
         }
         return ListeningStatus.LISTENING
