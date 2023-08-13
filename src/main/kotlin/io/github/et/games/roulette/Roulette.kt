@@ -27,7 +27,7 @@ class Roulette: SimpleListenerHost() {
         val game = games.getOrPut(group.id) { Game(null, null, null, null) }
 
         when {
-            message.contentToString().startsWith("俄罗斯轮盘") -> {
+            message.contentToString().startsWith("俄罗斯轮盘 ") -> {
                 val bulletCount = message.contentToString().split(" ")[1].toIntOrNull()
                 if(bulletCount==null){
                     group.sendMessage("非法子弹数量")
