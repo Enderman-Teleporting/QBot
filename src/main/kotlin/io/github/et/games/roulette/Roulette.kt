@@ -9,7 +9,7 @@ import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.ListeningStatus
 import net.mamoe.mirai.event.SimpleListenerHost
 import net.mamoe.mirai.event.events.GroupMessageEvent
-import net.mamoe.mirai.message.data.At
+import net.mamoe.mirai.message.data.*
 import kotlin.coroutines.CoroutineContext
 
 
@@ -34,7 +34,11 @@ class Roulette: SimpleListenerHost() {
                     return ListeningStatus.LISTENING
                 }
                 if (bulletCount in 1..5) {
-                    subject.sendMessage(At(sender.id)+"发起了挑战！输入“接受挑战以加入！”")
+                    val chain: MessageChain= buildMessageChain {
+                        add(At(sender.id))
+                        +PlainText("发起了挑战！输入“接受挑战”以加入！")
+                    }
+                    subject.sendMessage(chain)
                     game.isGameRunning=true
                     game.player1=Player(group.id,sender.id)
                     game.gun=Gun(bulletCount)
@@ -53,9 +57,15 @@ class Roulette: SimpleListenerHost() {
             message.contentToString()=="接受挑战"->{
                 if (game.isGameRunning && game.player1 != null && game.player2 == null) {
                     game.player2 = Player(group.id, sender.id)
-                    group.sendMessage("${At(game.player2!!.playerId)} 接受了挑战, ${At(game.player1!!.playerId)}，开枪吧！")
+                    val chain= buildMessageChain {
+                        add(At(game.player2!!.playerId))
+                        +PlainText(" 接受了挑战, ")
+                        add(At(game.player1!!.playerId))
+                        +PlainText("，开枪吧！")
+                    }
+                    group.sendMessage(chain)
                     game.currentPlayer = game.player1
-                    game.round+=1
+                    game.round=0
                     return ListeningStatus.LISTENING
                 }
             }
@@ -63,8 +73,16 @@ class Roulette: SimpleListenerHost() {
                 if (game.isGameRunning && game.player1 != null && game.player2 != null) {
                     if (sender.id == game.currentPlayer!!.playerId) {
                         if (game.bulletArray[game.round]!!) {
-                            group.sendMessage(At(game.currentPlayer!!.playerId) + "崩！你寄了")
-                            group.sendMessage("${At((if (game.currentPlayer==game.player1)game.player2 else game.player1)!!.playerId)}是本场胜利者！" )
+                            var chain= buildMessageChain {
+                                add(At(game.currentPlayer!!.playerId))
+                                +PlainText("崩！你寄了")
+                            }
+                            group.sendMessage(chain)
+                            chain= buildMessageChain {
+                                add(At((if (game.currentPlayer==game.player1)game.player2 else game.player1)!!.playerId))
+                                +PlainText("是本场获胜者！")
+                            }
+                            group.sendMessage(chain)
                             var bulletArrange:String=""
                             for (i in game.bulletArray){
                                 bulletArrange += (if(i!!)"1" else{"0"})
@@ -73,9 +91,17 @@ class Roulette: SimpleListenerHost() {
                             game.resetGame()
                             return ListeningStatus.LISTENING
                         } else {
-                            subject.sendMessage("${At(game.currentPlayer!!.playerId)} 你很幸运，没有寄")
+                            var chain= buildMessageChain {
+                                add(At(game.currentPlayer!!.playerId))
+                                +PlainText("你很幸运，没有寄")
+                            }
+                            subject.sendMessage(chain)
                             game.currentPlayer = if (game.currentPlayer == game.player1) game.player2 else game.player1
-                            group.sendMessage("${At(game.currentPlayer!!.playerId)} 轮到你了")
+                            chain= buildMessageChain {
+                                add(At(game.currentPlayer!!.playerId))
+                                +PlainText("轮到你了")
+                            }
+                            group.sendMessage(chain)
                             return ListeningStatus.LISTENING
                         }
                     }
