@@ -104,7 +104,7 @@ public class Main {
             logger.fine("Registered listener Roulette");
         }
 
-        Thread thread=new Thread(() -> {
+        new Thread(() -> {
             while(true){
                 try {
                     CommandConsole.handle(bot);
@@ -112,7 +112,7 @@ public class Main {
                     throw new RuntimeException(e);
                 }
             }
-        });
+        }).start();
         bot.join();
 
     }
