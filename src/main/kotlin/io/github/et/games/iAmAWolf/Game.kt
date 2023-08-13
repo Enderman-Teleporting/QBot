@@ -23,7 +23,7 @@ data class Game(var playerNum:Int){
     var doubleClawDoubleWolfCrowMembers:ArrayList<Player> =ArrayList()
     var invisibleWolfMembers:ArrayList<Player> =ArrayList()
     var gargoyleMembers:ArrayList<Player> =ArrayList()
-    var wolfKingMembers:ArrayList<Player>?=ArrayList()
+    var wolfKingMembers:ArrayList<Player> =ArrayList()
     var whiteWolfKingMembers:ArrayList<Player> =ArrayList()
     var villagerMembers:ArrayList<Player> =ArrayList()
     var guardianMembers:ArrayList<Player> =ArrayList()

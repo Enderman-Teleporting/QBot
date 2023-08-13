@@ -9,6 +9,7 @@ import net.mamoe.mirai.event.ListeningStatus
 import net.mamoe.mirai.event.SimpleListenerHost
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import kotlin.coroutines.CoroutineContext
+import kotlin.random.Random
 
 @Suppress("unused")
 class IAmAWolf : SimpleListenerHost() {
@@ -19,8 +20,8 @@ class IAmAWolf : SimpleListenerHost() {
         throw GameCrashedException("Game I am a wolf crashed")
     }
     @EventHandler
-    suspend fun GroupMessageEvent.iAmAWolf():ListeningStatus{
-        var game: Game =gameMap.getOrPut(group.id){Game(0)}
+    suspend fun GroupMessageEvent.iAmAWolf() {
+        /*var game: Game =gameMap.getOrPut(group.id){Game(0)}
         when{
             message.contentToString().startsWith("狼人杀 ")->{
                 if (game.currentStatus==Status.PRE_GAME) {
@@ -49,13 +50,6 @@ class IAmAWolf : SimpleListenerHost() {
                             例如：
                             队伍配置：1 2 0 0 0 0 3 1 1 1 0 0 1
                             """.trimIndent())
-                        launch {
-                            delay(1200000)
-                            if(game.currentStatus==Status.GETTING_READY){
-                                subject.sendMessage("两分钟了,等不及了,如果你还想玩的话重新开吧")
-                                game.resetGame()
-                            }
-                        }
                         return ListeningStatus.LISTENING
                     }
                 }else{
@@ -105,6 +99,88 @@ class IAmAWolf : SimpleListenerHost() {
                         if(bot.friends.contains(sender.id)){
                             game.players.add(Player(group.id, sender.id, false, true))
                             subject.sendMessage("加入成功")
+                            for(i in 0..game.playerNum) {
+                                while (true) {
+                                    val randomPlayer = Random(114514L).nextInt(1, 13)
+                                    when (randomPlayer) {
+                                        1 -> {
+                                            game.wolfMembers.add(Player(group.id, sender.id, false, true))
+                                            if (game.wolfMembers.size > game.wolf) {
+                                                game.wolfMembers.removeLast()
+
+                                            }
+                                            else{
+                                                game.players[i].identity="wolf"
+                                                break
+                                            }
+                                        }
+                                        2->{
+                                            game.doubleClawDoubleWolfCrowMembers.add(Player(group.id,sender.id,false,true))
+                                            if(game.doubleClawDoubleWolfCrowMembers.size>game.doubleClawDoubleWolfCrow){
+                                                game.doubleClawDoubleWolfCrowMembers.removeLast()
+                                            }
+                                            else{
+                                                game.players[i].identity="dCDWC"
+                                                break
+                                            }
+                                        }
+                                        3->{
+                                            game.invisibleWolfMembers.add(Player(group.id,sender.id,false,true))
+                                            if(game.invisibleWolfMembers.size>game.invisibleWolf){
+                                                game.invisibleWolfMembers.removeLast()
+                                            }
+                                            else{
+                                                game.players[i].identity="invisibleWolf"
+                                                break
+                                            }
+                                        }
+                                        4->{
+                                            game.gargoyleMembers.add(Player(group.id,sender.id,false,true))
+                                            if(game.gargoyleMembers.size>game.gargoyle){
+                                                game.gargoyleMembers.removeLast()
+                                            }
+                                            else{
+                                                game.players[i].identity="gargoyle"
+                                                break
+                                            }
+                                        }
+                                        5->{
+                                            game.wolfKingMembers.add(Player(group.id,sender.id,false,true))
+                                            if(game.wolfKingMembers.size >game.wolfKing){
+                                                game.wolfKingMembers.removeLast()
+                                            }
+                                            else{
+                                                break
+                                            }
+                                        }
+                                        6->{
+                                            game.whiteWolfKingMembers.add(Player(group.id,sender.id,false,true))
+                                            if(game.wolfKingMembers.size >game.wolfKing){
+                                                game.wolfKingMembers.removeLast()
+                                            }
+                                            else{
+                                                break
+                                            }
+                                        }
+                                        7->{
+                                            game.villagerMembers.add(Player(group.id,sender.id,false,true))
+                                            if(game.villagerMembers.size>game.villager){
+                                                game.villagerMembers.removeLast()
+                                            }
+                                        }
+                                        8->{
+                                            game.guardianMembers.add(Player(group.id,sender.id,false,true))
+                                        }
+                                        9->{
+                                            game.witchMembers
+                                        }
+                                        10->{
+                                            game.
+                                        }
+                                    }
+                                }
+                            }
+                            TODO("character generate, game start announcement, status set")
                             return ListeningStatus.LISTENING
                         } else{
                             subject.sendMessage("你还不是我好友哦，玩的时候是要有私聊消息的")
@@ -114,11 +190,12 @@ class IAmAWolf : SimpleListenerHost() {
                         subject.sendMessage("游戏满人了哦")
                         return ListeningStatus.LISTENING
                     }
-
                 }
+
             }
         }
-        return ListeningStatus.LISTENING
+        return ListeningStatus.LISTENING*/
     }
+
     
 }
