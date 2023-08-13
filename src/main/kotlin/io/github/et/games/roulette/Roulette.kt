@@ -46,12 +46,13 @@ class Roulette: SimpleListenerHost() {
                     launch{
                         delay(30000)
                         if (game.player2 == null) {
+                            subject.sendMessage("30秒还没人...我们先走吧")
                             game.resetGame()
                         }
                     }
                     return ListeningStatus.LISTENING
                 }else{
-                    sender.sendMessage("子弹数量只能是1到5,一共也才6个子弹槽")
+                    group.sendMessage("子弹数量只能是1到5,一共也才6个子弹槽")
                 }
             }
             message.contentToString()=="接受挑战"->{
@@ -102,6 +103,7 @@ class Roulette: SimpleListenerHost() {
                                 +PlainText("轮到你了")
                             }
                             group.sendMessage(chain)
+                            game.round+=1
                             return ListeningStatus.LISTENING
                         }
                     }
