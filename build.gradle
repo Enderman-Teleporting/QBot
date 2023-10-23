@@ -23,7 +23,7 @@ dependencies {
     implementation 'io.github.enderman-tping:ETToolset:1.0.0-pre3'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10'
     implementation 'io.github.fragland:MineStat:3.0.5'
-    implementation 'net.mamoe:mirai-core:2.15.0'
+    implementation 'net.mamoe:mirai-core:2.16.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
 }
