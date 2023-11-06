@@ -21,7 +21,7 @@ shadowJar{
 dependencies {
     implementation 'net.sf.json-lib:json-lib:2.4:jdk15'
     implementation 'io.github.enderman-tping:ETToolset:1.0.0-pre3'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20'
     implementation 'io.github.fragland:MineStat:3.0.5'
     implementation 'net.mamoe:mirai-core:2.15.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
