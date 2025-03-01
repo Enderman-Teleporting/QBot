@@ -77,7 +77,7 @@ public class Main {
             logger.fine("Registered listener Replier");
         }
         if(botInfo.get("PassAddRequest").equals("true")){
-            bot.getEventChannel().registerListenerHost(new ApplicationPasser());
+            bot.getEventChannel().registerListenerHost(new RequestPasser());
             logger.fine("Registered listener ApplicationPasser");
         }
         if(botInfo.get("GroupTalkative").equals("true")){

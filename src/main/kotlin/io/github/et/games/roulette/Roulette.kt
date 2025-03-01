@@ -1,7 +1,6 @@
 package io.github.et.games.roulette
 
 import io.github.et.exceptions.GameCrashedException
-import io.github.et.games.Player
 import io.github.ettoolset.tools.logger.Logger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
