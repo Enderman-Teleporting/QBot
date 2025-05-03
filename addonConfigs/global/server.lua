@@ -8,6 +8,7 @@ return{
         "首先填写bot的账号等基础配置",
         "请在port处填写端口(任意空闲端口均可),id处填写QQ号,useGuide处填写是否开启配置文件中的注释(true为开启,false为关闭),log处填写是否使用日志,是写明存储日志的路径，否写null或不填",
     },
+    help=nil,
     config={
         {name="port",type={"java.lang.Integer"},nullable=false},
         {name="id",type={"java.lang.Long"},nullable=false},

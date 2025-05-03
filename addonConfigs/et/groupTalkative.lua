@@ -3,7 +3,7 @@ return{
     guide={
         "群龙王变更"
     },
-    help="",
+    help=nil,
     config={
         {name="groupTalkative",type= { "java.lang.Boolean","com.alibaba.fastjson.JSONArray" },nullable=false},
     }

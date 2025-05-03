@@ -8,7 +8,7 @@ return{
         "不建议FreeTalk功能设置过多群,一两个就够了,API容易504",
         "PS:绘图和FreeTalk由于API原因未测试过"
     },
-    help="",
+    help="支持群聊和私聊回复 想在群聊中触发请先at机器人 绘图功能格式“绘图 [提示词]”，注意中间空格",
     config={
         {name="URL",type= { "java.lang.String" },nullable=false},
         {name="APIKEY",type= { "java.lang.String" },nullable=false},
