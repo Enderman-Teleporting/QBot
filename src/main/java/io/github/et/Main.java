@@ -1,30 +1,19 @@
 package io.github.et;
 
-import com.alibaba.fastjson2.JSONArray;
-import io.github.et.eventListener.*;
 import io.github.et.exceptions.BotInfoNotFoundException;
-import io.github.et.games.roulette.Roulette;
-import io.github.et.messager.*;
-import io.github.et.tools.CommandConsole;
-import io.github.et.utils.JsonReader;
+import io.github.et.utils.json.JsonReader;
 import io.github.ettoolset.tools.logger.LevelNotMatchException;
 import io.github.ettoolset.tools.logger.Logger;
-import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import io.github.ettoolset.tools.logger.RepeatedLoggerDeclarationException;
 import net.mamoe.mirai.Bot;
 import org.fusesource.jansi.AnsiConsole;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.jse.JsePlatform;
-import top.mrxiaom.overflow.BotBuilder;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Properties;
 import java.util.Scanner;
 
-import static io.github.et.utils.JsonReader.jsonObject;
+import static io.github.et.utils.json.JsonReader.jsonObject;
 
 public class Main {
     public static Globals globals= JsePlatform.standardGlobals();

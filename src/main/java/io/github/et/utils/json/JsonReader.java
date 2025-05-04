@@ -1,13 +1,11 @@
-package io.github.et.utils;
+package io.github.et.utils.json;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson2.JSONObject;
 import io.github.et.exceptions.BotInfoNotFoundException;
 
 import java.io.*;
-import java.util.logging.Logger;
 
 public class JsonReader {
     public static JSONObject jsonObject;
