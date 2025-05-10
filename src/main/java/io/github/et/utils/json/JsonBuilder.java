@@ -1,10 +1,13 @@
 package io.github.et.utils.json;
 
+import com.alibaba.fastjson2.JSONObject;
 import io.github.et.exceptions.BotInfoNotFoundException;
+import io.github.et.utils.lua.Item;
 import io.github.et.utils.lua.LuaLoader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class JsonBuilder {
     public static ArrayList<LuaLoader> luas= new ArrayList<>();
@@ -15,14 +18,6 @@ public class JsonBuilder {
             luas.add(new LuaLoader(luaFile));
         }
     }
-
-
-
-
-
-
-
-
     public static ArrayList<String> findLuaFiles(String folderPath) {
         ArrayList<String> luaFiles = new ArrayList<>();
         File directory = new File(folderPath);
@@ -48,6 +43,25 @@ public class JsonBuilder {
                 traverseDirectory(file, result);
             }
         }
+    }
+
+
+    public static JSONObject buildJson(){
+        JSONObject jsonObject=new JSONObject();
+        int guideListCount=0;
+        Scanner sc=new Scanner(System.in);
+        for (LuaLoader luaLoader : luas) {
+            if(luaLoader.getLuaName().equals("Global")){
+                for (String i:luaLoader.getGuide()) {
+                    jsonObject.put("GUIDE"+guideListCount,i);
+                    guideListCount++;
+                }
+                for(Item i:luaLoader.getItems()){
+                    //TODO use sc
+                }
+            }
+        }
+        return jsonObject;
     }
 
 }
