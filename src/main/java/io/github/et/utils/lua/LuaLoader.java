@@ -15,37 +15,54 @@ public class LuaLoader {
     private String luaPath;
     private String luaName;
     private boolean isGame;
-    private ArrayList<String> guide= new ArrayList<>();
+    private ArrayList<String> guide = new ArrayList<>();
     private String help;
-    private ArrayList<Item> items= new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<>();
 
     public LuaLoader(String luaPath) throws BotInfoNotFoundException, ClassNotFoundException {
-        this.luaPath=luaPath;
+        this.luaPath = luaPath;
         load();
     }
+
     private void load() throws BotInfoNotFoundException, ClassNotFoundException {
-        this.lua= Main.globals.loadfile(this.luaPath).call();
-        if(this.lua.get("feature").isnil()){
-            this.isGame=false;
-            luaName=this.lua.get("feature").tojstring();
-            help=this.lua.get("help").tojstring();
-        } else if (this.lua.get("game").isnil()) {
-            this.isGame=true;
-            luaName=this.lua.get("game").tojstring();
-            help=this.lua.get("rule").tojstring();
-        }else{
-            throw new BotInfoNotFoundException("Error occurred when loading "+this.luaPath+": feature or game name not found");
+        this.lua = Main.globals.loadfile(this.luaPath).call();
+        if (!this.lua.get("feature").isnil()) {
+            this.isGame = false;
+            luaName = this.lua.get("feature").tojstring();
+            help = this.lua.get("help").isnil() ? null : this.lua.get("help").tojstring();
+        } else if (!this.lua.get("game").isnil()) {
+            this.isGame = true;
+            luaName = this.lua.get("game").tojstring();
+            help = this.lua.get("rule").isnil() ? null : this.lua.get("rule").tojstring();
+        } else {
+            throw new BotInfoNotFoundException("Error occurred when loading " + this.luaPath + ": feature or game name not found");
         }
-        for (int i = 0; i < this.lua.get("guide").length(); i++) {
-            this.guide.add(this.lua.get("guide").get(i).tojstring());
-        }
-        for (int i = 1; i <= this.lua.get("config").length(); i++) {
-            LuaValue l=this.lua.get("config").get(i);
-            ArrayList<String> a = new ArrayList<>();
-            for(int j=1;j<=l.length();j++){
-                a.add(l.get("type").get(j).tojstring());
+
+        LuaValue guideTable = this.lua.get("guide");
+        if (!guideTable.isnil()) {
+            for (int i = 1; i <= guideTable.length(); i++) {
+                LuaValue guideValue = guideTable.get(i);
+                if (!guideValue.isnil()) {
+                    this.guide.add(guideValue.tojstring());
+                }
             }
-            this.items.add(new Item(l.get("name").tojstring(),l.get("nullable").checkboolean(),a.toArray(new String[0])));
+        }
+
+        LuaValue configTable = this.lua.get("config");
+        if (!configTable.isnil()) {
+            for (int i = 1; i <= configTable.length(); i++) {
+                LuaValue configItem = configTable.get(i);
+                if (!configItem.isnil()) {
+                    String name = configItem.get("name").tojstring();
+                    boolean nullable = configItem.get("nullable").checkboolean();
+                    LuaValue typeTable = configItem.get("type");
+                    ArrayList<String> types = new ArrayList<>();
+                    for (int j = 1; j <= typeTable.length(); j++) {
+                        types.add(typeTable.get(j).tojstring());
+                    }
+                    this.items.add(new Item(name, nullable, types.toArray(new String[0])));
+                }
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ return{
     },
     help=nil,
     config={
-        {name="exit",type= { "java.lang.Boolean","com.alibaba.fastjson.JSONArray" },nullable=false},
+        {name="exit",type= { "java.lang.Boolean" },nullable=false},
     }
 
 }

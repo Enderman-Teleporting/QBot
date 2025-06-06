@@ -5,6 +5,6 @@ return{
     },
     help=nil,
     config={
-        {name="groupTalkative",type= { "java.lang.Boolean","com.alibaba.fastjson.JSONArray" },nullable=false},
+        {name="groupTalkative",type= { "java.lang.Boolean" },nullable=false},
     }
 }

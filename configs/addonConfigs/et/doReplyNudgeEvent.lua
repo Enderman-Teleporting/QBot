@@ -5,6 +5,6 @@ return{
     },
     help="戳一戳机器人有奇效",
     config={
-        {name="doReplyNudgeEvent",type= { "java.lang.Boolean","com.alibaba.fastjson.JSONArray" },nullable=false},
+        {name="doReplyNudgeEvent",type= { "java.lang.Boolean"},nullable=false},
     }
 }
