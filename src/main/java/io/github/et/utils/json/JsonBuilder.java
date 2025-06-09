@@ -1,19 +1,20 @@
 package io.github.et.utils.json;
 
-import com.alibaba.fastjson2.JSONObject;
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONReader;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSONReader;
 import io.github.et.exceptions.BotInfoNotFoundException;
 import io.github.et.utils.lua.Item;
 import io.github.et.utils.lua.LuaLoader;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static io.github.et.Main.JSON_ALL;
+import static io.github.et.Main.JSON_NO_GUIDE;
 
 public class JsonBuilder {
     public static ArrayList<LuaLoader> luas = new ArrayList<>();
@@ -49,6 +50,17 @@ public class JsonBuilder {
         for (String luaFile : luaFiles) {
             luas.add(new LuaLoader(luaFile));
         }
+
+        // 设置父功能引用
+        for (LuaLoader lua : luas) {
+            if (lua.getParent() != null) {
+                luas.stream()
+                    .filter(p -> p.getLuaName().equals(lua.getParent()))
+                    .findFirst()
+                    .ifPresent(lua::setParentLua);
+            }
+        }
+
         initialized = true;
     }
 
@@ -111,7 +123,7 @@ public class JsonBuilder {
                 }
                 
                 if (!typeSupported) {
-                    System.out.println("不支持的类型，请检查lua文件中的类型定义");
+                    System.out.println("不支持的类型，请检查类型定义");
                     continue;
                 }
                 
@@ -177,12 +189,13 @@ public class JsonBuilder {
         JSONObject featureConfig = new JSONObject();
         
         if (includeRule) {
-            featureConfig.put("guide", lua.getGuide());
+            if (!lua.getAllGuide().isEmpty()) {
+                featureConfig.put("guide", lua.getAllGuide());
+            }
             
             if (lua.getHelp() != null) {
                 featureConfig.put("help", lua.getHelp());
             }
-            
             if (lua.getLua().get("rule") != null) {
                 featureConfig.put("rule", lua.getLua().get("rule").tojstring());
             }
@@ -191,28 +204,36 @@ public class JsonBuilder {
         featureConfig.put("include", new ArrayList<>());
         featureConfig.put("exclude", new ArrayList<>());
 
-        for (Item item : lua.getItems()) {
+        for (Item item : lua.getAllItems()) {
             String itemName = item.getName();
             Object value = null;
             boolean needInput = true;
             
-            if (existingConfig != null && existingConfig.containsKey(featureName) && 
-                existingConfig.getJSONObject(featureName).containsKey(itemName)) {
-                value = existingConfig.getJSONObject(featureName).get(itemName);
-                if (validateConfigValue(value, item)) {
-                    needInput = false;
-                    if (value instanceof Long) {
-                        if (item.getClasses().contains(Integer.class)) {
-                            Long longValue = (Long) value;
-                            if (longValue > Integer.MAX_VALUE || longValue < Integer.MIN_VALUE) {
-                                System.out.println("警告：配置项 " + itemName + " 的值超出Integer范围，需要重新输入");
-                                needInput = true;
-                            } else {
-                                value = longValue.intValue();
-                            }
+            if (existingConfig != null) {
+                if (lua.getParent() != null) {
+                    if (existingConfig.containsKey(lua.getParent()) && 
+                        existingConfig.getJSONObject(lua.getParent()).containsKey(itemName)) {
+                        value = existingConfig.getJSONObject(lua.getParent()).get(itemName);
+                        if (validateConfigValue(value, item)) {
+                            needInput = false;
                         }
-                    } else if (value instanceof Integer && item.getClasses().contains(Long.class)) {
-                        value = ((Integer) value).longValue();
+                    }
+                    if (existingConfig.containsKey(lua.getParent()) && 
+                        existingConfig.getJSONObject(lua.getParent()).containsKey("children") &&
+                        existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").containsKey(featureName) &&
+                        existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).containsKey(itemName)) {
+                        value = existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).get(itemName);
+                        if (validateConfigValue(value, item)) {
+                            needInput = false;
+                        }
+                    }
+                } else {
+                    if (existingConfig.containsKey(featureName) && 
+                        existingConfig.getJSONObject(featureName).containsKey(itemName)) {
+                        value = existingConfig.getJSONObject(featureName).get(itemName);
+                        if (validateConfigValue(value, item)) {
+                            needInput = false;
+                        }
                     }
                 }
             }
@@ -227,32 +248,84 @@ public class JsonBuilder {
 
             if (itemName.equals(featureName)) {
                 if (Boolean.TRUE.equals(value)) {
-                    if (existingConfig != null && existingConfig.containsKey(featureName) && 
-                        existingConfig.getJSONObject(featureName).containsKey("exclude")) {
-                        featureConfig.put("exclude", existingConfig.getJSONObject(featureName).getJSONArray("exclude"));
-                    } else {
-                        System.out.println("请输入要排除的群号（用英文逗号分隔）：");
-                        String excludeInput = scanner.nextLine().trim();
-                        if (!excludeInput.isEmpty()) {
-                            featureConfig.put("exclude", new ArrayList<>(java.util.Arrays.asList(excludeInput.split(","))));
+                    if (existingConfig != null) {
+                        if (lua.getParent() != null) {
+                            if (existingConfig.containsKey(lua.getParent()) && 
+                                existingConfig.getJSONObject(lua.getParent()).containsKey("exclude")) {
+                                featureConfig.put("exclude", existingConfig.getJSONObject(lua.getParent()).getJSONArray("exclude"));
+                            }
+                            else if (existingConfig.containsKey(lua.getParent()) && 
+                                existingConfig.getJSONObject(lua.getParent()).containsKey("children") &&
+                                existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").containsKey(featureName) &&
+                                existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).containsKey("exclude")) {
+                                featureConfig.put("exclude", existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).getJSONArray("exclude"));
+                            } else {
+                                System.out.println("请输入要排除的群号（用英文逗号分隔）：");
+                                String excludeInput = scanner.nextLine().trim();
+                                if (!excludeInput.isEmpty()) {
+                                    featureConfig.put("exclude", new ArrayList<>(java.util.Arrays.asList(excludeInput.split(","))));
+                                }
+                            }
+                        } else {
+                            if (existingConfig.containsKey(featureName) && 
+                                existingConfig.getJSONObject(featureName).containsKey("exclude")) {
+                                featureConfig.put("exclude", existingConfig.getJSONObject(featureName).getJSONArray("exclude"));
+                            } else {
+                                System.out.println("请输入要排除的群号（用英文逗号分隔）：");
+                                String excludeInput = scanner.nextLine().trim();
+                                if (!excludeInput.isEmpty()) {
+                                    featureConfig.put("exclude", new ArrayList<>(java.util.Arrays.asList(excludeInput.split(","))));
+                                }
+                            }
                         }
                     }
                 } else {
-                    if (existingConfig != null && existingConfig.containsKey(featureName) && 
-                        existingConfig.getJSONObject(featureName).containsKey("include")) {
-                        featureConfig.put("include", existingConfig.getJSONObject(featureName).getJSONArray("include"));
-                    } else {
-                        System.out.println("请输入要包含的群号（用英文逗号分隔）：");
-                        String includeInput = scanner.nextLine().trim();
-                        if (!includeInput.isEmpty()) {
-                            featureConfig.put("include", new ArrayList<>(java.util.Arrays.asList(includeInput.split(","))));
+                    if (existingConfig != null) {
+                        if (lua.getParent() != null) {
+                            if (existingConfig.containsKey(lua.getParent()) && 
+                                existingConfig.getJSONObject(lua.getParent()).containsKey("include")) {
+                                featureConfig.put("include", existingConfig.getJSONObject(lua.getParent()).getJSONArray("include"));
+                            }
+                            else if (existingConfig.containsKey(lua.getParent()) && 
+                                existingConfig.getJSONObject(lua.getParent()).containsKey("children") &&
+                                existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").containsKey(featureName) &&
+                                existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).containsKey("include")) {
+                                featureConfig.put("include", existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).getJSONArray("include"));
+                            } else {
+                                System.out.println("请输入要包含的群号（用英文逗号分隔）：");
+                                String includeInput = scanner.nextLine().trim();
+                                if (!includeInput.isEmpty()) {
+                                    featureConfig.put("include", new ArrayList<>(java.util.Arrays.asList(includeInput.split(","))));
+                                }
+                            }
+                        } else {
+                            if (existingConfig.containsKey(featureName) && 
+                                existingConfig.getJSONObject(featureName).containsKey("include")) {
+                                featureConfig.put("include", existingConfig.getJSONObject(featureName).getJSONArray("include"));
+                            } else {
+                                System.out.println("请输入要包含的群号（用英文逗号分隔）：");
+                                String includeInput = scanner.nextLine().trim();
+                                if (!includeInput.isEmpty()) {
+                                    featureConfig.put("include", new ArrayList<>(java.util.Arrays.asList(includeInput.split(","))));
+                                }
+                            }
                         }
                     }
                 }
             }
         }
 
-        jsonObject.put(featureName, featureConfig);
+        if (lua.getParent() != null) {
+            if (!jsonObject.containsKey(lua.getParent())) {
+                jsonObject.put(lua.getParent(), new JSONObject());
+            }
+            if (!jsonObject.getJSONObject(lua.getParent()).containsKey("children")) {
+                jsonObject.getJSONObject(lua.getParent()).put("children", new JSONObject());
+            }
+            jsonObject.getJSONObject(lua.getParent()).getJSONObject("children").put(featureName, featureConfig);
+        } else {
+            jsonObject.put(featureName, featureConfig);
+        }
     }
 
     public static JSONObject buildJson() {
@@ -265,9 +338,9 @@ public class JsonBuilder {
             }
         }
         
-        System.out.println("正在加载、构建配置...");
         JSONObject jsonObject = new JSONObject();
         
+        // 首先处理 Global 配置
         LuaLoader globalLua = luas.stream()
             .filter(lua -> lua.getLuaName().equals("Global"))
             .findFirst()
@@ -277,10 +350,17 @@ public class JsonBuilder {
             configureFeature(globalLua, jsonObject, false);
         }
 
+        // 处理普通功能
         luas.stream()
-            .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame())
+            .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() == null)
             .forEach(lua -> configureFeature(lua, jsonObject, false));
 
+        // 处理子功能
+        luas.stream()
+            .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() != null)
+            .forEach(lua -> configureFeature(lua, jsonObject, false));
+
+        // 处理游戏功能
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && lua.isGame())
             .forEach(lua -> configureFeature(lua, jsonObject, false));
@@ -301,6 +381,7 @@ public class JsonBuilder {
         System.out.println("正在加载、构建配置...");
         JSONObject jsonObject = new JSONObject();
         
+        // 首先处理 Global 配置
         LuaLoader globalLua = luas.stream()
             .filter(lua -> lua.getLuaName().equals("Global"))
             .findFirst()
@@ -310,14 +391,49 @@ public class JsonBuilder {
             configureFeature(globalLua, jsonObject, true);
         }
 
+        // 处理普通功能
         luas.stream()
-            .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame())
+            .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() == null)
             .forEach(lua -> configureFeature(lua, jsonObject, true));
 
+        // 处理子功能
+        luas.stream()
+            .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() != null)
+            .forEach(lua -> configureFeature(lua, jsonObject, true));
+
+        // 处理游戏功能
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && lua.isGame())
             .forEach(lua -> configureFeature(lua, jsonObject, true));
 
         return jsonObject;
+    }
+
+    public static void setValue(String key, Object obj){
+        JSON_ALL.put(key, obj);
+        JSON_NO_GUIDE.put(key, obj);
+    }
+
+    public static void update() throws IOException {
+        if(JSON_ALL!=null&&JSON_NO_GUIDE!=null){
+            File file = new File("./botInfo.json");
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            Object o1=JSON_NO_GUIDE.get("Global");
+            if(o1 instanceof JSONObject||o1 instanceof com.alibaba.fastjson.JSONObject){
+                Object o2=((JSONObject)o1).get("useGuide");
+                if(o2 instanceof Boolean){
+                    if(((Boolean) o2).booleanValue()){
+                        writer.write(com.alibaba.fastjson.JSON.toJSONString(JSON_ALL, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue));
+                    }else{
+                        writer.write(com.alibaba.fastjson.JSON.toJSONString(JSON_NO_GUIDE, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue));
+                    }
+                    writer.flush();
+                }
+            }
+            writer.close();
+        }
     }
 }
