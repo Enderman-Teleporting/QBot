@@ -2,6 +2,7 @@ package io.github.et.messager;
 
 import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
 import io.github.et.tools.ServerSearching;
+import io.github.et.utils.json.FeatureInUse;
 import io.github.ettoolset.tools.logger.Logger;
 import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
@@ -25,18 +26,19 @@ public class ServerSearcher extends SimpleListenerHost {
 
     @EventHandler
     public void search(MessageEvent msgEvent) throws LoggerNotDeclaredException {
-        if(msgEvent.getMessage().contentToString().startsWith("查服 ")){
-            String msg = msgEvent.getMessage().contentToString();
-            msg=msg.substring(3);
-            if(msg.contains(":")){
-                String[] list=msg.split(":");
-                msgEvent.getSubject().sendMessage(ServerSearching.search(list[0],Integer.parseInt(list[1])));
-            }else {
-                msgEvent.getSubject().sendMessage(ServerSearching.search(msg));
+        if(FeatureInUse.isInUse("MineServerStat",msgEvent.getSubject().getId())) {
+            if (msgEvent.getMessage().contentToString().startsWith("查服 ")) {
+                String msg = msgEvent.getMessage().contentToString();
+                msg = msg.substring(3);
+                if (msg.contains(":")) {
+                    String[] list = msg.split(":");
+                    msgEvent.getSubject().sendMessage(ServerSearching.search(list[0], Integer.parseInt(list[1])));
+                } else {
+                    msgEvent.getSubject().sendMessage(ServerSearching.search(msg));
+                }
+                Logger logger = Logger.getDeclaredLogger();
+                logger.info("Handled a server searching request");
             }
-            Logger logger=Logger.getDeclaredLogger();
-            logger.info("Handled a server searching request");
         }
-
     }
 }

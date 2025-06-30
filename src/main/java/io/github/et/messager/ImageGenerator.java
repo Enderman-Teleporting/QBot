@@ -2,6 +2,7 @@ package io.github.et.messager;
 
 import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
 import io.github.et.tools.GPT_Image;
+import io.github.et.utils.json.FeatureInUse;
 import io.github.ettoolset.tools.logger.Logger;
 import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
@@ -31,21 +32,23 @@ public class ImageGenerator extends SimpleListenerHost {
 
     @EventHandler
     public void generate(MessageEvent event) throws LoggerNotDeclaredException, IOException {
-        Logger logger=Logger.getDeclaredLogger();
-        if(event.getMessage().contentToString().startsWith("绘图 ")){
-            String prompt = event.getMessage().contentToString().substring(3).replace("\n","<br/>");
-            String image = GPT_Image.generateImage(prompt);
-            if(prompt.startsWith("生成图片失败")){
-                event.getSubject().sendMessage(image);
-            }else {
-                ExternalResource ex = ExternalResource.Companion.create(GPT_Image.getUrlByByte(image));
-                Image img = ExternalResource.uploadAsImage(ex, event.getSubject());
-                MessageChain chain = new MessageChainBuilder()
-                        .append(img)
-                        .build();
-                event.getSubject().sendMessage(chain);
+        if (FeatureInUse.isInUse("Image", event.getSubject().getId(), "Reply")) {
+            Logger logger = Logger.getDeclaredLogger();
+            if (event.getMessage().contentToString().startsWith("绘图 ")) {
+                String prompt = event.getMessage().contentToString().substring(3).replace("\n", "<br/>");
+                String image = GPT_Image.generateImage(prompt);
+                if (prompt.startsWith("生成图片失败")) {
+                    event.getSubject().sendMessage(image);
+                } else {
+                    ExternalResource ex = ExternalResource.Companion.create(GPT_Image.getUrlByByte(image));
+                    Image img = ExternalResource.uploadAsImage(ex, event.getSubject());
+                    MessageChain chain = new MessageChainBuilder()
+                            .append(img)
+                            .build();
+                    event.getSubject().sendMessage(chain);
+                }
+                logger.info("Handled image generating event from Group: %s", event.getSubject().getId());
             }
-            logger.info("Handled image generating event from Group: %s",event.getSubject().getId());
         }
     }
 }

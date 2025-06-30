@@ -1,6 +1,8 @@
 package io.github.et.eventListener;
 
+import io.github.et.Main;
 import io.github.et.exceptions.messageExceptions.IllegalEventHandlingException;
+import io.github.et.utils.json.FeatureInUse;
 import io.github.ettoolset.tools.logger.Logger;
 import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
@@ -28,18 +30,20 @@ public class AdminBuffet extends SimpleListenerHost {
 
     @EventHandler
     public void doAdmin(GroupMessageEvent msgEvent) throws LoggerNotDeclaredException, InterruptedException {
-        if(msgEvent.getMessage().contentToString().equals("我要管理")){
-            if(msgEvent.getSender() instanceof NormalMember){
-                NormalMember sender=(NormalMember)msgEvent.getSender();
-                sender.modifyAdmin(true);
-                msgEvent.getSubject().sendMessage("给了熬");
-                Thread.sleep(60000);
-                msgEvent.getSubject().sendMessage("忘说了，就给一分钟");
-                sender.modifyAdmin(false);
+        if (FeatureInUse.isInUse("Admin", msgEvent.getSubject().getId())) {
+            if (msgEvent.getMessage().contentToString().equals("我要管理")) {
+                if (msgEvent.getSender() instanceof NormalMember) {
+                    NormalMember sender = (NormalMember) msgEvent.getSender();
+                    sender.modifyAdmin(true);
+                    msgEvent.getSubject().sendMessage("给了熬");
+                    Thread.sleep(60000);
+                    msgEvent.getSubject().sendMessage("忘说了，就给一分钟");
+                    sender.modifyAdmin(false);
+                }
+                Logger logger = Logger.getDeclaredLogger();
+                logger.info("Received and handled Admin request from %s", msgEvent.getSubject().getId());
             }
-            Logger logger=Logger.getDeclaredLogger();
-            logger.info("Received and handled Admin request from %s",msgEvent.getSubject().getId());
-        }
 
+        }
     }
 }

@@ -1,6 +1,7 @@
 package io.github.et.eventListener;
 
 import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
+import io.github.et.utils.json.FeatureInUse;
 import io.github.ettoolset.tools.logger.Logger;
 import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
@@ -24,12 +25,13 @@ public class ChangeGroupName extends SimpleListenerHost {
 
     @EventHandler
     public void change(GroupMessageEvent msgEvent) throws LoggerNotDeclaredException {
-        if(msgEvent.getMessage().contentToString().startsWith("群名称 ")){
-            String message=msgEvent.getMessage().contentToString().substring(4);
-            msgEvent.getSubject().setName(message);
-            Logger logger = Logger.getDeclaredLogger();
-            logger.info("Handled a change-group-name request");
+        if(FeatureInUse.isInUse("GroupName",msgEvent.getSubject().getId())) {
+            if (msgEvent.getMessage().contentToString().startsWith("群名称 ")) {
+                String message = msgEvent.getMessage().contentToString().substring(4);
+                msgEvent.getSubject().setName(message);
+                Logger logger = Logger.getDeclaredLogger();
+                logger.info("Handled a change-group-name request");
+            }
         }
-
     }
 }

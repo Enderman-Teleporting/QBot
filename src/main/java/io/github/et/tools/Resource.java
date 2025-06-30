@@ -2,6 +2,7 @@ package io.github.et.tools;
 
 import com.alibaba.fastjson2.JSONObject;
 import io.github.et.Main;
+import io.github.et.exceptions.BotInfoNotFoundException;
 import io.github.ettoolset.tools.logger.Logger;
 
 import java.io.*;
@@ -146,6 +147,15 @@ public class Resource {
             }
         }
         logger.info("检查更新完成！");
+    }
+    public static void checkFileValidity() throws BotInfoNotFoundException {
+        File[] QQ = {new File("QQ.exe"),new File("napcat.bat"),new File("NapCatWinBootHook.dll"),new File("NapCatWinBootMain.exe")};
+        for (File i :QQ) {
+            if(!i.exists()){
+                throw new BotInfoNotFoundException("缺少资源文件！请重启程序以重新下载资源");
+            }
+        }
+
     }
 
 }

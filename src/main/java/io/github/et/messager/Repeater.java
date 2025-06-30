@@ -1,6 +1,7 @@
 package io.github.et.messager;
 
 import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
+import io.github.et.utils.json.FeatureInUse;
 import io.github.ettoolset.tools.logger.Logger;
 import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
@@ -29,23 +30,25 @@ public class Repeater extends SimpleListenerHost {
 
     @EventHandler
     public void runRepeat(GroupMessageEvent msgEvent) throws LoggerNotDeclaredException {
-        long groupId = msgEvent.getSubject().getId();
-        String msgContent = msgEvent.getMessage().serializeToMiraiCode();
-        if(!messageCountMap.containsKey(groupId)) {
-            messageCountMap.put(groupId,0);
-        }
-        if(!lastMessageMap.containsKey(groupId)) {
-            lastMessageMap.put(groupId,"");
-        }
-        if(lastMessageMap.get(groupId).isEmpty()||(!lastMessageMap.get(groupId).equals(msgContent))) {
-            lastMessageMap.put(groupId,msgContent);
-            messageCountMap.put(groupId,1);
-        }else{
-            messageCountMap.put(groupId,messageCountMap.get(groupId)+1);
-            if(messageCountMap.get(groupId)==2){
-                msgEvent.getSubject().sendMessage(msgEvent.getMessage());
-                Logger logger=Logger.getDeclaredLogger();
-                logger.info("Handled Repeating event at group " +groupId);
+        if (FeatureInUse.isInUse("Repeat", msgEvent.getSubject().getId())) {
+            long groupId = msgEvent.getSubject().getId();
+            String msgContent = msgEvent.getMessage().serializeToMiraiCode();
+            if (!messageCountMap.containsKey(groupId)) {
+                messageCountMap.put(groupId, 0);
+            }
+            if (!lastMessageMap.containsKey(groupId)) {
+                lastMessageMap.put(groupId, "");
+            }
+            if (lastMessageMap.get(groupId).isEmpty() || (!lastMessageMap.get(groupId).equals(msgContent))) {
+                lastMessageMap.put(groupId, msgContent);
+                messageCountMap.put(groupId, 1);
+            } else {
+                messageCountMap.put(groupId, messageCountMap.get(groupId) + 1);
+                if (messageCountMap.get(groupId) == 2) {
+                    msgEvent.getSubject().sendMessage(msgEvent.getMessage());
+                    Logger logger = Logger.getDeclaredLogger();
+                    logger.info("Handled Repeating event at group " + groupId);
+                }
             }
         }
     }

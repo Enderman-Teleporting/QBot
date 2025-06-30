@@ -15,7 +15,14 @@ import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.jse.JsePlatform;
 import top.mrxiaom.overflow.BotBuilder;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Main {
@@ -34,6 +41,20 @@ public class Main {
         JSON_ALL = JsonBuilder.buildFullJson();
         JSON_NO_GUIDE=JsonBuilder.buildJson();
         JsonBuilder.update();
+        File file=new File("plugins");
+        File file1 = new File("configs/addonConfigs");
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        if(!file1.exists()){
+            file1.mkdirs();
+            try {
+                copyFolderFromResources("io/github/et/et", new File("configs/addonConfigs/et").toPath());
+                copyFolderFromResources("io/github/et/global", new File("configs/addonConfigs/global").toPath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         if (JSON_NO_GUIDE.get("log") == null) {
             logger=new Logger(Logger.Levels.DEBUG,null);
         } else if(JSON_NO_GUIDE.get("log").equals("null")){
@@ -42,6 +63,7 @@ public class Main {
             logger=new Logger(Logger.Levels.DEBUG, (String)JSON_NO_GUIDE.get("log"));
         }
         Resource.update();
+        Resource.checkFileValidity();
         bot= BotBuilder.positive("ws://127.0.0.1:"+((JSONObject)JSON_ALL.get("Global")).get("port")).connect();
         if(bot==null){
             throw new BotInfoNotFoundException();
@@ -57,7 +79,7 @@ public class Main {
         new Thread(() -> {
             while(true){
                 try {
-                    CommandConsole.handle(bot);
+                    logger.fine(CommandConsole.handle(bot,CommandConsole.getCommand()));
                 } catch (LoggerNotDeclaredException | LevelNotMatchException e) {
                     throw new RuntimeException(e);
                 }
@@ -76,6 +98,29 @@ public class Main {
             Image_URL=a+"/"+Image_URL;
         }
 
+    }
+
+    private static void copyFolderFromResources(String sourceName, Path destination) throws URISyntaxException, IOException {
+        URL resourceUrl = Main.class.getClassLoader().getResource(sourceName);
+        if (resourceUrl == null) {
+            throw new IOException("Resource not found: " + sourceName);
+        }
+
+        Path sourcePath = Paths.get(resourceUrl.toURI());
+        Files.walkFileTree(sourcePath, new SimpleFileVisitor<>() {
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                Path targetDir = destination.resolve(sourcePath.relativize(dir));
+                Files.createDirectories(targetDir);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                Files.copy(file, destination.resolve(sourcePath.relativize(file)), StandardCopyOption.REPLACE_EXISTING);
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 
 }

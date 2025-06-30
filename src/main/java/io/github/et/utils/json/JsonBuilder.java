@@ -11,6 +11,7 @@ import io.github.et.utils.lua.LuaLoader;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import static io.github.et.Main.JSON_ALL;
@@ -21,6 +22,8 @@ public class JsonBuilder {
     private static final Scanner scanner = new Scanner(System.in);
     private static boolean initialized = false;
     private static JSONObject existingConfig = null;
+    private static HashMap<String, String> helpList = new HashMap<>();
+    private static ArrayList<String> features_cn=new ArrayList<>();
 
     public static void initAll() throws BotInfoNotFoundException, ClassNotFoundException {
         if (initialized) {
@@ -50,8 +53,6 @@ public class JsonBuilder {
         for (String luaFile : luaFiles) {
             luas.add(new LuaLoader(luaFile));
         }
-
-        // 设置父功能引用
         for (LuaLoader lua : luas) {
             if (lua.getParent() != null) {
                 luas.stream()
@@ -60,7 +61,7 @@ public class JsonBuilder {
                     .ifPresent(lua::setParentLua);
             }
         }
-
+        generateList();
         initialized = true;
     }
 
@@ -339,8 +340,6 @@ public class JsonBuilder {
         }
         
         JSONObject jsonObject = new JSONObject();
-        
-        // 首先处理 Global 配置
         LuaLoader globalLua = luas.stream()
             .filter(lua -> lua.getLuaName().equals("Global"))
             .findFirst()
@@ -350,17 +349,14 @@ public class JsonBuilder {
             configureFeature(globalLua, jsonObject, false);
         }
 
-        // 处理普通功能
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() == null)
             .forEach(lua -> configureFeature(lua, jsonObject, false));
 
-        // 处理子功能
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() != null)
             .forEach(lua -> configureFeature(lua, jsonObject, false));
 
-        // 处理游戏功能
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && lua.isGame())
             .forEach(lua -> configureFeature(lua, jsonObject, false));
@@ -380,8 +376,6 @@ public class JsonBuilder {
         
         System.out.println("正在加载、构建配置...");
         JSONObject jsonObject = new JSONObject();
-        
-        // 首先处理 Global 配置
         LuaLoader globalLua = luas.stream()
             .filter(lua -> lua.getLuaName().equals("Global"))
             .findFirst()
@@ -390,18 +384,13 @@ public class JsonBuilder {
         if (globalLua != null) {
             configureFeature(globalLua, jsonObject, true);
         }
-
-        // 处理普通功能
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() == null)
             .forEach(lua -> configureFeature(lua, jsonObject, true));
-
-        // 处理子功能
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() != null)
             .forEach(lua -> configureFeature(lua, jsonObject, true));
 
-        // 处理游戏功能
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && lua.isGame())
             .forEach(lua -> configureFeature(lua, jsonObject, true));
@@ -434,6 +423,30 @@ public class JsonBuilder {
                 }
             }
             writer.close();
+        }
+    }
+    private static void generateList(){
+        luas.stream()
+                .filter(lua -> lua.getCn() != null)
+                .forEach(lua -> {
+                    helpList.put(lua.getCn(), lua.getHelp());
+                    features_cn.add(lua.getCn());
+                });
+
+    }
+    public static String generateHelp_list(){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < features_cn.size()-1; i++) {
+            sb.append(features_cn.get(i)).append("\n");
+        }
+        sb.append(features_cn.get(features_cn.size()-1));
+        return sb.toString();
+    }
+    public static String generateHelp(String name){
+        if(helpList.containsKey(name)){
+            return helpList.get(name);
+        }else{
+            return "暂时没有这个功能哦，请换一个试试吧";
         }
     }
 }

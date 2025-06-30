@@ -14,6 +14,7 @@ public class LuaLoader {
     private LuaValue lua;
     private String luaPath;
     private String luaName;
+    private String cn;
     private boolean isGame;
     private ArrayList<String> guide = new ArrayList<>();
     private String help;
@@ -39,7 +40,11 @@ public class LuaLoader {
         } else {
             throw new BotInfoNotFoundException("Error occurred when loading " + this.luaPath + ": feature or game name not found");
         }
-
+        if(!this.lua.get("cn").isnil()){
+            this.cn=this.lua.get("cn").tojstring();
+        } else {
+            this.cn=null;
+        }
         if (!this.lua.get("parent").isnil()) {
             this.parent = this.lua.get("parent").tojstring();
         }
@@ -70,10 +75,6 @@ public class LuaLoader {
                 }
             }
         }
-    }
-
-    public void setParentLua(LuaLoader parentLua) {
-        this.parentLua = parentLua;
     }
 
     public ArrayList<Item> getAllItems() {
@@ -111,9 +112,5 @@ public class LuaLoader {
             return parentLua.getHelp();
         }
         return null;
-    }
-
-    // 用于创建子功能的构造函数
-    private LuaLoader() {
     }
 }

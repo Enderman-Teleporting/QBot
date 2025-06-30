@@ -1,6 +1,7 @@
 package io.github.et.eventListener;
 
 import io.github.et.exceptions.messageExceptions.IllegalEventHandlingException;
+import io.github.et.utils.json.FeatureInUse;
 import io.github.ettoolset.tools.logger.Logger;
 import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
@@ -23,8 +24,10 @@ public class LeaverListener extends SimpleListenerHost {
     }
     @EventHandler
     public void onExit(MemberLeaveEvent event) throws LoggerNotDeclaredException {
-        event.getGroup().sendMessage("555～"+event.getMember().getNameCard()+"离开了我们...");
-        Logger logger=Logger.getDeclaredLogger();
-        logger.error("Listened member leave event at: %s",event.getGroupId());
+        if (FeatureInUse.isInUse("Exit", event.getGroup().getId())) {
+            event.getGroup().sendMessage("555～" + event.getMember().getNameCard() + "离开了我们...");
+            Logger logger = Logger.getDeclaredLogger();
+            logger.error("Listened member leave event at: %s", event.getGroupId());
+        }
     }
 }
