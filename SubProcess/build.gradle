@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '8.3.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.10'
+}
+
+group = 'io.github.et'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+tasks.withType(JavaCompile){
+    options.encoding='UTF-8'
+    options.annotationProcessorPath = configurations.annotationProcessor
+}
+
+shadowJar{
+    manifest.attributes.put("Main-Class",'io.github.et.SubMain')
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
