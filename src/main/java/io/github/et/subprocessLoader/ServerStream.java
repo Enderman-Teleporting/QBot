@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class ServerStream {
     ServerSocket serverSocket;
-    InputStream is;
-    OutputStream os;
+    public static InputStream is;
+    public static OutputStream os;
     public ServerStream() throws IOException {
         serverSocket = new ServerSocket(Main.JSON_NO_GUIDE.getJSONObject("Global").getInteger("port2"));
         Process process = Runtime.getRuntime().exec(new String[]{"java", "-Dfile.encoding=utf-8", "-jar", "\"./SubProcess.jar\"", String.valueOf(Main.JSON_NO_GUIDE.getInteger("port2"))});
