@@ -36,10 +36,9 @@ public class Main {
     private static Logger logger;
     public static void main(String[] args) throws Exception {
         Logger logger;
-        System.out.println("正在加载、构建配置...");
         AnsiConsole.systemInstall();
-        JSON_ALL = JsonBuilder.buildFullJson();
-        JSON_NO_GUIDE=JsonBuilder.buildJson();
+        Resource.update();
+        Resource.checkFileValidity();
         JsonBuilder.update();
         File file=new File("plugins");
         File file1 = new File("configs/addonConfigs");
@@ -48,12 +47,6 @@ public class Main {
         }
         if(!file1.exists()){
             file1.mkdirs();
-            try {
-                copyFolderFromResources("io/github/et/et", new File("configs/addonConfigs/et").toPath());
-                copyFolderFromResources("io/github/et/global", new File("configs/addonConfigs/global").toPath());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
         if (JSON_NO_GUIDE.get("log") == null) {
             logger=new Logger(Logger.Levels.DEBUG,null);
@@ -62,8 +55,6 @@ public class Main {
         }else{
             logger=new Logger(Logger.Levels.DEBUG, (String)JSON_NO_GUIDE.get("log"));
         }
-        Resource.update();
-        Resource.checkFileValidity();
         bot= BotBuilder.positive("ws://127.0.0.1:"+((JSONObject)JSON_ALL.get("Global")).get("port")).connect();
         if(bot==null){
             throw new BotInfoNotFoundException();
@@ -100,27 +91,6 @@ public class Main {
 
     }
 
-    private static void copyFolderFromResources(String sourceName, Path destination) throws URISyntaxException, IOException {
-        URL resourceUrl = Main.class.getClassLoader().getResource(sourceName);
-        if (resourceUrl == null) {
-            throw new IOException("Resource not found: " + sourceName);
-        }
 
-        Path sourcePath = Paths.get(resourceUrl.toURI());
-        Files.walkFileTree(sourcePath, new SimpleFileVisitor<>() {
-            @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                Path targetDir = destination.resolve(sourcePath.relativize(dir));
-                Files.createDirectories(targetDir);
-                return FileVisitResult.CONTINUE;
-            }
-
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                Files.copy(file, destination.resolve(sourcePath.relativize(file)), StandardCopyOption.REPLACE_EXISTING);
-                return FileVisitResult.CONTINUE;
-            }
-        });
-    }
 
 }

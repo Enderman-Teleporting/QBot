@@ -6,6 +6,6 @@ return{
     },
     help=nil,
     config={
-        {name="mineServerStat",type= { "java.lang.Boolean" },nullable=false}
+        {name="repeat",type= { "java.lang.Boolean" },nullable=false}
     }
 }

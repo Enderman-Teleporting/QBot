@@ -20,15 +20,10 @@ import static io.github.et.Main.JSON_NO_GUIDE;
 public class JsonBuilder {
     public static ArrayList<LuaLoader> luas = new ArrayList<>();
     private static final Scanner scanner = new Scanner(System.in);
-    private static boolean initialized = false;
     private static JSONObject existingConfig = null;
     private static HashMap<String, String> helpList = new HashMap<>();
     private static ArrayList<String> features_cn=new ArrayList<>();
-
     public static void initAll() throws BotInfoNotFoundException, ClassNotFoundException {
-        if (initialized) {
-            return;
-        }
         File configFile = new File("botInfo.json");
         if (configFile.exists()) {
             try (FileReader reader = new FileReader(configFile)) {
@@ -38,17 +33,12 @@ public class JsonBuilder {
                 while ((read = reader.read(buffer)) != -1) {
                     content.append(buffer, 0, read);
                 }
-                JSONReader.Feature[] features = {
-                    JSONReader.Feature.UseNativeObject,
-                    JSONReader.Feature.FieldBased,
-                    JSONReader.Feature.SupportArrayToBean
-                };
-                existingConfig = JSON.parseObject(content.toString(), JSONObject.class, features);
+                existingConfig = JSON.parseObject(content.toString());
             } catch (IOException e) {
                 System.err.println("读取配置文件失败：" + e.getMessage());
             }
         }
-        
+
         ArrayList<String> luaFiles = findLuaFiles("./configs/addonConfigs");
         for (String luaFile : luaFiles) {
             luas.add(new LuaLoader(luaFile));
@@ -62,7 +52,6 @@ public class JsonBuilder {
             }
         }
         generateList();
-        initialized = true;
     }
 
     public static ArrayList<String> findLuaFiles(String folderPath) {
@@ -96,9 +85,6 @@ public class JsonBuilder {
         while (true) {
             try {
                 String input = scanner.nextLine().trim();
-                if (input.isEmpty() && item.isNullable()) {
-                    return null;
-                }
 
                 boolean typeSupported = false;
                 for (Class<?> type : item.getClasses()) {
@@ -122,12 +108,12 @@ public class JsonBuilder {
                         typeSupported = true;
                     }
                 }
-                
+
                 if (!typeSupported) {
                     System.out.println("不支持的类型，请检查类型定义");
                     continue;
                 }
-                
+
                 System.out.println("输入类型不匹配，请重新输入");
             } catch (NumberFormatException e) {
                 System.out.println("输入格式错误，请重新输入");
@@ -188,12 +174,12 @@ public class JsonBuilder {
     private static void configureFeature(LuaLoader lua, JSONObject jsonObject, boolean includeRule) {
         String featureName = lua.getLuaName();
         JSONObject featureConfig = new JSONObject();
-        
+
         if (includeRule) {
             if (!lua.getAllGuide().isEmpty()) {
                 featureConfig.put("guide", lua.getAllGuide());
             }
-            
+
             if (lua.getHelp() != null) {
                 featureConfig.put("help", lua.getHelp());
             }
@@ -201,36 +187,66 @@ public class JsonBuilder {
                 featureConfig.put("rule", lua.getLua().get("rule").tojstring());
             }
         }
-
-        featureConfig.put("include", new ArrayList<>());
-        featureConfig.put("exclude", new ArrayList<>());
-
-        for (Item item : lua.getAllItems()) {
+        if(!lua.getLuaName().equals("Global")){
+            if (existingConfig != null) {
+                if (lua.getParent() != null) {
+                    if (existingConfig.containsKey(lua.getParent()) &&
+                            existingConfig.getJSONObject(lua.getParent()).containsKey("include")&&
+                            existingConfig.getJSONObject(lua.getParent()).containsKey("exclude")) {
+                        featureConfig.put("include",existingConfig.getJSONObject(lua.getParent()).get("include"));
+                        featureConfig.put("exclude",existingConfig.getJSONObject(lua.getParent()).get("exclude"));
+                    }
+                    if (existingConfig.containsKey(lua.getParent()) &&
+                            existingConfig.getJSONObject(lua.getParent()).containsKey(featureName) &&
+                            existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).containsKey("include")&&
+                            existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).containsKey("exclude")) {
+                        featureConfig.put("include", existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).get("include"));
+                        featureConfig.put("exclude", existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).get("exclude"));
+                    }else{
+                        featureConfig.put("include",new JSONArray());
+                        featureConfig.put("exclude",new JSONArray());
+                    }
+                } else {
+                    if (existingConfig.containsKey(featureName) &&
+                            existingConfig.getJSONObject(featureName).containsKey("include")&&
+                            existingConfig.getJSONObject(featureName).containsKey("exclude")) {
+                        featureConfig.put("include",existingConfig.getJSONObject(featureName).get("include"));
+                        featureConfig.put("exclude",existingConfig.getJSONObject(featureName).get("exclude"));
+                    }else {
+                        featureConfig.put("include",new JSONArray());
+                        featureConfig.put("exclude",new JSONArray());
+                    }
+                }
+            }
+        }
+        for (Item item : lua.getItems()) {
+            if(item.isNullable()){
+                continue;
+            }
             String itemName = item.getName();
             Object value = null;
             boolean needInput = true;
-            
+
             if (existingConfig != null) {
                 if (lua.getParent() != null) {
-                    if (existingConfig.containsKey(lua.getParent()) && 
-                        existingConfig.getJSONObject(lua.getParent()).containsKey(itemName)) {
+                    if (existingConfig.containsKey(lua.getParent()) &&
+                            existingConfig.getJSONObject(lua.getParent()).containsKey(itemName)) {
                         value = existingConfig.getJSONObject(lua.getParent()).get(itemName);
                         if (validateConfigValue(value, item)) {
                             needInput = false;
                         }
                     }
-                    if (existingConfig.containsKey(lua.getParent()) && 
-                        existingConfig.getJSONObject(lua.getParent()).containsKey("children") &&
-                        existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").containsKey(featureName) &&
-                        existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).containsKey(itemName)) {
-                        value = existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).get(itemName);
+                    if (existingConfig.containsKey(lua.getParent()) &&
+                            existingConfig.getJSONObject(lua.getParent()).containsKey(featureName) &&
+                            existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).containsKey(itemName)) {
+                        value = existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).get(itemName);
                         if (validateConfigValue(value, item)) {
                             needInput = false;
                         }
                     }
                 } else {
-                    if (existingConfig.containsKey(featureName) && 
-                        existingConfig.getJSONObject(featureName).containsKey(itemName)) {
+                    if (existingConfig.containsKey(featureName) &&
+                            existingConfig.getJSONObject(featureName).containsKey(itemName)) {
                         value = existingConfig.getJSONObject(featureName).get(itemName);
                         if (validateConfigValue(value, item)) {
                             needInput = false;
@@ -238,113 +254,40 @@ public class JsonBuilder {
                     }
                 }
             }
-            
-            if (needInput) {
-                System.out.println("请输入 " + featureName + " 的 " + itemName + 
-                    (item.isNullable() ? " (可为空)" : ""));
-                value = getValueFromUser(item);
-            }
-            
-            featureConfig.put(itemName, value);
 
-            if (itemName.equals(featureName)) {
-                if (Boolean.TRUE.equals(value)) {
-                    if (existingConfig != null) {
-                        if (lua.getParent() != null) {
-                            if (existingConfig.containsKey(lua.getParent()) && 
-                                existingConfig.getJSONObject(lua.getParent()).containsKey("exclude")) {
-                                featureConfig.put("exclude", existingConfig.getJSONObject(lua.getParent()).getJSONArray("exclude"));
-                            }
-                            else if (existingConfig.containsKey(lua.getParent()) && 
-                                existingConfig.getJSONObject(lua.getParent()).containsKey("children") &&
-                                existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").containsKey(featureName) &&
-                                existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).containsKey("exclude")) {
-                                featureConfig.put("exclude", existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).getJSONArray("exclude"));
-                            } else {
-                                System.out.println("请输入要排除的群号（用英文逗号分隔）：");
-                                String excludeInput = scanner.nextLine().trim();
-                                if (!excludeInput.isEmpty()) {
-                                    featureConfig.put("exclude", new ArrayList<>(java.util.Arrays.asList(excludeInput.split(","))));
-                                }
-                            }
-                        } else {
-                            if (existingConfig.containsKey(featureName) && 
-                                existingConfig.getJSONObject(featureName).containsKey("exclude")) {
-                                featureConfig.put("exclude", existingConfig.getJSONObject(featureName).getJSONArray("exclude"));
-                            } else {
-                                System.out.println("请输入要排除的群号（用英文逗号分隔）：");
-                                String excludeInput = scanner.nextLine().trim();
-                                if (!excludeInput.isEmpty()) {
-                                    featureConfig.put("exclude", new ArrayList<>(java.util.Arrays.asList(excludeInput.split(","))));
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    if (existingConfig != null) {
-                        if (lua.getParent() != null) {
-                            if (existingConfig.containsKey(lua.getParent()) && 
-                                existingConfig.getJSONObject(lua.getParent()).containsKey("include")) {
-                                featureConfig.put("include", existingConfig.getJSONObject(lua.getParent()).getJSONArray("include"));
-                            }
-                            else if (existingConfig.containsKey(lua.getParent()) && 
-                                existingConfig.getJSONObject(lua.getParent()).containsKey("children") &&
-                                existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").containsKey(featureName) &&
-                                existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).containsKey("include")) {
-                                featureConfig.put("include", existingConfig.getJSONObject(lua.getParent()).getJSONObject("children").getJSONObject(featureName).getJSONArray("include"));
-                            } else {
-                                System.out.println("请输入要包含的群号（用英文逗号分隔）：");
-                                String includeInput = scanner.nextLine().trim();
-                                if (!includeInput.isEmpty()) {
-                                    featureConfig.put("include", new ArrayList<>(java.util.Arrays.asList(includeInput.split(","))));
-                                }
-                            }
-                        } else {
-                            if (existingConfig.containsKey(featureName) && 
-                                existingConfig.getJSONObject(featureName).containsKey("include")) {
-                                featureConfig.put("include", existingConfig.getJSONObject(featureName).getJSONArray("include"));
-                            } else {
-                                System.out.println("请输入要包含的群号（用英文逗号分隔）：");
-                                String includeInput = scanner.nextLine().trim();
-                                if (!includeInput.isEmpty()) {
-                                    featureConfig.put("include", new ArrayList<>(java.util.Arrays.asList(includeInput.split(","))));
-                                }
-                            }
-                        }
-                    }
-                }
+            if (needInput&&!item.isNullable()) {
+                System.out.println("请输入 " + featureName + " 的 " + itemName);
+                value = getValueFromUser(item);
+            } else if (item.isNullable()) {
+                value = null;
             }
+
+            featureConfig.put(itemName, value);
         }
 
         if (lua.getParent() != null) {
             if (!jsonObject.containsKey(lua.getParent())) {
                 jsonObject.put(lua.getParent(), new JSONObject());
             }
-            if (!jsonObject.getJSONObject(lua.getParent()).containsKey("children")) {
-                jsonObject.getJSONObject(lua.getParent()).put("children", new JSONObject());
-            }
-            jsonObject.getJSONObject(lua.getParent()).getJSONObject("children").put(featureName, featureConfig);
+            jsonObject.getJSONObject(lua.getParent()).put(featureName, featureConfig);
         } else {
             jsonObject.put(featureName, featureConfig);
         }
     }
 
-    public static JSONObject buildJson() {
-        if (!initialized) {
-            try {
-                initAll();
-            } catch (BotInfoNotFoundException | ClassNotFoundException e) {
-                System.err.println("初始化失败：" + e.getMessage());
-                return new JSONObject();
-            }
+    public static JSONObject buildJson() throws IOException {
+        try {
+            initAll();
+        } catch (BotInfoNotFoundException | ClassNotFoundException e) {
+            System.err.println("初始化失败：" + e.getMessage());
+            return new JSONObject();
         }
-        
         JSONObject jsonObject = new JSONObject();
         LuaLoader globalLua = luas.stream()
             .filter(lua -> lua.getLuaName().equals("Global"))
             .findFirst()
             .orElse(null);
-            
+
         if (globalLua != null) {
             configureFeature(globalLua, jsonObject, false);
         }
@@ -360,27 +303,32 @@ public class JsonBuilder {
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && lua.isGame())
             .forEach(lua -> configureFeature(lua, jsonObject, false));
-
+        File file=new File("./botInfo.json");
+        if(!file.exists()){
+            file.createNewFile();
+        }
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            fileWriter.write(com.alibaba.fastjson.JSONObject.toJSONString(jsonObject,true));
+            fileWriter.flush();
+            fileWriter.close();
+        }
         return jsonObject;
     }
 
-    public static JSONObject buildFullJson() {
-        if (!initialized) {
-            try {
-                initAll();
-            } catch (BotInfoNotFoundException | ClassNotFoundException e) {
-                System.err.println("初始化失败：" + e.getMessage());
-                return new JSONObject();
-            }
+    public static JSONObject buildFullJson() throws IOException {
+        try {
+            initAll();
+        } catch (BotInfoNotFoundException | ClassNotFoundException e) {
+            System.err.println("初始化失败：" + e.getMessage());
+            return new JSONObject();
         }
-        
-        System.out.println("正在加载、构建配置...");
+
         JSONObject jsonObject = new JSONObject();
         LuaLoader globalLua = luas.stream()
             .filter(lua -> lua.getLuaName().equals("Global"))
             .findFirst()
             .orElse(null);
-            
+
         if (globalLua != null) {
             configureFeature(globalLua, jsonObject, true);
         }
@@ -394,7 +342,17 @@ public class JsonBuilder {
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && lua.isGame())
             .forEach(lua -> configureFeature(lua, jsonObject, true));
-
+        if(JSON_NO_GUIDE.getJSONObject("Global").getBoolean("useGuide")){
+            File file=new File("./botInfo.json");
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            try (FileWriter fileWriter = new FileWriter(file)) {
+                fileWriter.write(com.alibaba.fastjson.JSONObject.toJSONString(jsonObject,true));
+                fileWriter.flush();
+                fileWriter.close();
+            }
+        }
         return jsonObject;
     }
 

@@ -9,12 +9,13 @@ return{
         "当功能同名的配置项为true时,需要输入exclude列表(用英文逗号分隔的群号列表),表示在这些群中不启用该功能",
         "当功能同名的配置项为false时,需要输入include列表(用英文逗号分隔的群号列表),表示在这些群中启用该功能",
         "首先填写bot的账号等基础配置",
-        "请在port处填写端口(任意空闲端口均可),id处填写QQ号,useGuide处填写是否开启配置文件中的注释(true为开启,false为关闭),log处填写是否使用日志,是写明存储日志的路径，否写null或不填",
+        "请在port和port2处填写端口(任意空闲端口均可),id处填写QQ号,useGuide处填写是否开启配置文件中的注释(true为开启,false为关闭),log处填写是否使用日志,是写明存储日志的路径，否写null或不填",
         "owner处填主人,可以私发消息以更改一些内容,可不填"
     },
     help=nil,
     config={
         {name="port",type={"java.lang.Integer"},nullable=false},
+        {name="port2",type={"java.lang.Integer"},nullable=false},
         {name="id",type={"java.lang.Long"},nullable=false},
         {name="owner",type={"java.lang.String"},nullable=true},
         {name="useGuide",type={"java.lang.Boolean"},nullable=false},
