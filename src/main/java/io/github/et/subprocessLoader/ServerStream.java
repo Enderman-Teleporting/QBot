@@ -16,7 +16,7 @@ public class ServerStream {
     OutputStream os;
     public ServerStream() throws IOException {
         serverSocket = new ServerSocket(Main.JSON_NO_GUIDE.getJSONObject("Global").getInteger("port2"));
-        Process process = Runtime.getRuntime().exec(new String[]{"java", "-Dfile.encoding=utf-8", "-jar", "\"./SubProcess.jar\""});
+        Process process = Runtime.getRuntime().exec(new String[]{"java", "-Dfile.encoding=utf-8", "-jar", "\"./SubProcess.jar\"", String.valueOf(Main.JSON_NO_GUIDE.getInteger("port2"))});
         Socket accepted=serverSocket.accept();
         is=accepted.getInputStream();
         os=accepted.getOutputStream();
