@@ -11,7 +11,7 @@ public class ConfigLoader {
             BufferedReader bf = new BufferedReader(new FileReader(configFile));
             for (String i:bf.lines().toList()){
                 String[] a=i.split("\\|\\|");
-                servers.add(new MCServer(a[0],a[1],Long.parseLong(a[2])));
+                servers.add(new MCServer(a[0],a[1],a[2],Long.parseLong(a[3])));
             }
         }
     }

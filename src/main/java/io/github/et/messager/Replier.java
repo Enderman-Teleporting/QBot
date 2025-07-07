@@ -43,6 +43,8 @@ public class Replier extends SimpleListenerHost {
                 Logger logger = Logger.getDeclaredLogger();
                 logger.info("Handled chatting event from Group: %s", msgEvent.getGroup().getId());
             }
+        }else {
+            msgEvent.getGroup().sendMessage("功能未开启");
         }
 
     }
@@ -57,6 +59,8 @@ public class Replier extends SimpleListenerHost {
                 Logger logger = Logger.getDeclaredLogger();
                 logger.info("Handled message reply at" + msgEvent.getSubject().getId());
             }
+        }else {
+            msgEvent.getSubject().sendMessage("功能未开启");
         }
     }
 

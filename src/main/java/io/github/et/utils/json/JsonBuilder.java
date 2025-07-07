@@ -220,9 +220,6 @@ public class JsonBuilder {
             }
         }
         for (Item item : lua.getItems()) {
-            if(item.isNullable()){
-                continue;
-            }
             String itemName = item.getName();
             Object value = null;
             boolean needInput = true;
@@ -258,10 +255,7 @@ public class JsonBuilder {
             if (needInput&&!item.isNullable()) {
                 System.out.println("请输入 " + featureName + " 的 " + itemName);
                 value = getValueFromUser(item);
-            } else if (item.isNullable()) {
-                value = null;
             }
-
             featureConfig.put(itemName, value);
         }
 
@@ -401,10 +395,6 @@ public class JsonBuilder {
         return sb.toString();
     }
     public static String generateHelp(String name){
-        if(helpList.containsKey(name)){
-            return helpList.get(name);
-        }else{
-            return "暂时没有这个功能哦，请换一个试试吧";
-        }
+        return helpList.getOrDefault(name, "暂时没有这个功能哦，请换一个试试吧");
     }
 }

@@ -49,6 +49,8 @@ public class ImageGenerator extends SimpleListenerHost {
                 }
                 logger.info("Handled image generating event from Group: %s", event.getSubject().getId());
             }
+        }else {
+            event.getSubject().sendMessage("功能未开启");
         }
     }
 }

@@ -3,12 +3,15 @@ package io.github.et.tools;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import io.github.et.Main;
+import io.github.et.subprocessLoader.ServerStream;
 import io.github.et.utils.json.JsonBuilder;
 import io.github.ettoolset.tools.logger.LevelNotMatchException;
 import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import net.mamoe.mirai.Bot;
 
 import java.io.Console;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class CommandConsole {
@@ -149,7 +152,12 @@ public class CommandConsole {
                             """);
                 }
                 default -> {
-                    return("Unknown Command, Type \"help\" For Help");
+                    if(commands[0].startsWith("[")&&commands[0].contains("]/")){
+                        ServerStream.os.write((cmd+"\r\n").getBytes(StandardCharsets.UTF_8));
+                        return "Command Sent!";
+                    }else{
+                        return ("Unknown Command, Type \"help\" For Help");
+                    }
                 }
             }
         }catch(Exception e){

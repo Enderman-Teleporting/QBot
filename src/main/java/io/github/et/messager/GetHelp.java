@@ -10,7 +10,8 @@ import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.MessageEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class getHelp extends SimpleListenerHost {
+@SuppressWarnings("unused")
+public class GetHelp extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         try {

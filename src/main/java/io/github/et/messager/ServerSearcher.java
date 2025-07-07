@@ -39,6 +39,8 @@ public class ServerSearcher extends SimpleListenerHost {
                 Logger logger = Logger.getDeclaredLogger();
                 logger.info("Handled a server searching request");
             }
+        }else {
+            msgEvent.getSubject().sendMessage("功能未开启");
         }
     }
 }

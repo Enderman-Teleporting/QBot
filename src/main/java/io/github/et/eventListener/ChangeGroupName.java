@@ -32,6 +32,8 @@ public class ChangeGroupName extends SimpleListenerHost {
                 Logger logger = Logger.getDeclaredLogger();
                 logger.info("Handled a change-group-name request");
             }
+        }else {
+            msgEvent.getSubject().sendMessage("功能未开启");
         }
     }
 }

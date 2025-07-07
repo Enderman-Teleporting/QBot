@@ -2,6 +2,7 @@ package io.github.et;
 
 import com.alibaba.fastjson2.JSONObject;
 import io.github.et.exceptions.BotInfoNotFoundException;
+import io.github.et.subprocessLoader.Loader;
 import io.github.et.tools.CommandConsole;
 import io.github.et.tools.Resource;
 import io.github.et.utils.classLoader.ClassLoader;
@@ -16,13 +17,7 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 import top.mrxiaom.overflow.BotBuilder;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
-import java.util.Objects;
 
 
 public class Main {
@@ -30,7 +25,7 @@ public class Main {
     public static String URL = "v1/chat/completions";
     public static String Image_URL = "v1/images/generations";
     public static String APIKEY;
-    public static Bot bot;
+    public static Bot bot=null;
     public static JSONObject JSON_ALL;
     public static JSONObject JSON_NO_GUIDE;
     private static Logger logger;
@@ -55,6 +50,7 @@ public class Main {
         }else{
             logger=new Logger(Logger.Levels.DEBUG, (String)JSON_NO_GUIDE.get("log"));
         }
+        new Thread(new Loader()).start();
         bot= BotBuilder.positive("ws://127.0.0.1:"+((JSONObject)JSON_ALL.get("Global")).get("port")).connect();
         if(bot==null){
             throw new BotInfoNotFoundException();

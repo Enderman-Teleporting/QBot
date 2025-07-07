@@ -44,6 +44,8 @@ public class AdminBuffet extends SimpleListenerHost {
                 logger.info("Received and handled Admin request from %s", msgEvent.getSubject().getId());
             }
 
+        }else{
+            msgEvent.getSubject().sendMessage("功能未开启");
         }
     }
 }

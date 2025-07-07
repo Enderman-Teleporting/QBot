@@ -6,11 +6,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MCServer {
-    private String name;
-    private String command;
-    private Long group;
-    public MCServer(String name,String command, Long group){
+    public String name;
+    public String workingDir;
+    public String command;
+    public Long group;
+    public MCServer(String name,String workingDir,String command, Long group){
         this.name = name;
+        this.workingDir = workingDir;
         this.command = command;
         this.group = group;
     }
