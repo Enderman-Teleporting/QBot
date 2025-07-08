@@ -21,13 +21,13 @@ public class ServerSearcher extends SimpleListenerHost {
         } catch (LoggerNotDeclaredException e) {
             throw new RuntimeException(e);
         }
-        throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent",exception);
+        throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent", exception);
     }
 
     @EventHandler
     public void search(MessageEvent msgEvent) throws LoggerNotDeclaredException {
-        if(FeatureInUse.isInUse("MineServerStat",msgEvent.getSubject().getId())) {
-            if (msgEvent.getMessage().contentToString().startsWith("查服 ")) {
+        if (msgEvent.getMessage().contentToString().startsWith("查服 ")) {
+            if (FeatureInUse.isInUse("MineServerStat", msgEvent.getSubject().getId())) {
                 String msg = msgEvent.getMessage().contentToString();
                 msg = msg.substring(3);
                 if (msg.contains(":")) {
@@ -38,9 +38,9 @@ public class ServerSearcher extends SimpleListenerHost {
                 }
                 Logger logger = Logger.getDeclaredLogger();
                 logger.info("Handled a server searching request");
+            } else {
+                msgEvent.getSubject().sendMessage("功能未开启");
             }
-        }else {
-            msgEvent.getSubject().sendMessage("功能未开启");
         }
     }
 }

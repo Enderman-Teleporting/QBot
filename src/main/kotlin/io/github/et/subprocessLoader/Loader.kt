@@ -6,29 +6,30 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.*
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 class Loader : Runnable {
     @OptIn(DelicateCoroutinesApi::class)
     override fun run() {
         try {
+            ConfigLoader.load()
             val serverStream = ServerStream()
-            val `is` = BufferedReader(InputStreamReader(ServerStream.`is`))
-            val os = BufferedWriter(OutputStreamWriter(ServerStream.os))
+            val `is` = BufferedReader(InputStreamReader(ServerStream.`is`,StandardCharsets.UTF_8))
+            val os = BufferedWriter(OutputStreamWriter(ServerStream.os, StandardCharsets.UTF_8))
             while (true) {
                 val a = `is`.readLine() ?: continue
                 val name = getContent(a)
                 val content = a.substring(name.length + 2)
-                println(a.replaceFirst("[]", ""))
+                System.out.println(a.replaceFirst("[]", ""))
                 if (name.isEmpty() || Main.bot == null) {
                     continue
                 }
                 for (i in ConfigLoader.servers) {
                     if (i.name == name) {
-                        if (content.contains("<") && content.contains(">")) {
+                        if (content.contains("<".toRegex()) && content.contains(">".toRegex())&&(!a.contains("\\[Server]".toRegex()))) {
                             GlobalScope.launch {
-                                Objects.requireNonNull(Main.bot.getGroup(i.group))
-                                    ?.sendMessage("[" + name + "]" + getTalkCont(content))
+                                Objects.requireNonNull(Main.bot.getGroup(i.group))?.sendMessage("[" + name + "]" + content.substring(content.indexOf("<")))
                             }
                         }
                     }
@@ -53,24 +54,6 @@ class Loader : Runnable {
             return str.substring(start + 1, end)
         }
 
-        private fun getTalkCont(s: String): String {
-            val start = s.indexOf('<')
-            if (start == -1) {
-                return ""
-            }
-            var count = 1
-            for (i in start + 1 until s.length) {
-                val c = s[i]
-                if (c == '<') {
-                    count++
-                } else if (c == '>') {
-                    count--
-                }
-                if (count == 0) {
-                    return s.substring(start)
-                }
-            }
-            return ""
-        }
+
     }
 }

@@ -27,14 +27,14 @@ public class ImageGenerator extends SimpleListenerHost {
         } catch (LoggerNotDeclaredException e) {
             throw new RuntimeException(e);
         }
-        throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent",exception);
+        throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent", exception);
     }
 
     @EventHandler
     public void generate(MessageEvent event) throws LoggerNotDeclaredException, IOException {
-        if (FeatureInUse.isInUse("Image", event.getSubject().getId(), "Reply")) {
-            Logger logger = Logger.getDeclaredLogger();
-            if (event.getMessage().contentToString().startsWith("绘图 ")) {
+        Logger logger = Logger.getDeclaredLogger();
+        if (event.getMessage().contentToString().startsWith("绘图 ")) {
+            if (FeatureInUse.isInUse("Image", event.getSubject().getId(), "Reply")) {
                 String prompt = event.getMessage().contentToString().substring(3).replace("\n", "<br/>");
                 String image = GPT_Image.generateImage(prompt);
                 if (prompt.startsWith("生成图片失败")) {
@@ -48,9 +48,10 @@ public class ImageGenerator extends SimpleListenerHost {
                     event.getSubject().sendMessage(chain);
                 }
                 logger.info("Handled image generating event from Group: %s", event.getSubject().getId());
+            } else {
+                event.getSubject().sendMessage("功能未开启");
             }
-        }else {
-            event.getSubject().sendMessage("功能未开启");
         }
     }
 }
+

@@ -15,30 +15,6 @@ public class ClassLoader {
         List<Class<?>> classes = new ArrayList<>();
         java.lang.ClassLoader classLoader = ClassLoader.class.getClassLoader();
         
-        String[] packages = {
-            "io.github.et.eventListener",
-            "io.github.et.messager"
-        };
-        
-        for (String packageName : packages) {
-            String path = packageName.replace('.', '/');
-            URL url = classLoader.getResource(path);
-            if (url != null) {
-                File directory = new File(url.toURI());
-                if (directory.exists()) {
-                    for (File file : directory.listFiles()) {
-                        if (file.getName().endsWith(".class")) {
-                            String className = packageName + "." + file.getName().substring(0, file.getName().length() - 6);
-                            Class<?> clazz = Class.forName(className);
-                            if (SimpleListenerHost.class.isAssignableFrom(clazz)) {
-                                classes.add(clazz);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        
         File pluginsDir = new File("plugins");
         if (pluginsDir.exists() && pluginsDir.isDirectory()) {
             for (File jarFile : pluginsDir.listFiles()) {

@@ -148,6 +148,8 @@ public class CommandConsole {
                             mute [GroupCode] [MemberCode] [Time(seconds)]
                             groupName [GroupCode] [NewName]
                             kick [GroupCode] [MemberCode] [Reason]
+                            set [GroupCode] [FullPathToFunction]
+                            set [FullPathToFunction] [Key] [Value]
                             help
                             """);
                 }

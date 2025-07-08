@@ -8,6 +8,7 @@ return{
     },
     help="绘图功能格式\"绘图 [提示词]\"，注意中间空格",
     config={
-        {name="image",type= { "java.lang.Boolean" },nullable=false}
+        {name="image",type= { "java.lang.Boolean" },nullable=false},
+        {name="imageModel",type= { "java.lang.String" },nullable=false}
     }
 } 

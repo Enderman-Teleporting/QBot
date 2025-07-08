@@ -20,20 +20,23 @@ public class ChangeGroupName extends SimpleListenerHost {
         } catch (LoggerNotDeclaredException e) {
             throw new RuntimeException(e);
         }
-        throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent",exception);
+        throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent", exception);
     }
 
     @EventHandler
     public void change(GroupMessageEvent msgEvent) throws LoggerNotDeclaredException {
-        if(FeatureInUse.isInUse("GroupName",msgEvent.getSubject().getId())) {
-            if (msgEvent.getMessage().contentToString().startsWith("群名称 ")) {
+
+        if (msgEvent.getMessage().contentToString().startsWith("群名称 ")) {
+            if (FeatureInUse.isInUse("GroupName", msgEvent.getSubject().getId())) {
                 String message = msgEvent.getMessage().contentToString().substring(4);
                 msgEvent.getSubject().setName(message);
                 Logger logger = Logger.getDeclaredLogger();
                 logger.info("Handled a change-group-name request");
+            } else {
+                msgEvent.getSubject().sendMessage("功能未开启");
             }
-        }else {
-            msgEvent.getSubject().sendMessage("功能未开启");
         }
+
+
     }
 }

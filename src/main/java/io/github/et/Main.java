@@ -1,8 +1,14 @@
 package io.github.et;
 
 import com.alibaba.fastjson2.JSONObject;
+import io.github.et.eventListener.AdminBuffet;
+import io.github.et.eventListener.ChangeGroupName;
+import io.github.et.eventListener.LeaverListener;
+import io.github.et.eventListener.RequestPasser;
 import io.github.et.exceptions.BotInfoNotFoundException;
+import io.github.et.messager.*;
 import io.github.et.subprocessLoader.Loader;
+import io.github.et.subprocessLoader.ServerStream;
 import io.github.et.tools.CommandConsole;
 import io.github.et.tools.Resource;
 import io.github.et.utils.classLoader.ClassLoader;
@@ -11,12 +17,15 @@ import io.github.ettoolset.tools.logger.LevelNotMatchException;
 import io.github.ettoolset.tools.logger.Logger;
 import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import net.mamoe.mirai.Bot;
+import net.mamoe.mirai.event.ListenerHost;
 import org.fusesource.jansi.AnsiConsole;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.jse.JsePlatform;
 import top.mrxiaom.overflow.BotBuilder;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.util.List;
 
 
@@ -31,6 +40,7 @@ public class Main {
     private static Logger logger;
     public static void main(String[] args) throws Exception {
         Logger logger;
+        System.setProperty("console.encoding", "UTF-8");
         AnsiConsole.systemInstall();
         Resource.update();
         Resource.checkFileValidity();
@@ -51,6 +61,8 @@ public class Main {
             logger=new Logger(Logger.Levels.DEBUG, (String)JSON_NO_GUIDE.get("log"));
         }
         new Thread(new Loader()).start();
+        logger.info("输入任意字符完成登录");
+        System.in.read();
         bot= BotBuilder.positive("ws://127.0.0.1:"+((JSONObject)JSON_ALL.get("Global")).get("port")).connect();
         if(bot==null){
             throw new BotInfoNotFoundException();
@@ -59,8 +71,25 @@ public class Main {
         buildURL();
         logger.info("正在注册监听器……");
         List<Class<?>> clazz= ClassLoader.loadClasses();
+        clazz.add(AdminBuffet.class);
+        clazz.add(ChangeGroupName.class);
+        clazz.add(LeaverListener.class);
+        clazz.add(RequestPasser.class);
+        clazz.add(ChangeConfigListener.class);
+        clazz.add(FreeTalk.class);
+        clazz.add(FreeTalk.class);
+        clazz.add(GetHelp.class);
+        clazz.add(ImageGenerator.class);
+        clazz.add(MinecraftServer.class);
+        clazz.add(Nudger.class);
+        clazz.add(Repeater.class);
+        clazz.add(Replier.class);
+        clazz.add(ServerSearcher.class);
         for (Class<?> c:clazz){
-            c.getDeclaredConstructor().newInstance();
+            Object abc=c.getDeclaredConstructor().newInstance();
+            if (abc instanceof ListenerHost a){
+                bot.getEventChannel().registerListenerHost(a);
+            }
             logger.info("已注册监听器"+c.getName());
         }
         new Thread(() -> {
@@ -84,6 +113,7 @@ public class Main {
             URL=a+"/"+URL;
             Image_URL=a+"/"+Image_URL;
         }
+        APIKEY = JSON_ALL.getJSONObject("Reply").getString("APIKEY");
 
     }
 

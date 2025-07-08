@@ -30,8 +30,8 @@ public class AdminBuffet extends SimpleListenerHost {
 
     @EventHandler
     public void doAdmin(GroupMessageEvent msgEvent) throws LoggerNotDeclaredException, InterruptedException {
-        if (FeatureInUse.isInUse("Admin", msgEvent.getSubject().getId())) {
-            if (msgEvent.getMessage().contentToString().equals("我要管理")) {
+        if (msgEvent.getMessage().contentToString().equals("我要管理")) {
+            if (FeatureInUse.isInUse("Admin", msgEvent.getSubject().getId())) {
                 if (msgEvent.getSender() instanceof NormalMember) {
                     NormalMember sender = (NormalMember) msgEvent.getSender();
                     sender.modifyAdmin(true);
@@ -42,10 +42,11 @@ public class AdminBuffet extends SimpleListenerHost {
                 }
                 Logger logger = Logger.getDeclaredLogger();
                 logger.info("Received and handled Admin request from %s", msgEvent.getSubject().getId());
+            } else {
+                msgEvent.getSubject().sendMessage("功能未开启");
             }
-
-        }else{
-            msgEvent.getSubject().sendMessage("功能未开启");
         }
+
+
     }
 }

@@ -17,6 +17,7 @@ public class GPT_Image {
             connection.setRequestProperty("Authorization", "Bearer " + Main.APIKEY);
             connection.setDoOutput(true);
             String jsonInputString = "{"
+                    + "\"model\": \"" + Main.JSON_NO_GUIDE.getJSONObject("Reply").getJSONObject("Image").getString("imageModel") + "\","
                     + "\"prompt\": \"" + prompt.replace("\n",", ") + "\","
                     + "\"n\": 1,"
                     + "\"size\": \"1024x1024\""

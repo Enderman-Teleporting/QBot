@@ -4,10 +4,14 @@ import io.github.et.ConfigLoader.load
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.*
+import java.lang.System
 import java.net.Socket
 import java.nio.charset.StandardCharsets
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
+import kotlin.system.exitProcess
 
 object SubMain {
     private val processMap: MutableMap<MCServer, Process> = ConcurrentHashMap()
@@ -20,8 +24,8 @@ object SubMain {
         try {
             val port = args[0].toInt()
             val s = Socket("127.0.0.1", port)
-            val `is` = BufferedReader(InputStreamReader(s.getInputStream()))
-            OS = BufferedWriter(OutputStreamWriter(s.getOutputStream()))
+            val `is` = BufferedReader(InputStreamReader(s.getInputStream(), StandardCharsets.UTF_8))
+            OS = BufferedWriter(OutputStreamWriter(s.getOutputStream(), StandardCharsets.UTF_8))
             load()
             val root = File(".")
             var QBotRunPathName: String? = null
@@ -59,11 +63,11 @@ object SubMain {
                                     processMap[server]!!.outputStream.flush()
                                 }
                             }
-                        }else if(a.contains("<")&&a.contains(">")){
+                        }else if(a.contains("<".toRegex())&&a.contains(">".toRegex())&&(!a.contains("\\[Server]".toRegex()))){
                             val name= getContent(a)
                             for(server in ConfigLoader.servers){
                                 if(server.name==name){
-                                    processMap[server]!!.outputStream.write(("msg @a ${getTalkCont(a)}\r\n").toByteArray(StandardCharsets.UTF_8))
+                                    processMap[server]!!.outputStream.write(("say ${a.substring(a.indexOf("<"))}\r\n").toByteArray(StandardCharsets.UTF_8))
                                     processMap[server]!!.outputStream.flush()
                                 }
                             }
@@ -75,8 +79,8 @@ object SubMain {
             }.start()
             for(i in ConfigLoader.servers){
                 Thread {
-                    var os = BufferedWriter(OutputStreamWriter(processMap[i]?.outputStream))
-                    var iss = BufferedReader(InputStreamReader(processMap[i]?.inputStream))
+                    BufferedWriter(OutputStreamWriter(processMap[i]?.outputStream, StandardCharsets.UTF_8))
+                    var iss = BufferedReader(InputStreamReader(processMap[i]?.inputStream, StandardCharsets.UTF_8))
                     while(true){
                         var a = iss.readLine()
                         if(a == null) break
@@ -86,8 +90,8 @@ object SubMain {
                 }.start()
             }
             Thread{
-                var os=BufferedWriter(OutputStreamWriter(bot?.outputStream))
-                var iss=BufferedReader(InputStreamReader(bot?.inputStream))
+                var os=BufferedWriter(OutputStreamWriter(bot?.outputStream, StandardCharsets.UTF_8))
+                var iss=BufferedReader(InputStreamReader(bot?.inputStream, StandardCharsets.UTF_8))
                 while(true){
                     var a = iss.readLine()
                     if(a == null) {
@@ -115,25 +119,6 @@ object SubMain {
         return str.substring(start + 1, end)
     }
 
-    private fun getTalkCont(s: String): String {
-        val start = s.indexOf('<')
-        if (start == -1) {
-            return ""
-        }
-        var count = 1
-        for (i in start + 1 until s.length) {
-            val c = s[i]
-            if (c == '<') {
-                count++
-            } else if (c == '>') {
-                count--
-            }
-            if (count == 0) {
-                return s.substring(start)
-            }
-        }
-        return ""
-    }
     fun deal(){
         if (!processMap.isEmpty()) {
             for (server in ConfigLoader.servers) {
@@ -151,9 +136,14 @@ object SubMain {
             }
         }
         if(bot!= null) {
-            bot!!.destroyForcibly()
+            bot!!.destroy()
+            ProcessBuilder("taskkill","/F","/IM","NapCatWinBootMain.exe").start()
+            ProcessBuilder("taskkill","/F","/IM","QQ.exe").start()
+            Thread.sleep(10000)
+            if (bot!!.isAlive) {
+                bot!!.destroyForcibly()
+            }
         }
+        exitProcess(0)
     }
-    //TODO 1.加载类问题
-    //TODO 2.进程没关掉
 }

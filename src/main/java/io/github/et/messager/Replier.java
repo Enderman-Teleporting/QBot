@@ -31,8 +31,8 @@ public class Replier extends SimpleListenerHost {
 
     @EventHandler
     public void groupTalk(GroupMessageEvent msgEvent) throws LoggerNotDeclaredException {
-        if(FeatureInUse.isInUse("Reply",msgEvent.getSubject().getId())) {
-            if (msgEvent.getMessage().contains(new At(msgEvent.getBot().getId()))) {
+        if (msgEvent.getMessage().contains(new At(msgEvent.getBot().getId()))) {
+            if (FeatureInUse.isInUse("Reply", msgEvent.getSubject().getId())) {
                 MessageChain msg = msgEvent.getMessage();
                 String result = GPT.getReply(msgEvent.getSubject().getId(), msgProcess(msg));
                 MessageChain chain = new MessageChainBuilder()
@@ -42,26 +42,28 @@ public class Replier extends SimpleListenerHost {
                 msgEvent.getGroup().sendMessage(chain);
                 Logger logger = Logger.getDeclaredLogger();
                 logger.info("Handled chatting event from Group: %s", msgEvent.getGroup().getId());
+            } else {
+                msgEvent.getGroup().sendMessage("功能未开启");
             }
-        }else {
-            msgEvent.getGroup().sendMessage("功能未开启");
         }
 
     }
     @EventHandler
     public void privateTalk(FriendMessageEvent msgEvent) throws IOException, LoggerNotDeclaredException {
-        if(FeatureInUse.isInUse("Reply",msgEvent.getSubject().getId())) {
-            if (!(msgEvent.getMessage().contentToString().startsWith("/")||msgEvent.getMessage().contentToString().startsWith("绘图 ") || msgEvent.getMessage().contentToString().startsWith("查服 "))) {
+
+        if (!(msgEvent.getMessage().contentToString().startsWith("/") || msgEvent.getMessage().contentToString().startsWith("绘图 ") || msgEvent.getMessage().contentToString().startsWith("查服 "))) {
+            if (FeatureInUse.isInUse("Reply", msgEvent.getSubject().getId())) {
                 MessageChain msg = msgEvent.getMessage();
                 String a = msgProcess(msg);
                 String result = a.equals("你好,请发送纯文本消息,谢谢") ? a : GPT.getReply(msgEvent.getSubject().getId(), a);
                 msgEvent.getSubject().sendMessage(result);
                 Logger logger = Logger.getDeclaredLogger();
                 logger.info("Handled message reply at" + msgEvent.getSubject().getId());
+            } else {
+                msgEvent.getSubject().sendMessage("功能未开启");
             }
-        }else {
-            msgEvent.getSubject().sendMessage("功能未开启");
         }
+
     }
 
     public static String msgProcess(MessageChain msg){
