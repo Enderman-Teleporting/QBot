@@ -74,7 +74,7 @@ public class Resource {
         Main.JSON_ALL = JsonBuilder.buildFullJson();
         try {
             checkFileValidity();
-        }catch (BotInfoNotFoundException e){
+        } catch (BotInfoNotFoundException e) {
             runInstaller();
         }
         System.out.println("正在配置...");
@@ -90,44 +90,45 @@ public class Resource {
                             File config = new File(version.getAbsolutePath() + "/resources/app/napcat/config/onebot11_" + global.get("id") + ".json");
                             if (!config.exists()) {
                                 config.createNewFile();
-                                BufferedWriter bf = new BufferedWriter(new FileWriter(config));
-                                final String json =
-                                        "{\n" +
-                                                "  \"network\": {\n" +
-                                                "    \"httpServers\": [],\n" +
-                                                "    \"httpClients\": [],\n" +
-                                                "    \"websocketServers\": [\n" +
-                                                "      {\n" +
-                                                "        \"name\": \"WsServer\",\n" +
-                                                "        \"enable\": true,\n" +
-                                                "        \"host\": \"127.0.0.1\",\n" +
-                                                "        \"port\": " + global.get("port") + ",\n" +
-                                                "        \"messagePostFormat\": \"array\",\n" +
-                                                "        \"reportSelfMessage\": false,\n" +
-                                                "        \"token\": \"\",\n" +
-                                                "        \"enableForcePushEvent\": true,\n" +
-                                                "        \"debug\": false,\n" +
-                                                "        \"heartInterval\": 3000\n" +
-                                                "      }\n" +
-                                                "    ],\n" +
-                                                "    \"websocketClients\": []\n" +
-                                                "  },\n" +
-                                                "  \"musicSignUrl\": \"\",\n" +
-                                                "  \"enableLocalFile2Url\": true,\n" +
-                                                "  \"parseMultMsg\": true\n" +
-                                                "}";
-                                bf.write(json);
-                                bf.flush();
-                                bf.close();
-                                break;
                             }
+                            BufferedWriter bf = new BufferedWriter(new FileWriter(config));
+                            final String json =
+                                    "{\n" +
+                                            "  \"network\": {\n" +
+                                            "    \"httpServers\": [],\n" +
+                                            "    \"httpClients\": [],\n" +
+                                            "    \"websocketServers\": [\n" +
+                                            "      {\n" +
+                                            "        \"name\": \"WsServer\",\n" +
+                                            "        \"enable\": true,\n" +
+                                            "        \"host\": \"127.0.0.1\",\n" +
+                                            "        \"port\": " + global.get("port") + ",\n" +
+                                            "        \"messagePostFormat\": \"array\",\n" +
+                                            "        \"reportSelfMessage\": false,\n" +
+                                            "        \"token\": \"\",\n" +
+                                            "        \"enableForcePushEvent\": true,\n" +
+                                            "        \"debug\": false,\n" +
+                                            "        \"heartInterval\": 3000\n" +
+                                            "      }\n" +
+                                            "    ],\n" +
+                                            "    \"websocketClients\": []\n" +
+                                            "  },\n" +
+                                            "  \"musicSignUrl\": \"\",\n" +
+                                            "  \"enableLocalFile2Url\": true,\n" +
+                                            "  \"parseMultMsg\": true\n" +
+                                            "}";
+                            bf.write(json);
+                            bf.flush();
+                            bf.close();
                             break;
                         }
+                        break;
                     }
                 }
-                break;
             }
+            break;
         }
+
     }
 
 

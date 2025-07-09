@@ -5,6 +5,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.JSONReader;
+import io.github.et.Main;
 import io.github.et.exceptions.BotInfoNotFoundException;
 import io.github.et.utils.lua.Item;
 import io.github.et.utils.lua.LuaLoader;
@@ -22,7 +23,6 @@ public class JsonBuilder {
     private static final Scanner scanner = new Scanner(System.in);
     private static JSONObject existingConfig = null;
     private static HashMap<String, String> helpList = new HashMap<>();
-    private static ArrayList<String> features_cn=new ArrayList<>();
     public static void initAll() throws BotInfoNotFoundException, ClassNotFoundException {
         File configFile = new File("botInfo.json");
         if (configFile.exists()) {
@@ -375,6 +375,7 @@ public class JsonBuilder {
                 }
             }
             writer.close();
+            Main.buildURL();
         }
     }
     private static void generateList(){
@@ -382,16 +383,15 @@ public class JsonBuilder {
                 .filter(lua -> lua.getCn() != null)
                 .forEach(lua -> {
                     helpList.put(lua.getCn(), lua.getHelp());
-                    features_cn.add(lua.getCn());
                 });
 
     }
     public static String generateHelp_list(){
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < features_cn.size()-1; i++) {
-            sb.append(features_cn.get(i)).append("\n");
+        for (int i = 0; i < helpList.size()-1; i++) {
+            sb.append(helpList.keySet().toArray()[i]).append("\n");
         }
-        sb.append(features_cn.get(features_cn.size()-1));
+        sb.append(helpList.keySet().toArray()[helpList.size()-1]);
         return sb.toString();
     }
     public static String generateHelp(String name){

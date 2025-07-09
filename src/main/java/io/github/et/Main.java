@@ -6,6 +6,7 @@ import io.github.et.eventListener.ChangeGroupName;
 import io.github.et.eventListener.LeaverListener;
 import io.github.et.eventListener.RequestPasser;
 import io.github.et.exceptions.BotInfoNotFoundException;
+import io.github.et.games.roulette.Roulette;
 import io.github.et.messager.*;
 import io.github.et.subprocessLoader.Loader;
 import io.github.et.subprocessLoader.ServerStream;
@@ -68,7 +69,6 @@ public class Main {
             throw new BotInfoNotFoundException();
         }
         bot.login();
-        buildURL();
         logger.info("正在注册监听器……");
         List<Class<?>> clazz= ClassLoader.loadClasses();
         clazz.add(AdminBuffet.class);
@@ -85,6 +85,7 @@ public class Main {
         clazz.add(Repeater.class);
         clazz.add(Replier.class);
         clazz.add(ServerSearcher.class);
+        clazz.add(Roulette.class);
         for (Class<?> c:clazz){
             Object abc=c.getDeclaredConstructor().newInstance();
             if (abc instanceof ListenerHost a){

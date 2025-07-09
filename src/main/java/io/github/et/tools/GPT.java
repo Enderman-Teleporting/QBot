@@ -35,6 +35,7 @@ public class GPT {
             HttpURLConnection connection = (HttpURLConnection) new URL(Main.URL).openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Authorization", "Bearer " + Main.APIKEY);
             connection.setRequestProperty("x-foo", "true");
             connection.setDoOutput(true);
@@ -96,6 +97,7 @@ public class GPT {
             HttpURLConnection connection = (HttpURLConnection) new URL(Main.URL).openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Authorization", "Bearer " + Main.APIKEY);
             connection.setRequestProperty("x-foo", "true");
             connection.setDoOutput(true);

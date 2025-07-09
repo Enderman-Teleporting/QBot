@@ -137,6 +137,13 @@ public class CommandConsole {
                     JsonBuilder.update();
                     return "setting completed!";
                 }
+                case "restart" -> {
+                    if(ServerStream.os!=null){
+                        ServerStream.os.write((commands[0]+" "+commands[1]+"\r\n").getBytes(StandardCharsets.UTF_8));
+                        ServerStream.os.flush();
+                    }
+                    return "restarting...";
+                }
                 case "help" -> {
                     return("""
                             sendGroupMsg [GroupCode] [Message]
@@ -150,6 +157,7 @@ public class CommandConsole {
                             kick [GroupCode] [MemberCode] [Reason]
                             set [GroupCode] [FullPathToFunction]
                             set [FullPathToFunction] [Key] [Value]
+                            restart [MCServerName]
                             help
                             """);
                 }

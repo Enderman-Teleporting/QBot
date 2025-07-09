@@ -71,6 +71,22 @@ object SubMain {
                                     processMap[server]!!.outputStream.flush()
                                 }
                             }
+                        }else if(a.startsWith("restart ")){
+                            val name=a.substring(8)
+                            for(server in ConfigLoader.servers){
+                                if(server.name==name){
+                                    if(processMap[server]!!.isAlive){
+                                        processMap[server]!!.destroy()
+                                        processMap[server]!!.waitFor()
+                                    }
+                                    val pb = ProcessBuilder(*server.command.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+                                        .toTypedArray()).directory(
+                                        File(server.workingDir)
+                                    )
+                                    val process = pb.start()
+                                    processMap[server] = process
+                                }
+                            }
                         }
                     }
                 } catch (e: IOException) {
