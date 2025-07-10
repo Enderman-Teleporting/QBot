@@ -76,7 +76,8 @@ object SubMain {
                             for(server in ConfigLoader.servers){
                                 if(server.name==name){
                                     if(processMap[server]!!.isAlive){
-                                        processMap[server]!!.destroy()
+                                        processMap[server]!!.outputStream.write(("stop\r\n").toByteArray(StandardCharsets.UTF_8))
+                                        processMap[server]!!.outputStream.flush()
                                         processMap[server]!!.waitFor()
                                     }
                                     val pb = ProcessBuilder(*server.command.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
@@ -85,6 +86,57 @@ object SubMain {
                                     )
                                     val process = pb.start()
                                     processMap[server] = process
+                                    GlobalScope.launch {
+                                        BufferedWriter(OutputStreamWriter(process.outputStream, StandardCharsets.UTF_8))
+                                        var iss = BufferedReader(InputStreamReader(process.inputStream, StandardCharsets.UTF_8))
+                                        while(true){
+                                            var a = iss.readLine()
+                                            if(a == null) break
+                                            OS.write("[${server.name}]$a\r\n")
+                                            OS.flush()
+                                        }
+                                    }
+                                }
+                            }
+                        }else if (a.startsWith("forceStop ")){
+                            val name = a.substring(10)
+                            for(server in ConfigLoader.servers){
+                                if(server.name==name){
+                                    if(processMap[server]!!.isAlive){
+                                        processMap[server]!!.destroyForcibly()
+                                    }
+                                }
+                            }
+                        }else if(a.startsWith("backup ")){
+                            GlobalScope.launch {
+                                val name=a.substring(7)
+                                for(server in ConfigLoader.servers){
+                                    if(server.name==name){
+                                        val file=File("./backup/${server.name}")
+                                        if(!file.exists()){
+                                            file.mkdirs()
+                                        }
+                                        processMap[server]?.outputStream?.write("save-off\r\n".toByteArray(StandardCharsets.UTF_8))
+                                        processMap[server]?.outputStream?.flush()
+                                        processMap[server]?.outputStream?.write("save hold\r\n".toByteArray(StandardCharsets.UTF_8))
+                                        processMap[server]?.outputStream?.flush()
+                                        val mis=System.currentTimeMillis()
+                                        compressDirectory("${server.workingDir}/./world",file,"$mis.zip")
+                                        processMap[server]?.outputStream?.write("save-on\r\n".toByteArray(StandardCharsets.UTF_8))
+                                        processMap[server]?.outputStream?.flush()
+                                        processMap[server]?.outputStream?.write("save resume\r\n".toByteArray(StandardCharsets.UTF_8))
+                                        processMap[server]?.outputStream?.flush()
+                                        for(i in file.listFiles()){
+                                            try {
+                                                val a = i.canonicalPath.split("/").last().split("\\").last().replace(".zip", "").toLong()
+                                                if (a <= mis - 10 * 24 * 3600 * 1000) {
+                                                    i.delete()
+                                                }
+                                            }catch (e:NumberFormatException){
+                                                continue
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -94,7 +146,7 @@ object SubMain {
                 }
             }.start()
             for(i in ConfigLoader.servers){
-                Thread {
+                GlobalScope.launch {
                     BufferedWriter(OutputStreamWriter(processMap[i]?.outputStream, StandardCharsets.UTF_8))
                     var iss = BufferedReader(InputStreamReader(processMap[i]?.inputStream, StandardCharsets.UTF_8))
                     while(true){
@@ -103,7 +155,7 @@ object SubMain {
                         OS.write("[${i.name}]$a\r\n")
                         OS.flush()
                     }
-                }.start()
+                }
             }
             Thread{
                 var os=BufferedWriter(OutputStreamWriter(bot?.outputStream, StandardCharsets.UTF_8))
@@ -115,6 +167,35 @@ object SubMain {
                     }
                     OS.write("[]$a\r\n")
                     OS.flush()
+                }
+            }.start()
+            Thread{
+                Thread.sleep(24*3600*1000)
+                for (server in ConfigLoader.servers){
+                   val file=File("./backup/${server.name}")
+                   if(!file.exists()){
+                       file.mkdirs()
+                   }
+                    processMap[server]?.outputStream?.write("save-off\r\n".toByteArray(StandardCharsets.UTF_8))
+                    processMap[server]?.outputStream?.flush()
+                    processMap[server]?.outputStream?.write("save hold\r\n".toByteArray(StandardCharsets.UTF_8))
+                    processMap[server]?.outputStream?.flush()
+                    val mis=System.currentTimeMillis()
+                    compressDirectory("${server.workingDir}/./world",file,"$mis.zip")
+                    processMap[server]?.outputStream?.write("save-on\r\n".toByteArray(StandardCharsets.UTF_8))
+                    processMap[server]?.outputStream?.flush()
+                    processMap[server]?.outputStream?.write("save resume\r\n".toByteArray(StandardCharsets.UTF_8))
+                    processMap[server]?.outputStream?.flush()
+                    for(i in file.listFiles()){
+                        try {
+                            val a = i.canonicalPath.split("/").last().split("\\").last().replace(".zip", "").toLong()
+                            if (a <= mis - 10 * 24 * 3600 * 1000) {
+                                i.delete()
+                            }
+                        }catch (e:NumberFormatException){
+                            continue
+                        }
+                    }
                 }
             }.start()
         } catch (e: Exception) {
@@ -163,3 +244,64 @@ object SubMain {
         exitProcess(0)
     }
 }
+fun compressDirectory(dir1: String, dir2: File, name: String) {
+    val sourceDir = File(dir1)
+    require(sourceDir.exists() && sourceDir.isDirectory) { "Source directory $dir1 is invalid" }
+    val tempDir = createTempDir("zip_temp_").apply { deleteOnExit() }
+    val tempTargetDir = File(tempDir, sourceDir.name).apply { mkdirs() }
+
+    try {
+        copyDirectorySkippingLockFiles(sourceDir, tempTargetDir)
+        val zipFile = File(dir2, "$name.zip")
+        createZipFile(tempTargetDir, zipFile)
+    } finally {
+        tempDir.deleteRecursively()
+    }
+}
+
+private fun copyDirectorySkippingLockFiles(source: File, target: File) {
+    source.listFiles()?.forEach { file ->
+        if (file.name.endsWith(".lock", ignoreCase = true)) {
+            return@forEach
+        }
+
+        val targetFile = File(target, file.name)
+        when {
+            file.isDirectory -> {
+                targetFile.mkdirs()
+                copyDirectorySkippingLockFiles(file, targetFile)
+            }
+            file.isFile -> {
+                try {
+                    file.copyTo(targetFile, overwrite = true)
+                } catch (_:Exception){}
+            }
+        }
+    }
+}
+
+private fun createZipFile(sourceDir: File, zipFile: File) {
+    ZipOutputStream(FileOutputStream(zipFile)).use { zipOut ->
+        sourceDir.walk().forEach { file ->
+            if (file == sourceDir) return@forEach
+
+            val relativePath = sourceDir.toPath().relativize(file.toPath()).toString()
+            val zipEntry = ZipEntry(
+                relativePath + if (file.isDirectory) "/" else ""
+            )
+
+            try {
+                zipOut.putNextEntry(zipEntry)
+
+                if (file.isFile) {
+                    FileInputStream(file).use { input ->
+                        input.copyTo(zipOut)
+                    }
+                }
+
+                zipOut.closeEntry()
+            } catch (_: Exception) {}
+        }
+    }
+}
+//TODO test reload

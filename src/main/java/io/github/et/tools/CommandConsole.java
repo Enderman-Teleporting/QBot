@@ -144,6 +144,20 @@ public class CommandConsole {
                     }
                     return "restarting...";
                 }
+                case "forceStop" -> {
+                    if(ServerStream.os!=null){
+                        ServerStream.os.write((commands[0]+" "+commands[1]+"\r\n").getBytes(StandardCharsets.UTF_8));
+                        ServerStream.os.flush();
+                    }
+                    return "shutting...";
+                }
+                case "backup" -> {
+                    if(ServerStream.os!=null){
+                        ServerStream.os.write((commands[0]+" "+commands[1]+"\r\n").getBytes(StandardCharsets.UTF_8));
+                        ServerStream.os.flush();
+                    }
+                    return "backing up...";
+                }
                 case "help" -> {
                     return("""
                             sendGroupMsg [GroupCode] [Message]
@@ -158,6 +172,8 @@ public class CommandConsole {
                             set [GroupCode] [FullPathToFunction]
                             set [FullPathToFunction] [Key] [Value]
                             restart [MCServerName]
+                            forceStop [MCServerName]
+                            backup [MCServerName]
                             help
                             """);
                 }

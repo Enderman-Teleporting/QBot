@@ -1,10 +1,6 @@
 package io.github.et
 
-import lombok.Getter
-import lombok.Setter
 
-@Getter
-@Setter
 class MCServer(
     val name: String,
     val workingDir: String,

@@ -9,22 +9,14 @@ import java.util.zip.ZipOutputStream
 fun compressDirectory(dir1: String, dir2: File, name: String) {
     val sourceDir = File(dir1)
     require(sourceDir.exists() && sourceDir.isDirectory) { "Source directory $dir1 is invalid" }
-
-    // 创建临时工作目录
     val tempDir = createTempDir("zip_temp_").apply { deleteOnExit() }
     val tempTargetDir = File(tempDir, sourceDir.name).apply { mkdirs() }
 
     try {
-        // 复制目录并跳过lock文件
         copyDirectorySkippingLockFiles(sourceDir, tempTargetDir)
-
-        // 创建目标ZIP文件
         val zipFile = File(dir2, "$name.zip")
-
-        // 压缩临时目录内容
         createZipFile(tempTargetDir, zipFile)
     } finally {
-        // 确保临时目录被删除
         tempDir.deleteRecursively()
     }
 }
@@ -45,15 +37,8 @@ private fun copyDirectorySkippingLockFiles(source: File, target: File) {
             file.isFile -> {
                 try {
                     file.copyTo(targetFile, overwrite = true)
-                } catch (e: FileSystemException) {
-                    // 处理文件被锁定的情况
-                    System.err.println("WARNING: Skipped locked file [${file.absolutePath}] - ${e.message}")
-                } catch (e: AccessDeniedException) {
-                    // 处理无权限访问的文件
-                    System.err.println("WARNING: Skipped access-denied file [${file.absolutePath}] - ${e.message}")
-                } catch (e: IOException) {
-                    // 处理其他IO异常
-                    System.err.println("WARNING: Skipped file [${file.absolutePath}] due to error: ${e.message}")
+                } catch (e:Exception){
+
                 }
             }
         }
@@ -63,7 +48,7 @@ private fun copyDirectorySkippingLockFiles(source: File, target: File) {
 private fun createZipFile(sourceDir: File, zipFile: File) {
     ZipOutputStream(FileOutputStream(zipFile)).use { zipOut ->
         sourceDir.walk().forEach { file ->
-            if (file == sourceDir) return@forEach  // 跳过根目录自身
+            if (file == sourceDir) return@forEach
 
             val relativePath = sourceDir.toPath().relativize(file.toPath()).toString()
             val zipEntry = ZipEntry(
@@ -106,3 +91,4 @@ fun main(){
     outputStream.write("save-on\r\n".toByteArray(StandardCharsets.UTF_8))
     outputStream.flush()
 }
+//基岩save hold/ save resume

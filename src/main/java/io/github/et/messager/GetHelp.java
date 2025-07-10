@@ -25,7 +25,7 @@ public class GetHelp extends SimpleListenerHost {
     @EventHandler
     public void generate(MessageEvent evt){
         if (evt.getMessage().contentToString().equals("帮助")) {
-            evt.getSubject().sendMessage(JsonBuilder.generateHelp_list());
+            evt.getSubject().sendMessage(JsonBuilder.generateHelp_list()+"\n\n请输入“帮助 [功能名]”以获取该功能的帮助信息,注意空格");
         } else if (evt.getMessage().contentToString().startsWith("帮助 ")) {
             evt.getSubject().sendMessage(JsonBuilder.generateHelp(evt.getMessage().contentToString().substring(3)));
         }

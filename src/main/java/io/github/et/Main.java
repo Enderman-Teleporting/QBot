@@ -32,8 +32,8 @@ import java.util.List;
 
 public class Main {
     public static Globals globals= JsePlatform.standardGlobals();
-    public static String URL = "v1/chat/completions";
-    public static String Image_URL = "v1/images/generations";
+    public static String URL = "/chat/completions";
+    public static String Image_URL = "/images/generations";
     public static String APIKEY;
     public static Bot bot=null;
     public static JSONObject JSON_ALL;
@@ -108,11 +108,11 @@ public class Main {
     public static void buildURL(){
         String a = ((JSONObject) JSON_NO_GUIDE.get("Reply")).get("URL").toString();
         if(a.endsWith("/")){
-            URL=a+URL;
-            Image_URL=a+Image_URL;
+            URL=a+"chat/completions";
+            Image_URL=a+"images/generations";
         }else{
-            URL=a+"/"+URL;
-            Image_URL=a+"/"+Image_URL;
+            URL=a+"/chat/completions";
+            Image_URL=a+"/images/generations";
         }
         APIKEY = JSON_ALL.getJSONObject("Reply").getString("APIKEY");
 
