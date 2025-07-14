@@ -1,5 +1,6 @@
 package io.github.et.messager;
 
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import io.github.et.Main;
 import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
@@ -69,18 +70,21 @@ public class FreeTalk extends SimpleListenerHost {
                 StringBuilder sb = new StringBuilder();
                 sb.append(sdf.format(new Date())).append(" ").append(event.getSender().getNick()).append("(").append(event.getSender().getId()).append("):");
                 j.put("role", "user");
+                JSONArray ja= new JSONArray();
                 for (SingleMessage i:msg){
                     if(i instanceof PlainText a){
                         sb.append(a.getContent());
                     }else if(i instanceof At a){
                         sb.append("@"+a.getTarget()+"@");
                     }else if(i instanceof Image a){
+                        JSONObject jo=new JSONObject();
                         sb.append("[图片]");
-                        j.put("type", "image_url");
-                        String code=a.serializeToMiraiCode();
+                        jo.put("type", "image_url");
                         JSONObject temp = new JSONObject();
+                        String code=a.serializeToMiraiCode();
                         temp.put("url", code.substring(18, code.length() - 1));
-                        j.put("image_url", temp);
+                        jo.put("image_url", temp);
+                        ja.add(jo);
                     }else if(i instanceof Face a){
                         sb.append("["+a.getName()+"]");
                     }else if(i instanceof QuoteReply a){
@@ -91,7 +95,15 @@ public class FreeTalk extends SimpleListenerHost {
                         sb.append(i.contentToString());
                     }
                 }
-                j.put("content", sb.toString());
+                if(!ja.isEmpty()){
+                    JSONObject jo = new JSONObject();
+                    jo.put("type", "text");
+                    jo.put("text", sb.toString());
+                    ja.add(jo);
+                    j.put("content", ja);
+                }else {
+                    j.put("content", sb.toString());
+                }
                 context.get(id).add(j);
                 currentMessageNum.put(id,currentMessageNum.get(id)+1);
                 if(context.size()>Main.JSON_NO_GUIDE.getJSONObject("Reply").getInteger("Max_Message_Count")+1){

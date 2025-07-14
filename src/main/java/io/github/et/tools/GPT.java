@@ -1,5 +1,6 @@
 package io.github.et.tools;
 
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import io.github.et.Main;
 
@@ -28,19 +29,30 @@ public class GPT {
             String[] a=question.split("~`\\+=");
             StringBuilder sb = new StringBuilder();
             userMessage.put("role", "user");
-            for (String i:a) {
-                if (!(i.startsWith(":img:")||i.startsWith(":vid:"))) {
-                    sb.append(i);
-                } else if(i.startsWith(":img:")) {
-                    sb.append("[图片]");
-                    userMessage.put("type","image_url");
-                    JSONObject temp = new JSONObject();
-                    temp.put("url", i.substring(18, i.length() - 1));
-                    userMessage.put("image_url", temp);
+            if(question.contains("~`+=")) {
+                JSONArray ja = new JSONArray();
+                for (String i : a) {
+                    if (!i.startsWith(":img:")) {
+                        sb.append(i);
+                    } else {
+                        JSONObject jo=new JSONObject();
+                        sb.append("[图片]");
+                        jo.put("type", "image_url");
+                        JSONObject temp = new JSONObject();
+                        temp.put("url", i.substring(18, i.length() - 1));
+                        jo.put("image_url", temp);
+                        ja.add(jo);
+                    }
                 }
+                JSONObject jo = new JSONObject();
+                jo.put("type","text");
+                jo.put("text",sb.toString());
+                ja.add(jo);
+                userMessage.put("content", ja);
+            }else{
+                userMessage.put("content", question);
             }
 
-            userMessage.put("content", sb.toString());
             messageHistory.get(groupNum).add(userMessage);
             if (messageHistory.get(groupNum).size() > Integer.parseInt((String) Main.JSON_NO_GUIDE.getOrDefault("Max_Message_Count", "16"))) {
                 messageHistory.get(groupNum).remove(0);
