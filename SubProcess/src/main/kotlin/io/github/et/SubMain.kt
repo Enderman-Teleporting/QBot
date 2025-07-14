@@ -3,7 +3,6 @@ package io.github.et
 import io.github.et.ConfigLoader.load
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.glavo.rcon.Rcon
 import java.io.*
 import java.net.Socket
 import java.nio.charset.Charset
@@ -61,16 +60,20 @@ object SubMain {
                             val cmd = a.substring(name.length + 3)
                             for (server in ConfigLoader.servers) {
                                 if (server.name == name) {
-                                    val rcon=Rcon("127.0.0.1",server.rcon_port, server.rcon_password)
-                                    rcon.command(cmd)
+                                    val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                    bw.write(cmd)
+                                    bw.newLine()
+                                    bw.flush()
                                 }
                             }
-                        }else if(a.contains("<".toRegex())&&a.contains(">".toRegex())&&(!a.contains("\\[Rcon]".toRegex()))&&(!a.contains("/[a-z]+".toRegex()))){
+                        }else if(a.contains("<".toRegex())&&a.contains(">".toRegex())&&(!a.contains("\\[Server]".toRegex()))&&(!a.contains("/[a-z]+".toRegex()))){
                             val name= getContent(a)
                             for(server in ConfigLoader.servers){
                                 if(server.name==name){
-                                    val rcon=Rcon("127.0.0.1",server.rcon_port, server.rcon_password)
-                                    rcon.command("say ${a.substring(a.indexOf("<"))}")
+                                    val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                    bw.write("say ${a.substring(a.indexOf("<"))}")
+                                    bw.newLine()
+                                    bw.flush()
                                 }
                             }
                         }else if(a.startsWith("restart ")) {
@@ -78,8 +81,10 @@ object SubMain {
                             for (server in ConfigLoader.servers) {
                                 if (server.name == name) {
                                     GlobalScope.launch {
-                                        val rcon=Rcon("127.0.0.1",server.rcon_port, server.rcon_password)
-                                        rcon.command("stop")
+                                        val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                        bw.write("stop")
+                                        bw.newLine()
+                                        bw.flush()
                                         Thread.sleep(1000)
                                         if (processMap[server]!!.isAlive) {
                                             processMap[server]!!.destroy()
@@ -170,10 +175,16 @@ object SubMain {
                                         if(!toDir.exists()){
                                             toDir.mkdirs()
                                         }
-                                        val rcon=Rcon("127.0.0.1",server.rcon_port,server.rcon_password)
-                                        rcon.command("save-off")
+                                        val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                        bw.write("save-off")
+                                        bw.newLine()
+                                        bw.flush()
+                                        Thread.sleep(300)
                                         compressDirectory(server.workingDir + "/world", toDir, time.toString())
-                                        rcon.command("save-on")
+                                        bw.write("save-on")
+                                        bw.newLine()
+                                        bw.flush()
+                                        Thread.sleep(300)
                                         for (i in toDir.listFiles()){
                                             if(i.name.endsWith(".zip")&&i.name.substring(0,i.name.length -4).matches("[0-9]+".toRegex())){
                                                 if(i.name.substring(0,i.name.length -4).toLong()+24*3600*1000*10<=time){
@@ -232,10 +243,15 @@ object SubMain {
                             if (!toDir.exists()) {
                                 toDir.mkdirs()
                             }
-                            val rcon=Rcon("127.0.0.1",server.rcon_port, server.rcon_password)
-                            rcon.command("save-off")
+                            val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                            bw.write("save-off")
+                            bw.newLine()
+                            bw.flush()
+                            Thread.sleep(300)
                             compressDirectory(server.workingDir + "/world", toDir, time.toString())
-                            rcon.command("save-on")
+                            bw.write("save-on")
+                            bw.newLine()
+                            bw.flush()
                             for (i in toDir.listFiles()) {
                                 if (i.name.endsWith(".zip") && i.name.substring(0, i.name.length - 4)
                                         .matches("[0-9]+".toRegex())

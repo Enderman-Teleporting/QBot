@@ -34,7 +34,9 @@ public class GPT {
                 } else if(i.startsWith(":img:")) {
                     sb.append("[图片]");
                     userMessage.put("type","image_url");
-                    userMessage.put("image_url",i.substring(18,i.length()-1));
+                    JSONObject temp = new JSONObject();
+                    temp.put("url", i.substring(18, i.length() - 1));
+                    userMessage.put("image_url", temp);
                 }
             }
 
@@ -88,7 +90,7 @@ public class GPT {
         }
     }
 
-    public static String freeSpeech(String name,Long groupNum) {
+    public static String freeSpeech(Long groupNum) {
         try {
             JSONObject info = new JSONObject();
             info.put("model", Main.JSON_NO_GUIDE.getJSONObject("Reply").getOrDefault("model", "gpt-4o-mini"));

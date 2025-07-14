@@ -44,7 +44,8 @@ public class FreeTalk extends SimpleListenerHost {
                     "我会以这样的形式向你展示群聊上下文:\n" +
                     "`发送时间` `昵称`(`QQ号`):`消息内容`\n" +
                     "你需要根据这个上下文进行回复,也可以在适宜的位置开启新话题,在需要at某个群成员的地方,请以如下格式at:\n" +
-                    "@`QQ号`@\n";
+                    "@`QQ号`@\n" +
+                    "你只需发送你需要的消息即可,无需按照我给你消息记录的格式发送,除了at消息";
             long id=event.getSubject().getId();
             Calendar date = Calendar.getInstance();
             date.setTime(new Date(System.currentTimeMillis()));
@@ -76,7 +77,10 @@ public class FreeTalk extends SimpleListenerHost {
                     }else if(i instanceof Image a){
                         sb.append("[图片]");
                         j.put("type", "image_url");
-                        j.put("image_url", a.serializeToMiraiCode());
+                        String code=a.serializeToMiraiCode();
+                        JSONObject temp = new JSONObject();
+                        temp.put("url", code.substring(18, code.length() - 1));
+                        j.put("image_url", temp);
                     }else if(i instanceof Face a){
                         sb.append("["+a.getName()+"]");
                     }else if(i instanceof QuoteReply a){
@@ -94,7 +98,7 @@ public class FreeTalk extends SimpleListenerHost {
                     context.get(id).remove(1);
                 }
                 if (Objects.equals(currentMessageNum.get(id), targetMessageNum.get(id))) {
-                    String content = GPT.freeSpeech(event.getSubject().getName(), id);
+                    String content = GPT.freeSpeech(id);
                     if (content != null) {
                         String[] messages = content.split("[\n，。；：？！,.?;:! ]");
                         for (int i = 0; i < messages.length; i++) {

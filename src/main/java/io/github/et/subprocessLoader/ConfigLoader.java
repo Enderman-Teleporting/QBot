@@ -14,8 +14,11 @@ public class ConfigLoader {
             BufferedReader bf = new BufferedReader(new FileReader(configFile, StandardCharsets.UTF_8));
             for (String i:bf.lines().toList()){
                 String[] a=i.split("\\|\\|");
-                if(a.length==6){
-                    servers.add(new MCServer(a[0],a[1],a[2],Long.parseLong(a[3]),Integer.parseInt(a[4]),a[5]));
+                if(a.length==4){
+                    if(!a[0].matches("[a-zA-Z0-9]+")){
+                        throw new BotInfoNotFoundException("服务器名称只能为字母和数字组合");
+                    }
+                    servers.add(new MCServer(a[0],a[1],a[2],Long.parseLong(a[3])));
                 }else{
                     throw new BotInfoNotFoundException("Wrong arguments in config file");
                 }
