@@ -3,21 +3,24 @@ package io.github.et
 import io.github.et.ConfigLoader.load
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.glavo.rcon.Rcon
 import java.io.*
-import java.lang.System
 import java.net.Socket
+import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 import kotlin.system.exitProcess
 
+
 object SubMain {
     private val processMap: MutableMap<MCServer, Process> = ConcurrentHashMap()
     private var bot: Process? = null
     lateinit var OS:BufferedWriter
-
+    var QBotRunPathName: String? = null
     @Throws(IOException::class)
     @JvmStatic
     fun main(args: Array<String>) {
@@ -25,10 +28,9 @@ object SubMain {
             val port = args[0].toInt()
             val s = Socket("127.0.0.1", port)
             val `is` = BufferedReader(InputStreamReader(s.getInputStream(), StandardCharsets.UTF_8))
-            OS = BufferedWriter(OutputStreamWriter(s.getOutputStream(), StandardCharsets.UTF_8))
+            OS = BufferedWriter(OutputStreamWriter(s.getOutputStream(),StandardCharsets.UTF_8))
             load()
             val root = File(".")
-            var QBotRunPathName: String? = null
             for (i in Objects.requireNonNull<Array<File>>(root.listFiles())) {
                 if (i.name.contains("NapCat")&&i.name.contains("Shell")&&i.isDirectory) {
                     QBotRunPathName = i.absolutePath
@@ -59,81 +61,124 @@ object SubMain {
                             val cmd = a.substring(name.length + 3)
                             for (server in ConfigLoader.servers) {
                                 if (server.name == name) {
-                                    processMap[server]!!.outputStream.write((cmd + "\r\n").toByteArray(StandardCharsets.UTF_8))
-                                    processMap[server]!!.outputStream.flush()
+                                    val rcon=Rcon("127.0.0.1",server.rcon_port, server.rcon_password)
+                                    rcon.command(cmd)
                                 }
                             }
-                        }else if(a.contains("<".toRegex())&&a.contains(">".toRegex())&&(!a.contains("\\[Server]".toRegex()))){
+                        }else if(a.contains("<".toRegex())&&a.contains(">".toRegex())&&(!a.contains("\\[Rcon]".toRegex()))&&(!a.contains("/[a-z]+".toRegex()))){
                             val name= getContent(a)
                             for(server in ConfigLoader.servers){
                                 if(server.name==name){
-                                    processMap[server]!!.outputStream.write(("say ${a.substring(a.indexOf("<"))}\r\n").toByteArray(StandardCharsets.UTF_8))
-                                    processMap[server]!!.outputStream.flush()
+                                    val rcon=Rcon("127.0.0.1",server.rcon_port, server.rcon_password)
+                                    rcon.command("say ${a.substring(a.indexOf("<"))}")
                                 }
                             }
-                        }else if(a.startsWith("restart ")){
-                            val name=a.substring(8)
-                            for(server in ConfigLoader.servers){
-                                if(server.name==name){
-                                    if(processMap[server]!!.isAlive){
-                                        processMap[server]!!.outputStream.write(("stop\r\n").toByteArray(StandardCharsets.UTF_8))
-                                        processMap[server]!!.outputStream.flush()
-                                        processMap[server]!!.waitFor()
-                                    }
-                                    val pb = ProcessBuilder(*server.command.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
-                                        .toTypedArray()).directory(
-                                        File(server.workingDir)
-                                    )
-                                    val process = pb.start()
-                                    processMap[server] = process
+                        }else if(a.startsWith("restart ")) {
+                            val name = a.substring(8)
+                            for (server in ConfigLoader.servers) {
+                                if (server.name == name) {
                                     GlobalScope.launch {
-                                        BufferedWriter(OutputStreamWriter(process.outputStream, StandardCharsets.UTF_8))
-                                        var iss = BufferedReader(InputStreamReader(process.inputStream, StandardCharsets.UTF_8))
-                                        while(true){
-                                            var a = iss.readLine()
-                                            if(a == null) break
-                                            OS.write("[${server.name}]$a\r\n")
-                                            OS.flush()
+                                        val rcon=Rcon("127.0.0.1",server.rcon_port, server.rcon_password)
+                                        rcon.command("stop")
+                                        Thread.sleep(1000)
+                                        if (processMap[server]!!.isAlive) {
+                                            processMap[server]!!.destroy()
+                                        }
+                                        processMap[server] =
+                                            ProcessBuilder(server.command.split(" ")).directory(File(server.workingDir))
+                                                .start()
+                                        BufferedWriter(
+                                            OutputStreamWriter(
+                                                processMap[server]?.outputStream,
+                                                StandardCharsets.UTF_8
+                                            )
+                                        )
+                                        var iss = BufferedReader(
+                                            InputStreamReader(
+                                                processMap[server]?.inputStream,
+                                                StandardCharsets.UTF_8
+                                            )
+                                        )
+                                        while (true) {
+                                            if (!(processMap[server] ?: return@launch).isAlive) {
+                                                break
+                                            }
+                                            try {
+                                                var b = iss.readLine()
+                                                if (b == null) continue
+                                                OS.write("[${server.name}]$b\r\n")
+                                                OS.flush()
+                                            } catch (_: Exception) {
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }else if (a.startsWith("forceStop ")){
-                            val name = a.substring(10)
+                        }else if(a.startsWith("forceStop ")){
+                            val name=a.substring(10)
                             for(server in ConfigLoader.servers){
-                                if(server.name==name){
-                                    if(processMap[server]!!.isAlive){
-                                        processMap[server]!!.destroyForcibly()
+                                if(server.name==name) {
+                                    if (processMap[server]!!.isAlive) {
+                                        processMap[server]?.destroyForcibly()
+                                    }
+                                }
+                            }
+                        }else if(a.startsWith("startup ")) {
+                            val name = a.substring(8)
+                            for (server in ConfigLoader.servers) {
+                                if (server.name == name) {
+                                    if (!processMap[server]!!.isAlive) {
+                                        GlobalScope.launch {
+                                            processMap[server] =
+                                                ProcessBuilder(server.command.split(" ")).directory(File(server.workingDir))
+                                                    .start()
+                                            BufferedWriter(
+                                                OutputStreamWriter(
+                                                    processMap[server]?.outputStream,
+                                                    StandardCharsets.UTF_8
+                                                )
+                                            )
+                                            var iss = BufferedReader(
+                                                InputStreamReader(
+                                                    processMap[server]?.inputStream,
+                                                    StandardCharsets.UTF_8
+                                                )
+                                            )
+                                            while (true) {
+                                                if (!(processMap[server] ?: return@launch).isAlive) {
+                                                    break
+                                                }
+                                                try {
+                                                    var b = iss.readLine()
+                                                    if (b == null) continue
+                                                    OS.write("[${server.name}]$b\r\n")
+                                                    OS.flush()
+                                                } catch (_: Exception) {
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }else if(a.startsWith("backup ")){
-                            GlobalScope.launch {
-                                val name=a.substring(7)
-                                for(server in ConfigLoader.servers){
-                                    if(server.name==name){
-                                        val file=File("./backup/${server.name}")
-                                        if(!file.exists()){
-                                            file.mkdirs()
+                            val name=a.substring(7)
+                            for(server in ConfigLoader.servers){
+                                if(name==server.name){
+                                    GlobalScope.launch {
+                                        val time=System.currentTimeMillis()
+                                        val toDir=File("./backups/${server.name}")
+                                        if(!toDir.exists()){
+                                            toDir.mkdirs()
                                         }
-                                        processMap[server]?.outputStream?.write("save-off\r\n".toByteArray(StandardCharsets.UTF_8))
-                                        processMap[server]?.outputStream?.flush()
-                                        processMap[server]?.outputStream?.write("save hold\r\n".toByteArray(StandardCharsets.UTF_8))
-                                        processMap[server]?.outputStream?.flush()
-                                        val mis=System.currentTimeMillis()
-                                        compressDirectory("${server.workingDir}/./world",file,"$mis.zip")
-                                        processMap[server]?.outputStream?.write("save-on\r\n".toByteArray(StandardCharsets.UTF_8))
-                                        processMap[server]?.outputStream?.flush()
-                                        processMap[server]?.outputStream?.write("save resume\r\n".toByteArray(StandardCharsets.UTF_8))
-                                        processMap[server]?.outputStream?.flush()
-                                        for(i in file.listFiles()){
-                                            try {
-                                                val a = i.canonicalPath.split("/").last().split("\\").last().replace(".zip", "").toLong()
-                                                if (a <= mis - 10 * 24 * 3600 * 1000) {
+                                        val rcon=Rcon("127.0.0.1",server.rcon_port,server.rcon_password)
+                                        rcon.command("save-off")
+                                        compressDirectory(server.workingDir + "/world", toDir, time.toString())
+                                        rcon.command("save-on")
+                                        for (i in toDir.listFiles()){
+                                            if(i.name.endsWith(".zip")&&i.name.substring(0,i.name.length -4).matches("[0-9]+".toRegex())){
+                                                if(i.name.substring(0,i.name.length -4).toLong()+24*3600*1000*10<=time){
                                                     i.delete()
                                                 }
-                                            }catch (e:NumberFormatException){
-                                                continue
                                             }
                                         }
                                     }
@@ -150,10 +195,15 @@ object SubMain {
                     BufferedWriter(OutputStreamWriter(processMap[i]?.outputStream, StandardCharsets.UTF_8))
                     var iss = BufferedReader(InputStreamReader(processMap[i]?.inputStream, StandardCharsets.UTF_8))
                     while(true){
-                        var a = iss.readLine()
-                        if(a == null) break
-                        OS.write("[${i.name}]$a\r\n")
-                        OS.flush()
+                        if(!(processMap[i] ?: return@launch).isAlive){
+                            break
+                        }
+                        try {
+                            var a = iss.readLine()
+                            if (a == null) continue
+                            OS.write("[${i.name}]$a\r\n")
+                            OS.flush()
+                        }catch (_:Exception){}
                     }
                 }
             }
@@ -169,35 +219,40 @@ object SubMain {
                     OS.flush()
                 }
             }.start()
-            Thread{
-                Thread.sleep(24*3600*1000)
-                for (server in ConfigLoader.servers){
-                   val file=File("./backup/${server.name}")
-                   if(!file.exists()){
-                       file.mkdirs()
-                   }
-                    processMap[server]?.outputStream?.write("save-off\r\n".toByteArray(StandardCharsets.UTF_8))
-                    processMap[server]?.outputStream?.flush()
-                    processMap[server]?.outputStream?.write("save hold\r\n".toByteArray(StandardCharsets.UTF_8))
-                    processMap[server]?.outputStream?.flush()
-                    val mis=System.currentTimeMillis()
-                    compressDirectory("${server.workingDir}/./world",file,"$mis.zip")
-                    processMap[server]?.outputStream?.write("save-on\r\n".toByteArray(StandardCharsets.UTF_8))
-                    processMap[server]?.outputStream?.flush()
-                    processMap[server]?.outputStream?.write("save resume\r\n".toByteArray(StandardCharsets.UTF_8))
-                    processMap[server]?.outputStream?.flush()
-                    for(i in file.listFiles()){
-                        try {
-                            val a = i.canonicalPath.split("/").last().split("\\").last().replace(".zip", "").toLong()
-                            if (a <= mis - 10 * 24 * 3600 * 1000) {
-                                i.delete()
+        Thread {
+            while (true) {
+                if (SimpleDateFormat("HH:mm:ss").format(Date()) == "00:00:00" || SimpleDateFormat("HH:mm:ss").format(
+                        Date()
+                    ) == "00:00:01"
+                ) {
+                    for (server in ConfigLoader.servers) {
+                        GlobalScope.launch {
+                            val time = System.currentTimeMillis()
+                            val toDir = File("./backups/${server.name}")
+                            if (!toDir.exists()) {
+                                toDir.mkdirs()
                             }
-                        }catch (e:NumberFormatException){
-                            continue
+                            val rcon=Rcon("127.0.0.1",server.rcon_port, server.rcon_password)
+                            rcon.command("save-off")
+                            compressDirectory(server.workingDir + "/world", toDir, time.toString())
+                            rcon.command("save-on")
+                            for (i in toDir.listFiles()) {
+                                if (i.name.endsWith(".zip") && i.name.substring(0, i.name.length - 4)
+                                        .matches("[0-9]+".toRegex())
+                                ) {
+                                    if (i.name.substring(0, i.name.length - 4)
+                                            .toLong() + 24 * 3600 * 1000 * 10 <= time
+                                    ) {
+                                        i.delete()
+                                    }
+                                }
+                            }
                         }
                     }
+                    Thread.sleep(1000)
                 }
-            }.start()
+            }
+        }.start()
         } catch (e: Exception) {
             deal()
         }
@@ -304,4 +359,3 @@ private fun createZipFile(sourceDir: File, zipFile: File) {
         }
     }
 }
-//TODO test reload

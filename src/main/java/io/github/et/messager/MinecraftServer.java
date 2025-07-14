@@ -12,7 +12,9 @@ import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
 
@@ -34,8 +36,10 @@ public class MinecraftServer extends SimpleListenerHost {
         long id= evt.getSubject().getId();
         for(MCServer ms: ConfigLoader.servers){
             if(ms.getGroup()==id){
-                ServerStream.os.write(("["+ms.getName()+"]<"+evt.getSender().getNick()+">"+evt.getMessage().contentToString()+"\r\n").getBytes(StandardCharsets.UTF_8));
-                ServerStream.os.flush();
+                BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(ServerStream.os, StandardCharsets.UTF_8));
+                bw.write("["+ms.getName()+"]<"+evt.getSender().getNick()+">"+evt.getMessage().contentToString());
+                bw.newLine();
+                bw.flush();
             }
         }
     }

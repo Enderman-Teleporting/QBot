@@ -44,8 +44,7 @@ public class Resource {
         }));
         System.out.println("NapCat安装程序已启动,请在安装完成后关闭安装程序并在此输入任意字符");
         System.out.println("如欲更新,请删除QQ.exe,NapCat.xxx.Shell文件夹");
-        Scanner sc=new Scanner(System.in);
-        sc.next();
+        System.in.read();
     }
     private static void deleteDirectory(File directory) {
         if(directory.isDirectory()) {
@@ -78,7 +77,7 @@ public class Resource {
             runInstaller();
         }
         System.out.println("正在配置...");
-        File root = new File(("./"));
+        File root = new File(".");
 
         for (File f : root.listFiles()) {
             if (f.isDirectory() && f.getName().matches("NapCat\\.[0-9]+\\.Shell")) {
@@ -122,11 +121,11 @@ public class Resource {
                             bf.close();
                             break;
                         }
-                        break;
+
                     }
                 }
             }
-            break;
+
         }
 
     }

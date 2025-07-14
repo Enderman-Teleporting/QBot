@@ -16,17 +16,31 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GPT {
-    private static ConcurrentHashMap<Long,List<JSONObject>> messageHistory = new ConcurrentHashMap<>();
-    public static String getReply(long groupNum,String question) {
-        if(!messageHistory.containsKey(groupNum)) {
-            messageHistory.put(groupNum,new ArrayList<>());
+    private static ConcurrentHashMap<Long, List<JSONObject>> messageHistory = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<Long, List<JSONObject>> context = new ConcurrentHashMap<>();
+
+    public static String getReply(long groupNum, String question) {
+        if (!messageHistory.containsKey(groupNum)) {
+            messageHistory.put(groupNum, new ArrayList<>());
         }
         try {
             JSONObject userMessage = new JSONObject();
+            String[] a=question.split("~`\\+=");
+            StringBuilder sb = new StringBuilder();
             userMessage.put("role", "user");
-            userMessage.put("content", question);
+            for (String i:a) {
+                if (!(i.startsWith(":img:")||i.startsWith(":vid:"))) {
+                    sb.append(i);
+                } else if(i.startsWith(":img:")) {
+                    sb.append("[图片]");
+                    userMessage.put("type","image_url");
+                    userMessage.put("image_url",i.substring(18,i.length()-1));
+                }
+            }
+
+            userMessage.put("content", sb.toString());
             messageHistory.get(groupNum).add(userMessage);
-            if(messageHistory.get(groupNum).size() > Integer.parseInt((String) Main.JSON_NO_GUIDE.getOrDefault("Max_Message_Count","16"))) {
+            if (messageHistory.get(groupNum).size() > Integer.parseInt((String) Main.JSON_NO_GUIDE.getOrDefault("Max_Message_Count", "16"))) {
                 messageHistory.get(groupNum).remove(0);
             }
             JSONObject info = new JSONObject();
@@ -56,9 +70,9 @@ public class GPT {
                     .getJSONObject(0)
                     .getJSONObject("message")
                     .getString("content");
-            if(content==null) {
+            if (content == null) {
                 throw new NullPointerException("content is null");
-            } else if(content.equals("null")){
+            } else if (content.equals("null")) {
                 throw new NullPointerException("content is null");
             } else {
                 JSONObject assistantMessage = new JSONObject();
@@ -74,26 +88,11 @@ public class GPT {
         }
     }
 
-    public static String freeSpeech(ArrayList<String> context, String name) {
-        Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String prompt="你叫"+name+"，你是一个性格温和的人。在日常生活里，你是"+Main.JSON_NO_GUIDE.getJSONObject("Reply").getOrDefault("role","一名在江苏省常熟中学学习的中学生")+"。生日随便编。\n" +
-                "你在一个qq群中，我会以\"A:xxx B:xxx 你:?\"的格式输入不全的聊天记录，你需要想想在这个情境下你接下来会说什么，然后补充\"你:?\"中你说的话，你补全的话题应该符合你的人设，不要讨论别的话题或试图结束聊天，你补全聊天的时候应该尽量附和之前的人说的话。\n" +
-                "你补全的风格应该较为温和，简短且口语化，切忌把话说的完整或太长，切忌使用书面语言。还有，你补全的长度应该与其他人发信息的长度差不多，尽量简短，要尽可能口语化。\n" +
-                "不要随意透露你的个人信息。记住用简体中文回答。\n" +
-                "请注意现在的北京时间是" +dateFormat.format(date)+"\n" +
-                "最后，请把你的回答精简到20字以内，并输出。";
-        for (String s : context) {
-            prompt+="\n"+s;
-        }
-        prompt+="\n你:?";
+    public static String freeSpeech(String name,Long groupNum) {
         try {
-            JSONObject message = new JSONObject();
-            message.put("role", "user");
-            message.put("content", prompt);
             JSONObject info = new JSONObject();
             info.put("model", Main.JSON_NO_GUIDE.getJSONObject("Reply").getOrDefault("model", "gpt-4o-mini"));
-            info.put("messages", message);
+            info.put("messages", context.get(groupNum));
             HttpURLConnection connection = (HttpURLConnection) new URL(Main.URL).openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
@@ -122,10 +121,16 @@ public class GPT {
                 throw new NullPointerException("content is null");
             } else if (content.equals("null")) {
                 throw new NullPointerException("content is null");
-            }  else {
-                return content;
+            } else {
+                JSONObject assistantMessage = new JSONObject();
+                assistantMessage.put("role", "assistant");
+                assistantMessage.put("content", content);
+                context.get(groupNum).add(assistantMessage);
             }
-        } catch (Exception ignored) {
+            return content;
+
+        } catch (Exception e) {
+            context.get(groupNum).clear();
             return null;
         }
     }

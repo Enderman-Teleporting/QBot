@@ -18,7 +18,11 @@ object ConfigLoader {
             val bf = BufferedReader(FileReader(configFile, StandardCharsets.UTF_8))
             for (i in bf.lines().toList()) {
                 val a = i.split("\\|\\|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                servers.add(MCServer(a[0], a[1], a[2], a[3].toLong()))
+                if(a.size==6) {
+                    servers.add(MCServer(a[0], a[1], a[2], a[3].toLong(), a[4].toInt(), a[5]))
+                }else{
+                    throw IllegalStateException()
+                }
             }
         }
     }

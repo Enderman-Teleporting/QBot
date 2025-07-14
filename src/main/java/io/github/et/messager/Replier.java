@@ -26,7 +26,7 @@ public class Replier extends SimpleListenerHost {
         } catch (LoggerNotDeclaredException e) {
             throw new RuntimeException(e);
         }
-        throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent",exception);
+        //throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent",exception);
     }
 
     @EventHandler
@@ -34,7 +34,27 @@ public class Replier extends SimpleListenerHost {
         if (msgEvent.getMessage().contains(new At(msgEvent.getBot().getId()))) {
             if (FeatureInUse.isInUse("Reply", msgEvent.getSubject().getId())) {
                 MessageChain msg = msgEvent.getMessage();
-                String result = GPT.getReply(msgEvent.getSubject().getId(), msgProcess(msg));
+                StringBuilder sb = new StringBuilder();
+                for (SingleMessage i:msg){
+                    if(i instanceof PlainText a){
+                        sb.append(a.getContent());
+                    }else if(i instanceof At a){
+                        if(!(a.getTarget()==msgEvent.getBot().getId())) {
+                            sb.append("@" + a.getTarget() + "@");
+                        }
+                    }else if(i instanceof Image a){
+                        sb.append("~`+=:img:"+a.getImageId()+"~`+=");
+                    }else if(i instanceof Face a){
+                        sb.append("["+a.getName()+"]");
+                    }else if(i instanceof QuoteReply a){
+                        sb.append("回复" + a.getSource().contentToString()+":\n");
+                    }else if(i instanceof AtAll a){
+                        sb.append("@所有人@");
+                    }else {
+                        sb.append(i.contentToString());
+                    }
+                }
+                String result = GPT.getReply(msgEvent.getSubject().getId(), sb.toString());
                 MessageChain chain = new MessageChainBuilder()
                         .append(result)
                         .append(new At(msgEvent.getSender().getId()))
@@ -50,12 +70,28 @@ public class Replier extends SimpleListenerHost {
     }
     @EventHandler
     public void privateTalk(FriendMessageEvent msgEvent) throws IOException, LoggerNotDeclaredException {
-
-        if (!(msgEvent.getMessage().contentToString().startsWith("/") || msgEvent.getMessage().contentToString().startsWith("绘图 ") || msgEvent.getMessage().contentToString().startsWith("查服 "))) {
+        if (!(msgEvent.getMessage().contentToString().startsWith("/") || msgEvent.getMessage().contentToString().startsWith("绘图 ") || msgEvent.getMessage().contentToString().startsWith("查服 ")|| msgEvent.getMessage().contentToString().startsWith("帮助 ")|| msgEvent.getMessage().contentToString().startsWith("帮助"))) {
             if (FeatureInUse.isInUse("Reply", msgEvent.getSubject().getId())) {
                 MessageChain msg = msgEvent.getMessage();
-                String a = msgProcess(msg);
-                String result = a.equals("你好,请发送纯文本消息,谢谢") ? a : GPT.getReply(msgEvent.getSubject().getId(), a);
+                StringBuilder sb = new StringBuilder();
+                for (SingleMessage i:msg){
+                    if(i instanceof PlainText a){
+                        sb.append(a.getContent());
+                    }else if(i instanceof At a){
+                        sb.append("@"+a.getTarget()+"@");
+                    }else if(i instanceof Image a){
+                        sb.append("~`+=:img:"+a.serializeToMiraiCode()+"~`+=");
+                    }else if(i instanceof Face a){
+                        sb.append("["+a.getName()+"]");
+                    }else if(i instanceof QuoteReply a){
+                        sb.append("回复" + a.getSource().contentToString()+":\n");
+                    }else if(i instanceof AtAll a){
+                        sb.append("@所有人@");
+                    }else {
+                        sb.append(i.contentToString());
+                    }
+                }
+                String result = GPT.getReply(msgEvent.getSubject().getId(), sb.toString());
                 msgEvent.getSubject().sendMessage(result);
                 Logger logger = Logger.getDeclaredLogger();
                 logger.info("Handled message reply at" + msgEvent.getSubject().getId());
@@ -66,21 +102,6 @@ public class Replier extends SimpleListenerHost {
 
     }
 
-    public static String msgProcess(MessageChain msg){
-        StringBuilder textMessage = new StringBuilder();
-        boolean noText=true;
-        for (SingleMessage messageContent : msg) {
-            if (messageContent instanceof PlainText) {
-                PlainText plainText = (PlainText) messageContent;
-                textMessage.append(plainText.getContent());
-                noText=false;
-            }
-        }
-        if(noText) {
-            textMessage.append("你好,请发送纯文本消息,谢谢");
-        }
-        return textMessage.toString();
-    }
 
 
 

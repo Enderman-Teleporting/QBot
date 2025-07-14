@@ -9,7 +9,11 @@ import io.github.ettoolset.tools.logger.LevelNotMatchException;
 import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import net.mamoe.mirai.Bot;
 
+import java.io.BufferedWriter;
 import java.io.Console;
+import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Objects;
@@ -139,22 +143,37 @@ public class CommandConsole {
                 }
                 case "restart" -> {
                     if(ServerStream.os!=null){
-                        ServerStream.os.write((commands[0]+" "+commands[1]+"\r\n").getBytes(StandardCharsets.UTF_8));
-                        ServerStream.os.flush();
+                        BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(ServerStream.os,StandardCharsets.UTF_8));
+                        bw.write(commands[0]+" "+commands[1]);
+                        bw.newLine();
+                        bw.flush();
                     }
                     return "restarting...";
                 }
                 case "forceStop" -> {
                     if(ServerStream.os!=null){
-                        ServerStream.os.write((commands[0]+" "+commands[1]+"\r\n").getBytes(StandardCharsets.UTF_8));
-                        ServerStream.os.flush();
+                        BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(ServerStream.os,StandardCharsets.UTF_8));
+                        bw.write(commands[0]+" "+commands[1]);
+                        bw.newLine();
+                        bw.flush();
                     }
                     return "shutting...";
                 }
+                case "startup" -> {
+                    if(ServerStream.os!=null){
+                        BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(ServerStream.os,StandardCharsets.UTF_8));
+                        bw.write(commands[0]+" "+commands[1]);
+                        bw.newLine();
+                        bw.flush();
+                    }
+                    return "starting up...";
+                }
                 case "backup" -> {
                     if(ServerStream.os!=null){
-                        ServerStream.os.write((commands[0]+" "+commands[1]+"\r\n").getBytes(StandardCharsets.UTF_8));
-                        ServerStream.os.flush();
+                        BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(ServerStream.os,StandardCharsets.UTF_8));
+                        bw.write(commands[0]+" "+commands[1]);
+                        bw.newLine();
+                        bw.flush();
                     }
                     return "backing up...";
                 }

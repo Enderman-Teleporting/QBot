@@ -1,13 +1,13 @@
 package  io.github.et.subprocessLoader
 import io.github.et.Main
-import io.github.et.subprocessLoader.ConfigLoader
-import io.github.et.subprocessLoader.ServerStream
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.*
+import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.util.*
+
 
 class Loader : Runnable {
     @OptIn(DelicateCoroutinesApi::class)
@@ -15,7 +15,7 @@ class Loader : Runnable {
         try {
             ConfigLoader.load()
             val serverStream = ServerStream()
-            val `is` = BufferedReader(InputStreamReader(ServerStream.`is`,StandardCharsets.UTF_8))
+            val `is` = BufferedReader(InputStreamReader(ServerStream.`is`, StandardCharsets.UTF_8))
             val os = BufferedWriter(OutputStreamWriter(ServerStream.os, StandardCharsets.UTF_8))
             while (true) {
                 val a = `is`.readLine() ?: continue
@@ -27,7 +27,7 @@ class Loader : Runnable {
                 }
                 for (i in ConfigLoader.servers) {
                     if (i.name == name) {
-                        if (content.contains("<".toRegex()) && content.contains(">".toRegex())&&(!a.contains("\\[Server]".toRegex()))) {
+                        if (content.contains("<".toRegex()) && content.contains(">".toRegex())&&(!a.contains("\\[Rcon]".toRegex()))) {
                             GlobalScope.launch {
                                 Objects.requireNonNull(Main.bot.getGroup(i.group))?.sendMessage("[" + name + "]" + content.substring(content.indexOf("<")))
                             }

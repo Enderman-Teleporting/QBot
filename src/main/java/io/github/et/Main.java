@@ -38,7 +38,7 @@ public class Main {
     public static Bot bot=null;
     public static JSONObject JSON_ALL;
     public static JSONObject JSON_NO_GUIDE;
-    private static Logger logger;
+
     public static void main(String[] args) throws Exception {
         Logger logger;
         System.setProperty("console.encoding", "UTF-8");
@@ -76,7 +76,6 @@ public class Main {
         clazz.add(LeaverListener.class);
         clazz.add(RequestPasser.class);
         clazz.add(ChangeConfigListener.class);
-        clazz.add(FreeTalk.class);
         clazz.add(FreeTalk.class);
         clazz.add(GetHelp.class);
         clazz.add(ImageGenerator.class);
