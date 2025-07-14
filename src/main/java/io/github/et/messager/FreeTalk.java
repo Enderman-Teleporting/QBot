@@ -44,16 +44,15 @@ public class FreeTalk extends SimpleListenerHost {
                     Main.JSON_NO_GUIDE.getJSONObject("Reply").getJSONObject("FreeTalk").getString("role") + "\n" +
                     "我会以这样的形式向你展示群聊上下文:\n" +
                     "`发送时间` `昵称`(`QQ号`):`消息内容`\n" +
-                    "你需要根据这个上下文进行回复,也可以在适宜的位置开启新话题,在需要at某个群成员的地方,请以如下格式at:\n" +
-                    "@`QQ号`@\n" +
-                    "你只需发送你需要的消息即可,无需按照我给你消息记录的格式发送,除了at消息";
+                    "你需要根据这个上下文进行回复,也可以在适宜的位置开启新话题,请直接输入你需要的的回复即可,在需要at某个群成员的地方,请以如下格式at:\n" +
+                    "@`QQ号`@\n";
             long id=event.getSubject().getId();
             Calendar date = Calendar.getInstance();
             date.setTime(new Date(System.currentTimeMillis()));
             int hour = date.get(Calendar.HOUR_OF_DAY);
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             if (hour < 22 && hour > 6) {
-                if (!context.containsKey(event.getSubject().getId())) {
+                if ((!context.containsKey(event.getSubject().getId()))|| context.get(id).isEmpty()) {
                     context.put(id,new ArrayList<>());
                     JSONObject j=new JSONObject();
                     j.put("role", "user");
@@ -82,7 +81,7 @@ public class FreeTalk extends SimpleListenerHost {
                         jo.put("type", "image_url");
                         JSONObject temp = new JSONObject();
                         String code=a.serializeToMiraiCode();
-                        temp.put("url", code.substring(18, code.length() - 1));
+                        temp.put("url", code.substring(13, code.length() - 1));
                         jo.put("image_url", temp);
                         ja.add(jo);
                     }else if(i instanceof Face a){
@@ -130,19 +129,22 @@ public class FreeTalk extends SimpleListenerHost {
                         for (String i : messages) {
                             Thread.sleep(300L * i.length());
                             String[] a=i.split("@");
+                            MessageChainBuilder msgBuilder=new MessageChainBuilder();
                             for(String k:a){
                                 if(k.isEmpty()){
                                     continue;
                                 }
-                                MessageChainBuilder msgBuilder=new MessageChainBuilder();
                                 if(k.matches("[0-9]+")){
-                                    msgBuilder.add(new At(Long.parseLong(k)));
+                                    try {
+                                        msgBuilder.add(new At(Long.parseLong(k)));
+                                    }catch (Exception ignored){}
                                 }else{
                                     msgBuilder.add(new PlainText(k));
                                 }
-                                MessageChain messages1=msgBuilder.build();
-                                event.getSubject().sendMessage(messages1);
+
                             }
+                            MessageChain messages1=msgBuilder.build();
+                            event.getSubject().sendMessage(messages1);
 
                         }
                         targetMessageNum.put(id, 0);

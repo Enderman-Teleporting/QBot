@@ -107,6 +107,7 @@ public class GPT {
             JSONObject info = new JSONObject();
             info.put("model", Main.JSON_NO_GUIDE.getJSONObject("Reply").getOrDefault("model", "gpt-4o-mini"));
             info.put("messages", context.get(groupNum));
+            info.put("max_tokens", 30);
             HttpURLConnection connection = (HttpURLConnection) new URL(Main.URL).openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
