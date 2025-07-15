@@ -29,7 +29,7 @@ public class GPT {
             String[] a=question.split("~`\\+=");
             StringBuilder sb = new StringBuilder();
             userMessage.put("role", "user");
-            if(question.contains("~`+=")) {
+            if(question.contains("~`+=:img:")) {
                 JSONArray ja = new JSONArray();
                 for (String i : a) {
                     if (!i.startsWith(":img:")) {

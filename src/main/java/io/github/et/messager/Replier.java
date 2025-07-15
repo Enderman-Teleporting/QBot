@@ -43,7 +43,7 @@ public class Replier extends SimpleListenerHost {
                             sb.append("@" + a.getTarget() + "@");
                         }
                     }else if(i instanceof Image a){
-                        sb.append("~`+=:img:"+a.getImageId()+"~`+=");
+                        sb.append("~`+=:img:"+a.serializeToMiraiCode()+"~`+=");
                     }else if(i instanceof Face a){
                         sb.append("["+a.getName()+"]");
                     }else if(i instanceof QuoteReply a){
