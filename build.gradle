@@ -27,7 +27,7 @@ dependencies {
     implementation 'io.github.fragland:MineStat:3.0.6'
     implementation "top.mrxiaom.mirai:overflow-core:1.0.0"
     implementation 'net.mamoe:mirai-core:2.16.0'
-    implementation 'org.fusesource.jansi:jansi:2.4.0'
+    implementation 'org.fusesource.jansi:jansi:2.4.2'
     implementation 'org.luaj:luaj-jse:3.0.1'
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
