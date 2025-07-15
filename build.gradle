@@ -21,7 +21,7 @@ shadowJar{
 }
 
 dependencies {
-    implementation 'com.alibaba:fastjson:2.0.34'
+    implementation 'com.alibaba:fastjson:2.0.57'
     implementation 'io.github.enderman-tping:ETToolset:1.0.0-pre3'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10'
     implementation 'io.github.fragland:MineStat:3.0.6'
