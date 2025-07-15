@@ -4,8 +4,7 @@ on:
   pull_request:
   push:
     branches:
-      - main
-      - v4-dev
+      - v5-onecore
 
 jobs:
   qodana:

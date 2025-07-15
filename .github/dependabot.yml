@@ -2,6 +2,6 @@ version: 2
 updates:
   - package-ecosystem: gradle
     directory: /
-    target-branch: "v4-dev"
+    target-branch: "v5-onecore"
     schedule:
       interval: weekly
