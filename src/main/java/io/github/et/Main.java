@@ -7,6 +7,7 @@ import io.github.et.eventListener.LeaverListener;
 import io.github.et.eventListener.RequestPasser;
 import io.github.et.exceptions.BotInfoNotFoundException;
 import io.github.et.games.roulette.Roulette;
+import io.github.et.games.wordle.Wordle;
 import io.github.et.messager.*;
 import io.github.et.subprocessLoader.Loader;
 import io.github.et.subprocessLoader.ServerStream;
@@ -84,6 +85,7 @@ public class Main {
         clazz.add(Replier.class);
         clazz.add(ServerSearcher.class);
         clazz.add(Roulette.class);
+        clazz.add(Wordle.class);
         for (Class<?> c:clazz){
             Object abc=c.getDeclaredConstructor().newInstance();
             if (abc instanceof ListenerHost a){
