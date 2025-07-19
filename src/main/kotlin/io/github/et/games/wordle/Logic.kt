@@ -6,7 +6,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
+
 object Logic {
+    @JvmStatic
     fun generateWord(length: Int): ArrayList<String> {
         val words = mutableListOf<Pair<String, String>>()
         val inputStream = Logic::class.java.classLoader.getResourceAsStream("io/github/et/EnWords.csv")
@@ -31,7 +33,8 @@ object Logic {
         
         return arrayListOf(selectedWord.first, selectedWord.second)
     }
-    
+
+    @JvmStatic
     fun check(word: String): Boolean {
         val inputStream = Logic::class.java.classLoader.getResourceAsStream("io/github/et/Words.txt")
         if (inputStream != null) {
@@ -45,7 +48,8 @@ object Logic {
         }
         return false
     }
-    
+
+    @JvmStatic
     fun match(ori: String, inp: String): String {
         val original= ori.lowercase(Locale.getDefault())
         val input = inp.lowercase(Locale.getDefault())

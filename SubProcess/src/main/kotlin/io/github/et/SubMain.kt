@@ -287,6 +287,30 @@ object SubMain {
         return str.substring(start + 1, end)
     }
 
+    fun killProcessByExePath(exePath: String) {
+        try {
+            val exeFile = File(exePath)
+            if (!exeFile.exists()) {
+                return
+            }
+            
+            val canonicalPath = exeFile.canonicalPath
+            var killedCount = 0
+            ProcessHandle.allProcesses().forEach { processHandle ->
+                try {
+                    val info = processHandle.info()
+                    val command = info.command().orElse("")
+                    if (command.isNotEmpty() && command.equals(canonicalPath, ignoreCase = true)) {
+                        processHandle.destroy()
+                        killedCount++
+                    }
+                } catch (e: Exception) {
+                }
+            }
+            
+        } catch (_: Exception) {}
+    }
+
     fun deal(){
         if (!processMap.isEmpty()) {
             for (server in ConfigLoader.servers) {
@@ -306,7 +330,7 @@ object SubMain {
         if(bot!= null) {
             bot!!.destroy()
             ProcessBuilder("taskkill","/F","/IM","NapCatWinBootMain.exe").start()
-            ProcessBuilder("taskkill","/F","/IM","QQ.exe").start()
+            killProcessByExePath("./$QBotRunPathName/QQ.exe")
             Thread.sleep(10000)
             if (bot!!.isAlive) {
                 bot!!.destroyForcibly()

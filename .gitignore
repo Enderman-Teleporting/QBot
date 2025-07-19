@@ -6,3 +6,5 @@ deviceInfo
 botInfo.properties
 .idea
 botInfo.json
+src/test/java/OtherLanguageWordle.java
+src/test/java/Hack.java

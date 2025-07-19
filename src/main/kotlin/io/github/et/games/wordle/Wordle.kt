@@ -68,7 +68,7 @@ class Wordle: SimpleListenerHost() {
                                 gameMap[subject.id]!!.word=null
                                 gameMap[subject.id]!!.isGameRunning=false
                             }else{
-                                if(gameRecord[subject.id]!!.size==6){
+                                if(gameRecord[subject.id]!!.size>=6){
                                     subject.sendMessage("很遗憾，你没有猜对")
                                     subject.sendMessage("正确答案为:"+gameMap[subject.id]!!.word+", 意为"+gameMap[subject.id]!!.meaning)
                                     gameMap[subject.id]!!.word=null

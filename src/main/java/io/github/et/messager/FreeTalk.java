@@ -27,6 +27,33 @@ public class FreeTalk extends SimpleListenerHost {
     private static Random random=new Random();
     private static ConcurrentHashMap<Long,Integer> targetMessageNum=new ConcurrentHashMap<>();
     private static ConcurrentHashMap<Long,Integer> currentMessageNum=new ConcurrentHashMap<>();
+    
+
+    public static String removeThink(String ori) {
+        if (ori == null || (!ori.contains("<think>")&&!ori.contains("</think>"))) {
+            return ori;
+        }
+        StringBuilder result = new StringBuilder();
+        int i = 0;
+        int len = ori.length();
+        
+        while (i < len) {
+            int thinkStart = ori.indexOf("<think>", i);
+            if (thinkStart == -1) {
+                result.append(ori.substring(i));
+                break;
+            }
+            result.append(ori.substring(i, thinkStart));
+            int thinkEnd = ori.indexOf("</think>", thinkStart);
+            if (thinkEnd == -1) {
+                result.append(ori.substring(thinkStart));
+                break;
+            }
+            i = thinkEnd + 8;
+        }
+        
+        return result.toString();
+    }
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         try {

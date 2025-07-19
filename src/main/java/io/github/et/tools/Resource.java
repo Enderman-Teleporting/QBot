@@ -107,7 +107,7 @@ public class Resource {
                                             "        \"token\": \"\",\n" +
                                             "        \"enableForcePushEvent\": true,\n" +
                                             "        \"debug\": false,\n" +
-                                            "        \"heartInterval\": 3000\n" +
+                                            "        \"heartInterval\": 300\n" +
                                             "      }\n" +
                                             "    ],\n" +
                                             "    \"websocketClients\": []\n" +
