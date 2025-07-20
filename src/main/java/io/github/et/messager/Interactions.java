@@ -13,7 +13,9 @@ import net.mamoe.mirai.message.data.*;
 import net.mamoe.mirai.utils.ExternalResource;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -25,6 +27,7 @@ public class Interactions extends SimpleListenerHost {
     private static HashMap<Long, Ranking> patCreeper = new HashMap<>();
     private static HashMap<Long, Ranking> patDog = new HashMap<>();
     private static HashMap<Long, Ranking> patFrog = new HashMap<>();
+    private static String date=new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
 
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
@@ -40,6 +43,16 @@ public class Interactions extends SimpleListenerHost {
     @EventHandler
     public void interact(GroupMessageEvent event) throws IOException {
         if (FeatureInUse.isInUse("Interact", event.getSubject().getId())) {
+            String jetzt = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+            if(!jetzt.equals(date)){
+                date=jetzt;
+                bonk.remove(event.getSubject().getId());
+                patPaimon.remove(event.getSubject().getId());
+                patCreeper.remove(event.getSubject().getId());
+                patFrog.remove(event.getSubject().getId());
+                patCat.remove(event.getSubject().getId());
+                patDog.remove(event.getSubject().getId());
+            }
             Random rand = new Random();
             MessageChain msg = event.getMessage();
             if (msg.size() >= 3) {
@@ -51,14 +64,12 @@ public class Interactions extends SimpleListenerHost {
                             }
                             int times = rand.nextInt(1, 1001);
                             bonk.get(event.getSubject().getId()).add(at.getTarget(), times);
-                            ExternalResource ex = ExternalResource.create(Interactions.class.getResource("io/github/et/memes/bonk.gif").openStream());
-                            Image img = ExternalResource.uploadAsImage(ex, event.getSubject());
+                            Image img=ExternalResource.uploadAsImage(new File("./memes/bonk.gif"),event.getSubject());
                             MessageChain reply = new MessageChainBuilder().append(new PlainText("你狠狠地敲了"))
                                     .append(new At(at.getTarget()))
                                     .append(new PlainText(" " + times + "下"))
                                     .append(img)
                                     .build();
-
                             event.getSubject().sendMessage(reply);
                         }
                         case "摸摸猫" -> {
@@ -67,8 +78,7 @@ public class Interactions extends SimpleListenerHost {
                             }
                             int times = rand.nextInt(1, 1001);
                             patCat.get(event.getSubject().getId()).add(at.getTarget(), times);
-                            ExternalResource ex = ExternalResource.create(Interactions.class.getResource("io/github/et/memes/patCat.gif").openStream());
-                            Image img = ExternalResource.uploadAsImage(ex, event.getSubject());
+                            Image img=ExternalResource.uploadAsImage(new File("./memes/patCat.gif"),event.getSubject());
                             MessageChain reply = new MessageChainBuilder().append(new PlainText("你摸了"))
                                     .append(new At(at.getTarget()))
                                     .append(new PlainText(" 的猫猫伙伴" + times + "次"))
@@ -82,8 +92,7 @@ public class Interactions extends SimpleListenerHost {
                             }
                             int times = rand.nextInt(1, 1001);
                             patDog.get(event.getSubject().getId()).add(at.getTarget(), times);
-                            ExternalResource ex = ExternalResource.create(Interactions.class.getResource("io/github/et/memes/patDog.gif").openStream());
-                            Image img = ExternalResource.uploadAsImage(ex, event.getSubject());
+                            Image img=ExternalResource.uploadAsImage(new File("./memes/petDog.gif"),event.getSubject());
                             MessageChain reply = new MessageChainBuilder().append(new PlainText("你摸了"))
                                     .append(new At(at.getTarget()))
                                     .append(new PlainText(" 家的旺柴" + times + "下"))
@@ -100,8 +109,7 @@ public class Interactions extends SimpleListenerHost {
                             }
                             int times = rand.nextInt(1, 1001);
                             patPaimon.get(event.getSubject().getId()).add(at.getTarget(), times);
-                            ExternalResource ex = ExternalResource.create(Interactions.class.getResource("io/github/et/memes/patPaimon.gif").openStream());
-                            Image img = ExternalResource.uploadAsImage(ex, event.getSubject());
+                            Image img=ExternalResource.uploadAsImage(new File("./memes/patPaimon.gif"),event.getSubject());
                             MessageChain reply = new MessageChainBuilder().append(new PlainText("你把"))
                                     .append(new At(at.getTarget()))
                                     .append(new PlainText(" 旅行者的派蒙抓住狠狠rua了" + times + "下"))
@@ -114,8 +122,7 @@ public class Interactions extends SimpleListenerHost {
                                 patCreeper.put(event.getSubject().getId(), new Ranking("摸苦力怕榜"));
                             }
                             int times = rand.nextInt(1, 1001);
-                            ExternalResource ex = ExternalResource.create(Interactions.class.getResource("io/github/et/memes/patCreeper.gif").openStream());
-                            Image img = ExternalResource.uploadAsImage(ex, event.getSubject());
+                            Image img=ExternalResource.uploadAsImage(new File("./memes/petCreeper.gif"),event.getSubject());
                             patCreeper.get(event.getSubject().getId()).add(at.getTarget(), times);
                             MessageChain reply = new MessageChainBuilder().append(new PlainText("你摸了"))
                                     .append(new At(at.getTarget()))
@@ -133,8 +140,7 @@ public class Interactions extends SimpleListenerHost {
                             }
                             int times = rand.nextInt(1, 1001);
                             patFrog.get(event.getSubject().getId()).add(at.getTarget(), times);
-                            ExternalResource ex = ExternalResource.create(Interactions.class.getResource("io/github/et/memes/patFrog.gif").openStream());
-                            Image img = ExternalResource.uploadAsImage(ex, event.getSubject());
+                            Image img=ExternalResource.uploadAsImage(new File("./memes/petFrog.gif"),event.getSubject());
                             MessageChain reply = new MessageChainBuilder().append(new PlainText("你摸了"))
                                     .append(new At(at.getTarget()))
                                     .append(new PlainText(" 的青蛙" + times + "次"))
@@ -152,6 +158,16 @@ public class Interactions extends SimpleListenerHost {
     @EventHandler
     public void onMessage(GroupMessageEvent event) {
         if (FeatureInUse.isInUse("Interact", event.getSubject().getId())) {
+            String jetzt = new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+            if(!jetzt.equals(date)){
+                date=jetzt;
+                bonk.remove(event.getSubject().getId());
+                patPaimon.remove(event.getSubject().getId());
+                patCreeper.remove(event.getSubject().getId());
+                patFrog.remove(event.getSubject().getId());
+                patCat.remove(event.getSubject().getId());
+                patDog.remove(event.getSubject().getId());
+            }
             if (!bonk.containsKey(event.getSubject().getId())) {
                 bonk.put(event.getSubject().getId(), new Ranking("被敲榜"));
             }

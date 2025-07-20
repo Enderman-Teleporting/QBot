@@ -11,10 +11,13 @@ import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 public class MessageCount extends SimpleListenerHost {
     private static HashMap<Long, Ranking> messageCount = new HashMap<>();
+    private static String date= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         try {
@@ -27,12 +30,16 @@ public class MessageCount extends SimpleListenerHost {
     }
 
     @EventHandler
-    public void count(GroupMessageEvent event){
-        if (FeatureInUse.isInUse("Ranking",event.getSubject().getId())) {
-            if(!messageCount.containsKey(event.getSubject().getId())) {
+    public void count(GroupMessageEvent event) {
+        if (FeatureInUse.isInUse("Ranking", event.getSubject().getId())) {
+            String dateCurrent = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            if (!dateCurrent.equals(date)) {
+                messageCount.remove(event.getSubject().getId());
+            }
+            if (!messageCount.containsKey(event.getSubject().getId())) {
                 messageCount.put(event.getSubject().getId(), new Ranking("消息数排行榜"));
             }
-            messageCount.get(event.getSubject().getId()).add(event.getSender().getId(),1);
+            messageCount.get(event.getSubject().getId()).add(event.getSender().getId(), 1);
         }
     }
 
