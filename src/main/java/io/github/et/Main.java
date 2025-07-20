@@ -86,6 +86,8 @@ public class Main {
         clazz.add(ServerSearcher.class);
         clazz.add(Roulette.class);
         clazz.add(Wordle.class);
+        clazz.add(Interactions.class);
+        clazz.add(MessageCount.class);
         for (Class<?> c:clazz){
             Object abc=c.getDeclaredConstructor().newInstance();
             if (abc instanceof ListenerHost a){

@@ -295,14 +295,12 @@ object SubMain {
             }
             
             val canonicalPath = exeFile.canonicalPath
-            var killedCount = 0
             ProcessHandle.allProcesses().forEach { processHandle ->
                 try {
                     val info = processHandle.info()
                     val command = info.command().orElse("")
                     if (command.isNotEmpty() && command.equals(canonicalPath, ignoreCase = true)) {
                         processHandle.destroy()
-                        killedCount++
                     }
                 } catch (e: Exception) {
                 }
@@ -330,7 +328,7 @@ object SubMain {
         if(bot!= null) {
             bot!!.destroy()
             ProcessBuilder("taskkill","/F","/IM","NapCatWinBootMain.exe").start()
-            killProcessByExePath("./$QBotRunPathName/QQ.exe")
+            killProcessByExePath(File("$QBotRunPathName/QQ.exe").canonicalPath)
             Thread.sleep(10000)
             if (bot!!.isAlive) {
                 bot!!.destroyForcibly()
