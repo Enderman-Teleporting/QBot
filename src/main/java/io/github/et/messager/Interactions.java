@@ -42,8 +42,8 @@ public class Interactions extends SimpleListenerHost {
         if (FeatureInUse.isInUse("Interact", event.getSubject().getId())) {
             Random rand = new Random();
             MessageChain msg = event.getMessage();
-            if (msg.size() >= 2) {
-                if (msg.get(0) instanceof PlainText text && msg.get(1) instanceof At at) {
+            if (msg.size() >= 3) {
+                if (msg.get(1) instanceof PlainText text && msg.get(2) instanceof At at) {
                     switch (text.getContent().trim()) {
                         case "敲" -> {
                             if (!bonk.containsKey(event.getSubject().getId())) {
