@@ -28,6 +28,7 @@ public class Interactions extends SimpleListenerHost {
     private static HashMap<Long, Ranking> patDog = new HashMap<>();
     private static HashMap<Long, Ranking> patFrog = new HashMap<>();
     private static String date=new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+    private static HashMap<Long,Ranking> pat=new HashMap<>();
 
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
@@ -52,6 +53,7 @@ public class Interactions extends SimpleListenerHost {
                 patFrog.remove(event.getSubject().getId());
                 patCat.remove(event.getSubject().getId());
                 patDog.remove(event.getSubject().getId());
+                pat.remove(event.getSubject().getId());
             }
             Random rand = new Random();
             MessageChain msg = event.getMessage();
@@ -66,6 +68,20 @@ public class Interactions extends SimpleListenerHost {
                             bonk.get(event.getSubject().getId()).add(at.getTarget(), times);
                             Image img=ExternalResource.uploadAsImage(new File("./memes/bonk.gif"),event.getSubject());
                             MessageChain reply = new MessageChainBuilder().append(new PlainText("你狠狠地敲了"))
+                                    .append(new At(at.getTarget()))
+                                    .append(new PlainText(" " + times + "下"))
+                                    .append(img)
+                                    .build();
+                            event.getSubject().sendMessage(reply);
+                        }
+                        case "拍" -> {
+                            if (!pat.containsKey(event.getSubject().getId())) {
+                                pat.put(event.getSubject().getId(), new Ranking("被拍榜"));
+                            }
+                            int times = rand.nextInt(1, 1001);
+                            pat.get(event.getSubject().getId()).add(at.getTarget(), times);
+                            Image img=ExternalResource.uploadAsImage(new File("./memes/pat.jpg"),event.getSubject());
+                            MessageChain reply = new MessageChainBuilder().append(new PlainText("你狠狠地rua了"))
                                     .append(new At(at.getTarget()))
                                     .append(new PlainText(" " + times + "下"))
                                     .append(img)
@@ -167,6 +183,7 @@ public class Interactions extends SimpleListenerHost {
                 patFrog.remove(event.getSubject().getId());
                 patCat.remove(event.getSubject().getId());
                 patDog.remove(event.getSubject().getId());
+                pat.remove(event.getSubject().getId());
             }
             if (!bonk.containsKey(event.getSubject().getId())) {
                 bonk.put(event.getSubject().getId(), new Ranking("被敲榜"));
@@ -186,6 +203,9 @@ public class Interactions extends SimpleListenerHost {
             if (!patFrog.containsKey(event.getSubject().getId())) {
                 patFrog.put(event.getSubject().getId(), new Ranking("摸青蛙榜"));
             }
+            if(!pat.containsKey(event.getSubject().getId())){
+                pat.put(event.getSubject().getId(), new Ranking("被拍榜"));
+            }
             switch (event.getMessage().contentToString()){
                 case "被敲榜" -> event.getSubject().sendMessage(bonk.get(event.getSubject().getId()).toRankingString(event.getSubject()));
                 case "摸猫榜" -> event.getSubject().sendMessage(patCat.get(event.getSubject().getId()).toRankingString(event.getSubject()));
@@ -193,6 +213,7 @@ public class Interactions extends SimpleListenerHost {
                 case "摸汪榜" -> event.getSubject().sendMessage(patDog.get(event.getSubject().getId()).toRankingString(event.getSubject()));
                 case "摸派蒙榜" -> event.getSubject().sendMessage(patPaimon.get(event.getSubject().getId()).toRankingString(event.getSubject()));
                 case "摸苦力怕榜" -> event.getSubject().sendMessage(patCreeper.get(event.getSubject().getId()).toRankingString(event.getSubject()));
+                case "被拍榜" -> event.getSubject().sendMessage(pat.get(event.getSubject().getId()).toRankingString(event.getSubject()));
             }
         }
     }
