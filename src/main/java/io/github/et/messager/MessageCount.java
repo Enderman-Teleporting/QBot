@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+@SuppressWarnings("unused")
 public class MessageCount extends SimpleListenerHost {
     private static HashMap<Long, Ranking> messageCount = new HashMap<>();
     private static String date= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -34,6 +35,7 @@ public class MessageCount extends SimpleListenerHost {
         if (FeatureInUse.isInUse("Ranking", event.getSubject().getId())) {
             String dateCurrent = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             if (!dateCurrent.equals(date)) {
+                date= dateCurrent;
                 messageCount.remove(event.getSubject().getId());
             }
             if (!messageCount.containsKey(event.getSubject().getId())) {
@@ -47,6 +49,11 @@ public class MessageCount extends SimpleListenerHost {
     public void getRankingList(GroupMessageEvent event){
         if(FeatureInUse.isInUse("Ranking",event.getSubject().getId())) {
             if(event.getMessage().contentToString().equals("消息排名")) {
+                String dateCurrent = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                if (!dateCurrent.equals(date)) {
+                    date= dateCurrent;
+                    messageCount.remove(event.getSubject().getId());
+                }
                 if(!messageCount.containsKey(event.getSubject().getId())) {
                     messageCount.put(event.getSubject().getId(), new Ranking("消息数排行榜"));
                 }
