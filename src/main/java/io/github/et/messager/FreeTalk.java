@@ -132,13 +132,14 @@ public class FreeTalk extends SimpleListenerHost {
                 }
                 context.get(id).add(j);
                 currentMessageNum.put(id,currentMessageNum.get(id)+1);
-                if(context.size()>Main.JSON_NO_GUIDE.getJSONObject("Reply").getInteger("Max_Message_Count")+1){
+                if(context.get(id).size()>Main.JSON_NO_GUIDE.getJSONObject("Reply").getInteger("Max_Message_Count")+1){
                     context.get(id).remove(1);
                 }
                 if (Objects.equals(currentMessageNum.get(id), targetMessageNum.get(id))) {
                     String content = GPT.freeSpeech(id);
                     if (content != null) {
-                        String[] messages = content.split("[\n，。；：？！,.?;:! ]");
+                        content = content.replaceAll("^(`\\d+:\\d+`\\s*:*\\s*[^\\n\\s()]+\\s*\\(\\d+\\)\\s*:*\\s*)?", "").trim();
+                        String[] messages = content.split("[\n，。；：,.;:` ]");
                         for (int i = 0; i < messages.length; i++) {
                             messages[i] = messages[i].trim();
                             if (messages[i].isEmpty()) {
@@ -155,6 +156,11 @@ public class FreeTalk extends SimpleListenerHost {
                         Thread.sleep(150);
                         for (String i : messages) {
                             Thread.sleep(300L * i.length());
+                            if(i.matches("[^()]+\\(\\d+\\)\\s*（*）*")){
+                                int m=Integer.parseInt(i.substring(i.indexOf("(")+1,i.indexOf(")")));
+                                event.getSubject().sendMessage(new At(m));
+                                continue;
+                            }
                             String[] a=i.split("@");
                             MessageChainBuilder msgBuilder=new MessageChainBuilder();
                             for(String k:a){

@@ -91,24 +91,24 @@ public class CommandConsole {
                             JSONArray exclude1 = jo1.getJSONArray("exclude");
                             JSONArray exclude2 = jo2.getJSONArray("exclude");
 
-                            if (!exclude1.contains(id)) {
-                                exclude1.add(id);
-                                exclude2.add(id);
+                            if (!exclude1.contains((int)id)) {
+                                exclude1.add((int)id);
+                                exclude2.add((int)id);
                             } else {
-                                exclude1.remove(id);
-                                exclude2.remove(id);
+                                exclude1.remove((Integer) (int) id);
+                                exclude1.remove((Integer) (int) id);
                             }
                         }else{
                             long id = Long.parseLong(commands[1]);
                             JSONArray include1 = jo1.getJSONArray("include");
                             JSONArray include2 = jo2.getJSONArray("include");
 
-                            if (!include1.contains(id)) {
-                                include1.add(id);
-                                include2.add(id);
+                            if (!include1.contains((int)id)) {
+                                include1.add((int)id);
+                                include2.add((int)id);
                             } else {
-                                include1.remove(id);
-                                include2.remove(id);
+                                include1.remove((Integer) (int) id);
+                                include2.remove((Integer) (int) id);
                             }
                         }
                     }else{

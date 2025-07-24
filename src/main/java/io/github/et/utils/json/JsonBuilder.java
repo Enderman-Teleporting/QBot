@@ -187,36 +187,18 @@ public class JsonBuilder {
                 featureConfig.put("rule", lua.getLua().get("rule").tojstring());
             }
         }
-        if(!lua.getLuaName().equals("Global")){
+        if(!lua.getLuaName().equals("Global")) {
             if (existingConfig != null) {
-                if (lua.getParent() != null) {
-                    if (existingConfig.containsKey(lua.getParent()) &&
-                            existingConfig.getJSONObject(lua.getParent()).containsKey("include")&&
-                            existingConfig.getJSONObject(lua.getParent()).containsKey("exclude")) {
-                        featureConfig.put("include",existingConfig.getJSONObject(lua.getParent()).get("include"));
-                        featureConfig.put("exclude",existingConfig.getJSONObject(lua.getParent()).get("exclude"));
-                    }
-                    if (existingConfig.containsKey(lua.getParent()) &&
-                            existingConfig.getJSONObject(lua.getParent()).containsKey(featureName) &&
-                            existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).containsKey("include")&&
-                            existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).containsKey("exclude")) {
-                        featureConfig.put("include", existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).get("include"));
-                        featureConfig.put("exclude", existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).get("exclude"));
-                    }else{
-                        featureConfig.put("include",new JSONArray());
-                        featureConfig.put("exclude",new JSONArray());
-                    }
+                if (existingConfig.containsKey(featureName) &&
+                        existingConfig.getJSONObject(featureName).containsKey("include") &&
+                        existingConfig.getJSONObject(featureName).containsKey("exclude")) {
+                    featureConfig.put("include", existingConfig.getJSONObject(featureName).get("include"));
+                    featureConfig.put("exclude", existingConfig.getJSONObject(featureName).get("exclude"));
                 } else {
-                    if (existingConfig.containsKey(featureName) &&
-                            existingConfig.getJSONObject(featureName).containsKey("include")&&
-                            existingConfig.getJSONObject(featureName).containsKey("exclude")) {
-                        featureConfig.put("include",existingConfig.getJSONObject(featureName).get("include"));
-                        featureConfig.put("exclude",existingConfig.getJSONObject(featureName).get("exclude"));
-                    }else {
-                        featureConfig.put("include",new JSONArray());
-                        featureConfig.put("exclude",new JSONArray());
-                    }
+                    featureConfig.put("include", new JSONArray());
+                    featureConfig.put("exclude", new JSONArray());
                 }
+
             }
         }
         for (Item item : lua.getItems()) {

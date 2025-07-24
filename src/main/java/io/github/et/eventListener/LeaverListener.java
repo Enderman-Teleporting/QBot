@@ -25,7 +25,7 @@ public class LeaverListener extends SimpleListenerHost {
     @EventHandler
     public void onExit(MemberLeaveEvent event) throws LoggerNotDeclaredException {
         if (FeatureInUse.isInUse("Exit", event.getGroup().getId())) {
-            event.getGroup().sendMessage("555～" + event.getMember().getNameCard() + "离开了我们...");
+            event.getGroup().sendMessage("555～" + event.getMember().getNick() + "离开了我们...");
             Logger logger = Logger.getDeclaredLogger();
             logger.error("Listened member leave event at: %s", event.getGroupId());
         }
