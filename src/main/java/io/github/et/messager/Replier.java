@@ -40,8 +40,8 @@ public class Replier extends SimpleListenerHost {
                         sb.append(a.getContent());
                     }else if(i instanceof At a){
                         if(!(a.getTarget()==msgEvent.getBot().getId())) {
-                            sb.append("@" + a.getTarget() + "@");
-                        }
+                            sb.append("@" + msgEvent.getSubject().get(a.getTarget()).getNick());
+                    }
                     }else if(i instanceof Image a){
                         sb.append("~`+=:img:"+a.serializeToMiraiCode()+"~`+=");
                     }else if(i instanceof Face a){
@@ -49,7 +49,7 @@ public class Replier extends SimpleListenerHost {
                     }else if(i instanceof QuoteReply a){
                         sb.append("回复" + a.getSource().contentToString()+":\n");
                     }else if(i instanceof AtAll a){
-                        sb.append("@所有人@");
+                        sb.append("@所有人");
                     }else {
                         sb.append(i.contentToString());
                     }
