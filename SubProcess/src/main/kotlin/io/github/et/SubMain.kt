@@ -81,6 +81,7 @@ object SubMain {
                 )
                 processMap[server] = pb.start().also { setupProcessMonitoring(server, it) }
             }
+
             Thread {
                 try {
                     while (true) {
@@ -130,6 +131,7 @@ object SubMain {
                             for(server in ConfigLoader.servers){
                                 if(server.name==name) {
                                     if (processMap[server]!!.isAlive) {
+                                        processMap[server]?.destroy()
                                         processMap[server]?.destroyForcibly()
                                     }
                                 }
@@ -181,13 +183,7 @@ object SubMain {
                     deal()
                 }
             }.start()
-            for(i in ConfigLoader.servers){
-                val pb = ProcessBuilder(*i.command.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
-                    .toTypedArray()).directory(
-                    File(i.workingDir)
-                )
-                processMap[i] = pb.start().also { setupProcessMonitoring(i, it) }
-            }
+
             Thread{
                 var os=BufferedWriter(OutputStreamWriter(bot?.outputStream, StandardCharsets.UTF_8))
                 var iss=BufferedReader(InputStreamReader(bot?.inputStream, StandardCharsets.UTF_8))
@@ -200,42 +196,45 @@ object SubMain {
                     OS.flush()
                 }
             }.start()
-        Thread {
-            while (true) {
-                if (SimpleDateFormat("HH:mm:ss").format(Date()) == "00:00:00") {
-                    for (server in ConfigLoader.servers) {
-                        GlobalScope.launch {
-                            val time = System.currentTimeMillis()
-                            val toDir = File("./backups/${server.name}")
-                            if (!toDir.exists()) {
-                                toDir.mkdirs()
-                            }
-                            val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                            bw.write("save-off")
-                            bw.newLine()
-                            bw.flush()
-                            Thread.sleep(300)
-                            compressDirectory(server.workingDir + "/world", toDir, time.toString())
-                            bw.write("save-on")
-                            bw.newLine()
-                            bw.flush()
-                            for (i in toDir.listFiles()) {
-                                if (i.name.endsWith(".zip") && i.name.substring(0, i.name.length - 4)
-                                        .matches("[0-9]+".toRegex())
-                                ) {
-                                    if (i.name.substring(0, i.name.length - 4)
-                                            .toLong() + 24 * 3600 * 1000 * 10 <= time
-                                    ) {
-                                        i.delete()
+
+            Thread {
+                while (true) {
+                    if (SimpleDateFormat("HH:mm:ss").format(Date()) == "00:00:00") {
+                        for (server in ConfigLoader.servers) {
+                            if(server.useAutoBackup) {
+                                GlobalScope.launch {
+                                    val time = System.currentTimeMillis()
+                                    val toDir = File("./backups/${server.name}")
+                                    if (!toDir.exists()) {
+                                        toDir.mkdirs()
+                                    }
+                                    val bw = BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                    bw.write("save-off")
+                                    bw.newLine()
+                                    bw.flush()
+                                    Thread.sleep(300)
+                                    compressDirectory(server.workingDir + "/world", toDir, time.toString())
+                                    bw.write("save-on")
+                                    bw.newLine()
+                                    bw.flush()
+                                    for (i in toDir.listFiles()) {
+                                        if (i.name.endsWith(".zip") && i.name.substring(0, i.name.length - 4)
+                                                .matches("[0-9]+".toRegex())
+                                        ) {
+                                            if (i.name.substring(0, i.name.length - 4)
+                                                    .toLong() + 24 * 3600 * 1000 * 10 <= time
+                                            ) {
+                                                i.delete()
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
+                        Thread.sleep(1000)
                     }
-                    Thread.sleep(1000)
                 }
-            }
-        }.start()
+            }.start()
         } catch (e: Exception) {
             deal()
         }
@@ -304,6 +303,7 @@ object SubMain {
         exitProcess(0)
     }
 }
+
 fun compressDirectory(dir1: String, dir2: File, name: String) {
     val sourceDir = File(dir1)
     require(sourceDir.exists() && sourceDir.isDirectory) { "Source directory $dir1 is invalid" }

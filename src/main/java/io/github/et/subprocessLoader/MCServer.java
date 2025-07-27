@@ -10,10 +10,12 @@ public class MCServer {
     public String workingDir;
     public String command;
     public long group;
-    public MCServer(String name,String workingDir,String command, long group){
+    public boolean useAutoBackUp;
+    public MCServer(String name,String workingDir,String command, long group, boolean useAutoBackUp){
         this.name = name;
         this.workingDir = workingDir;
         this.command = command;
         this.group = group;
+        this.useAutoBackUp = useAutoBackUp;
     }
 }
