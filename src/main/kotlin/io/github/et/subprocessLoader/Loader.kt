@@ -31,6 +31,11 @@ class Loader : Runnable {
                             GlobalScope.launch {
                                 Objects.requireNonNull(Main.bot.getGroup(i.group))?.sendMessage("[" + name + "]" + content.substring(content.indexOf("<")))
                             }
+                        }else if(content.trim().endsWith(" left the game")||content.endsWith(" joined the game")){
+                            val aaa=content.split("[\\s:]".toRegex())
+                            GlobalScope.launch {
+                                Objects.requireNonNull(Main.bot.getGroup(i.group))?.sendMessage("[" + name + "]" + aaa[aaa.size-4]+" "+aaa[aaa.size-3]+" "+aaa[aaa.size-2]+" "+aaa[aaa.size-1])
+                            }
                         }
                     }
                 }

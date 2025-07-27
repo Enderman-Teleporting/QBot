@@ -2,6 +2,7 @@ package io.github.et
 
 import io.github.et.ConfigLoader.load
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.*
 import java.net.Socket
@@ -17,6 +18,39 @@ import kotlin.system.exitProcess
 
 object SubMain {
     private val processMap: MutableMap<MCServer, Process> = ConcurrentHashMap()
+    private val restartingFlags: MutableMap<MCServer, Boolean> = ConcurrentHashMap()
+
+    private fun setupProcessMonitoring(server: MCServer, process: Process) {
+        GlobalScope.launch {
+            val reader = BufferedReader(InputStreamReader(process.inputStream, StandardCharsets.UTF_8))
+            while (process.isAlive) {
+                try {
+                    val line = reader.readLine() ?: continue
+                    OS.write("[${server.name}]$line\r\n")
+                    OS.flush()
+
+                    if (line.contains(Regex("(?i)exception|crash")) && restartingFlags[server] != true) {
+                        restartingFlags[server] = true
+                        GlobalScope.launch {
+                            delay(10000)
+                            if (!process.isAlive) {
+                                process.destroy()
+                                restartServer(server)
+                            }
+                            restartingFlags[server] = false
+                        }
+                    }
+                } catch (_: Exception) {}
+            }
+        }
+    }
+
+    private fun restartServer(server: MCServer) {
+        ProcessBuilder(server.command.split(" ")).directory(File(server.workingDir)).start().apply {
+            processMap[server] = this
+            setupProcessMonitoring(server, this)
+        }
+    }
     private var bot: Process? = null
     lateinit var OS:BufferedWriter
     var QBotRunPathName: String? = null
@@ -45,8 +79,7 @@ object SubMain {
                     .toTypedArray()).directory(
                     File(server.workingDir)
                 )
-                val process = pb.start()
-                processMap[server] = process
+                processMap[server] = pb.start().also { setupProcessMonitoring(server, it) }
             }
             Thread {
                 try {
@@ -80,43 +113,16 @@ object SubMain {
                             val name = a.substring(8)
                             for (server in ConfigLoader.servers) {
                                 if (server.name == name) {
-                                    GlobalScope.launch {
-                                        val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                        bw.write("stop")
-                                        bw.newLine()
-                                        bw.flush()
-                                        Thread.sleep(1000)
-                                        if (processMap[server]!!.isAlive) {
-                                            processMap[server]!!.destroy()
-                                        }
-                                        processMap[server] =
-                                            ProcessBuilder(server.command.split(" ")).directory(File(server.workingDir))
-                                                .start()
-                                        BufferedWriter(
-                                            OutputStreamWriter(
-                                                processMap[server]?.outputStream,
-                                                StandardCharsets.UTF_8
-                                            )
-                                        )
-                                        var iss = BufferedReader(
-                                            InputStreamReader(
-                                                processMap[server]?.inputStream,
-                                                StandardCharsets.UTF_8
-                                            )
-                                        )
-                                        while (true) {
-                                            if (!(processMap[server] ?: return@launch).isAlive) {
-                                                break
-                                            }
-                                            try {
-                                                var b = iss.readLine()
-                                                if (b == null) continue
-                                                OS.write("[${server.name}]$b\r\n")
-                                                OS.flush()
-                                            } catch (_: Exception) {
-                                            }
-                                        }
-                                    }
+                                    val bufferedWriter= BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                    bufferedWriter.write("stop")
+                                    bufferedWriter.newLine()
+                                    bufferedWriter.flush()
+                                    processMap[server]!!.destroy()
+                                    val pb = ProcessBuilder(*server.command.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+                                        .toTypedArray()).directory(
+                                        File(server.workingDir)
+                                    )
+                                    processMap[server] = pb.start().also { setupProcessMonitoring(server, it) }
                                 }
                             }
                         }else if(a.startsWith("forceStop ")){
@@ -132,37 +138,11 @@ object SubMain {
                             val name = a.substring(8)
                             for (server in ConfigLoader.servers) {
                                 if (server.name == name) {
-                                    if (!processMap[server]!!.isAlive) {
-                                        GlobalScope.launch {
-                                            processMap[server] =
-                                                ProcessBuilder(server.command.split(" ")).directory(File(server.workingDir))
-                                                    .start()
-                                            BufferedWriter(
-                                                OutputStreamWriter(
-                                                    processMap[server]?.outputStream,
-                                                    StandardCharsets.UTF_8
-                                                )
-                                            )
-                                            var iss = BufferedReader(
-                                                InputStreamReader(
-                                                    processMap[server]?.inputStream,
-                                                    StandardCharsets.UTF_8
-                                                )
-                                            )
-                                            while (true) {
-                                                if (!(processMap[server] ?: return@launch).isAlive) {
-                                                    break
-                                                }
-                                                try {
-                                                    var b = iss.readLine()
-                                                    if (b == null) continue
-                                                    OS.write("[${server.name}]$b\r\n")
-                                                    OS.flush()
-                                                } catch (_: Exception) {
-                                                }
-                                            }
-                                        }
-                                    }
+                                    val pb = ProcessBuilder(*server.command.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+                                        .toTypedArray()).directory(
+                                        File(server.workingDir)
+                                    )
+                                    processMap[server] = pb.start().also { setupProcessMonitoring(server, it) }
                                 }
                             }
                         }else if(a.startsWith("backup ")){
@@ -202,21 +182,11 @@ object SubMain {
                 }
             }.start()
             for(i in ConfigLoader.servers){
-                GlobalScope.launch {
-                    BufferedWriter(OutputStreamWriter(processMap[i]?.outputStream, StandardCharsets.UTF_8))
-                    var iss = BufferedReader(InputStreamReader(processMap[i]?.inputStream, StandardCharsets.UTF_8))
-                    while(true){
-                        if(!(processMap[i] ?: return@launch).isAlive){
-                            break
-                        }
-                        try {
-                            var a = iss.readLine()
-                            if (a == null) continue
-                            OS.write("[${i.name}]$a\r\n")
-                            OS.flush()
-                        }catch (_:Exception){}
-                    }
-                }
+                val pb = ProcessBuilder(*i.command.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()).directory(
+                    File(i.workingDir)
+                )
+                processMap[i] = pb.start().also { setupProcessMonitoring(i, it) }
             }
             Thread{
                 var os=BufferedWriter(OutputStreamWriter(bot?.outputStream, StandardCharsets.UTF_8))
@@ -232,10 +202,7 @@ object SubMain {
             }.start()
         Thread {
             while (true) {
-                if (SimpleDateFormat("HH:mm:ss").format(Date()) == "00:00:00" || SimpleDateFormat("HH:mm:ss").format(
-                        Date()
-                    ) == "00:00:01"
-                ) {
+                if (SimpleDateFormat("HH:mm:ss").format(Date()) == "00:00:00") {
                     for (server in ConfigLoader.servers) {
                         GlobalScope.launch {
                             val time = System.currentTimeMillis()
