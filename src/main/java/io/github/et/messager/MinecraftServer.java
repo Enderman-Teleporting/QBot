@@ -40,6 +40,11 @@ public class MinecraftServer extends SimpleListenerHost {
                 bw.write("["+ms.getName()+"]<"+evt.getSender().getNick()+">"+evt.getMessage().contentToString());
                 bw.newLine();
                 bw.flush();
+                if(evt.getMessage().contentToString().matches("whitelist\\s[a-zA-Z0-9_]+")){
+                    evt.getSubject().sendMessage("已将"+evt.getMessage().contentToString().replace("whitelist ","")+"添加到白名单");
+                } else if (evt.getMessage().contentToString().startsWith("whitelist ")){
+                    evt.getSubject().sendMessage("请将游戏内名称应只包含英文字母,数字和下划线");
+                }
             }
         }
     }

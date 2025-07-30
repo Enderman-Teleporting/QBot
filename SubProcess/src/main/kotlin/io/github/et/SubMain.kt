@@ -110,10 +110,10 @@ object SubMain {
                                     bw.flush()
                                 }
                             }
-                            if(a.matches("\\[[A-Za-z0-9]+]<.+>whitelist\\s.+".toRegex())){
+                            if(a.matches("\\[[A-Za-z0-9]+]<.+>whitelist\\s\\S+".toRegex())){
                                 for (server in ConfigLoader.servers){
                                     if(server.name==name){
-                                        val cmd="whitelist add "+a.replace("\\[[A-Za-z0-9]+]<.+>whitelist\\s","").trim()
+                                        val cmd="whitelist add "+a.replace("\\[[A-Za-z0-9]+]<.+>whitelist\\s".toRegex(),"").trim()
                                         val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
                                         bw.write(cmd)
                                         bw.newLine()
