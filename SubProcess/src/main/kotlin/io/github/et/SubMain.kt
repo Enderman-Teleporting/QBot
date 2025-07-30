@@ -110,6 +110,17 @@ object SubMain {
                                     bw.flush()
                                 }
                             }
+                            if(a.matches("\\[[A-Za-z0-9]+]<.+>whitelist\\s.+".toRegex())){
+                                for (server in ConfigLoader.servers){
+                                    if(server.name==name){
+                                        val cmd="whitelist add "+a.replace("\\[[A-Za-z0-9]+]<.+>whitelist\\s","").trim()
+                                        val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                        bw.write(cmd)
+                                        bw.newLine()
+                                        bw.flush()
+                                    }
+                                }
+                            }
                         }else if(a.startsWith("restart ")) {
                             val name = a.substring(8)
                             for (server in ConfigLoader.servers) {
