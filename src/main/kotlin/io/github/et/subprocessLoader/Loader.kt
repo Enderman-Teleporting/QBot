@@ -38,7 +38,7 @@ class Loader : Runnable {
                 val name = getContent(a)
                 val content = a.substring(name.length + 2)
                 System.out.println(a.replaceFirst("[]", ""))
-                if(a.trim().equals("[]WebSocket服务: 127.0.0.1:${Main.JSON_NO_GUIDE.getJSONObject("Global").getInteger("port")}, : 已启动")){
+                if(a.trim().contains("[debug] 本账号数据/缓存目录：")){
                     GlobalScope.launch {
                         if(Main.bot!=null){
                             Main.bot.close()
