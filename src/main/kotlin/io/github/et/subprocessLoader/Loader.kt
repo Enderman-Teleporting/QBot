@@ -1,10 +1,26 @@
 package  io.github.et.subprocessLoader
+import com.alibaba.fastjson2.JSONObject
 import io.github.et.Main
+import io.github.et.eventListener.AdminBuffet
+import io.github.et.eventListener.ChangeGroupName
+import io.github.et.eventListener.LeaverListener
+import io.github.et.eventListener.RequestPasser
+import io.github.et.exceptions.BotInfoNotFoundException
+import io.github.et.games.roulette.Roulette
+import io.github.et.games.wordle.Wordle
+import io.github.et.messager.*
+import io.github.et.tools.CommandConsole
+import io.github.et.tools.DeathMessage
+import io.github.et.utils.classLoader.ClassLoader
+import io.github.ettoolset.tools.logger.LevelNotMatchException
+import io.github.ettoolset.tools.logger.Logger
+import io.github.ettoolset.tools.logger.LoggerNotDeclaredException
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import net.mamoe.mirai.event.ListenerHost
+import top.mrxiaom.overflow.BotBuilder
 import java.io.*
-import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.util.*
 
@@ -22,6 +38,65 @@ class Loader : Runnable {
                 val name = getContent(a)
                 val content = a.substring(name.length + 2)
                 System.out.println(a.replaceFirst("[]", ""))
+                if(a.trim().equals("[]WebSocket服务: 127.0.0.1:${Main.JSON_NO_GUIDE.getJSONObject("Global").getInteger("port")}, : 已启动")){
+                    GlobalScope.launch {
+                        if(Main.bot!=null){
+                            Main.bot.close()
+                        }
+                        val logger=Logger.getDeclaredLogger()
+                        Main.bot =
+                            BotBuilder.positive("ws://127.0.0.1:" + (Main.JSON_ALL["Global"] as JSONObject)["port"])
+                                .connect()
+                        if (Main.bot == null) {
+                            throw BotInfoNotFoundException()
+                        }
+                        Main.bot.login()
+                        logger.info("正在注册监听器……")
+                        val clazz = ClassLoader.loadClasses()
+                        clazz.add(AdminBuffet::class.java)
+                        clazz.add(ChangeGroupName::class.java)
+                        clazz.add(LeaverListener::class.java)
+                        clazz.add(RequestPasser::class.java)
+                        clazz.add(ChangeConfigListener::class.java)
+                        clazz.add(FreeTalk::class.java)
+                        clazz.add(GetHelp::class.java)
+                        clazz.add(ImageGenerator::class.java)
+                        clazz.add(MinecraftServer::class.java)
+                        clazz.add(Nudger::class.java)
+                        clazz.add(Repeater::class.java)
+                        clazz.add(Replier::class.java)
+                        clazz.add(ServerSearcher::class.java)
+                        clazz.add(Roulette::class.java)
+                        clazz.add(Wordle::class.java)
+                        clazz.add(Interactions::class.java)
+                        clazz.add(MessageCount::class.java)
+                        for (c in clazz) {
+                            val abc = c.getDeclaredConstructor().newInstance()
+                            if (abc is ListenerHost) {
+                                Main.bot.eventChannel.registerListenerHost(abc)
+                            }
+                            logger.info("已注册监听器" + c.name)
+                        }
+                        Thread {
+                            while (true) {
+                                try {
+                                    if (Main.bot == null) {
+                                        continue
+                                    }
+                                    logger.fine(
+                                        CommandConsole.handle(
+                                            Main.bot,
+                                            CommandConsole.getCommand()
+                                        )
+                                    )
+                                } catch (e:Exception){
+                                    break
+                                }
+                            }
+                        }.start()
+                        Main.bot.join()
+                    }
+                }
                 if (name.isEmpty() || Main.bot == null) {
                     continue
                 }
@@ -35,6 +110,13 @@ class Loader : Runnable {
                             val aaa=content.split("[\\s:]".toRegex())
                             GlobalScope.launch {
                                 Objects.requireNonNull(Main.bot.getGroup(i.group))?.sendMessage("[" + name + "]" + aaa[aaa.size-4]+" "+aaa[aaa.size-3]+" "+aaa[aaa.size-2]+" "+aaa[aaa.size-1])
+                            }
+                        }else {
+                            val result=DeathMessage.getDeathMessage(content)
+                            if(result!=null){
+                                GlobalScope.launch {
+                                    Objects.requireNonNull(Main.bot.getGroup(i.group))?.sendMessage("[$name]$result")
+                                }
                             }
                         }
                     }

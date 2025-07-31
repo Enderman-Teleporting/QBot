@@ -11,6 +11,8 @@ import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.MessageEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+
 @SuppressWarnings("unused")
 public class ServerSearcher extends SimpleListenerHost {
     @Override
@@ -25,16 +27,16 @@ public class ServerSearcher extends SimpleListenerHost {
     }
 
     @EventHandler
-    public void search(MessageEvent msgEvent) throws LoggerNotDeclaredException {
+    public void search(MessageEvent msgEvent) throws LoggerNotDeclaredException, IOException {
         if (msgEvent.getMessage().contentToString().startsWith("查服 ")) {
             if (FeatureInUse.isInUse("MineServerStat", msgEvent.getSubject().getId())) {
                 String msg = msgEvent.getMessage().contentToString();
                 msg = msg.substring(3);
                 if (msg.contains(":")) {
                     String[] list = msg.split(":");
-                    msgEvent.getSubject().sendMessage(ServerSearching.search(list[0], Integer.parseInt(list[1])));
+                    msgEvent.getSubject().sendMessage(ServerSearching.search(list[0], Integer.parseInt(list[1]), msgEvent.getSubject()));
                 } else {
-                    msgEvent.getSubject().sendMessage(ServerSearching.search(msg));
+                    msgEvent.getSubject().sendMessage(ServerSearching.search(msg, 25565, msgEvent.getSubject()));
                 }
                 Logger logger = Logger.getDeclaredLogger();
                 logger.info("Handled a server searching request");

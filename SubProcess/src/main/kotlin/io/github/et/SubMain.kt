@@ -2,6 +2,7 @@ package io.github.et
 
 import io.github.et.ConfigLoader.load
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.*
@@ -72,8 +73,20 @@ object SubMain {
             if (QBotRunPathName == null) {
                 throw RuntimeException("QBotRunPathName is null")
             }
-            val builder = ProcessBuilder("$QBotRunPathName\\napcat.bat").directory(File(QBotRunPathName))
+            val builder = ProcessBuilder("$QBotRunPathName\\napcat.quick.bat").directory(File(QBotRunPathName))
             bot = builder.start()
+            var job= GlobalScope.launch {
+                var iss=BufferedReader(InputStreamReader(bot?.inputStream, StandardCharsets.UTF_8))
+                while(true){
+                    var a = iss.readLine()
+                    if(a == null) {
+                        continue
+                    }
+                    OS.write("[]$a")
+                    OS.newLine()
+                    OS.flush()
+                }
+            }
             for (server in ConfigLoader.servers) {
                 val pb = ProcessBuilder(*server.command.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
                     .toTypedArray()).directory(
@@ -188,6 +201,31 @@ object SubMain {
                                     }
                                 }
                             }
+                        }else if(a=="restart"){
+                            if (bot != null) {
+                                if(bot!!.isAlive == true){
+                                    bot!!.destroy()
+                                    ProcessBuilder("taskkill","/F","/IM","NapCatWinBootMain.exe").start()
+                                    killProcessByExePath(File("$QBotRunPathName/QQ.exe").canonicalPath)
+                                }
+                            }
+                            val builder = ProcessBuilder("$QBotRunPathName\\napcat.quick.bat").directory(File(QBotRunPathName))
+                            bot = builder.start()
+                            job.cancel()
+                            job=GlobalScope.launch {
+                                var iss=BufferedReader(InputStreamReader(bot?.inputStream, StandardCharsets.UTF_8))
+                                while(true){
+                                    var a = iss.readLine()
+                                    if(a == null) {
+                                        continue
+                                    }
+                                    OS.write("[]$a")
+                                    OS.newLine()
+                                    OS.flush()
+                                }
+                            }
+
+
                         }
                     }
                 } catch (e: IOException) {
@@ -195,18 +233,7 @@ object SubMain {
                 }
             }.start()
 
-            Thread{
-                var os=BufferedWriter(OutputStreamWriter(bot?.outputStream, StandardCharsets.UTF_8))
-                var iss=BufferedReader(InputStreamReader(bot?.inputStream, StandardCharsets.UTF_8))
-                while(true){
-                    var a = iss.readLine()
-                    if(a == null) {
-                        continue
-                    }
-                    OS.write("[]$a\r\n")
-                    OS.flush()
-                }
-            }.start()
+
 
             Thread {
                 while (true) {

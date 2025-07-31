@@ -20,8 +20,7 @@ import java.util.Objects;
 
 public class CommandConsole {
     public static String getCommand(){
-        Console console=System.console();
-        return console.readLine();
+        return Main.console.readLine();
     }
     public static String handle(Bot bot,String cmd) throws LoggerNotDeclaredException, LevelNotMatchException {
         String[] commands=cmd.split(" ");
@@ -91,24 +90,28 @@ public class CommandConsole {
                             JSONArray exclude1 = jo1.getJSONArray("exclude");
                             JSONArray exclude2 = jo2.getJSONArray("exclude");
 
-                            if (!exclude1.contains((int)id)) {
+                            if (!(exclude1.contains((int)id)||exclude1.contains(id))) {
                                 exclude1.add((int)id);
                                 exclude2.add((int)id);
                             } else {
                                 exclude1.remove((Integer) (int) id);
-                                exclude1.remove((Integer) (int) id);
+                                exclude2.remove((Integer) (int) id);
+                                exclude1.remove(id);
+                                exclude2.remove(id);
                             }
                         }else{
                             long id = Long.parseLong(commands[1]);
                             JSONArray include1 = jo1.getJSONArray("include");
                             JSONArray include2 = jo2.getJSONArray("include");
 
-                            if (!include1.contains((int)id)) {
+                            if (!(include1.contains((int)id)||include1.contains(id))) {
                                 include1.add((int)id);
                                 include2.add((int)id);
                             } else {
                                 include1.remove((Integer) (int) id);
                                 include2.remove((Integer) (int) id);
+                                include1.remove(id);
+                                include2.remove(id);
                             }
                         }
                     }else{
@@ -142,11 +145,20 @@ public class CommandConsole {
                     return "setting completed!";
                 }
                 case "restart" -> {
-                    if(ServerStream.os!=null){
-                        BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(ServerStream.os,StandardCharsets.UTF_8));
-                        bw.write(commands[0]+" "+commands[1]);
-                        bw.newLine();
-                        bw.flush();
+                    if(commands.length==1){
+                        if (ServerStream.os != null) {
+                            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(ServerStream.os, StandardCharsets.UTF_8));
+                            bw.write("restart");
+                            bw.newLine();
+                            bw.flush();
+                        }
+                    }else {
+                        if (ServerStream.os != null) {
+                            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(ServerStream.os, StandardCharsets.UTF_8));
+                            bw.write(commands[0] + " " + commands[1]);
+                            bw.newLine();
+                            bw.flush();
+                        }
                     }
                     return "restarting...";
                 }
@@ -191,6 +203,7 @@ public class CommandConsole {
                             set [GroupCode] [FullPathToFunction]
                             set [FullPathToFunction] [Key] [Value]
                             restart [MCServerName]
+                            restart
                             forceStop [MCServerName]
                             backup [MCServerName]
                             help

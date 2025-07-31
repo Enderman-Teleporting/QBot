@@ -6,6 +6,7 @@ import io.github.et.exceptions.BotInfoNotFoundException;
 import io.github.et.utils.json.JsonBuilder;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -81,6 +82,18 @@ public class Resource {
 
         for (File f : root.listFiles()) {
             if (f.isDirectory() && f.getName().matches("NapCat\\.[0-9]+\\.Shell")) {
+                File launch = new File(f.getAbsolutePath() + "/napcat.quick.bat");
+                if(! launch.exists()){
+                    launch.createNewFile();
+                }
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(launch))) {
+                    bw.write("@echo off\n" +
+                            "chcp 65001\n" +
+                            ".\\NapCatWinBootMain.exe "+Main.JSON_NO_GUIDE.getJSONObject("Global").get("id")+"\n" +
+                            "pause");
+                    bw.flush();
+                    bw.close();
+                }
                 File configDir = new File(f.getAbsolutePath() + "/versions");
                 if (configDir.isDirectory()) {
                     for (File version : Objects.requireNonNull(configDir.listFiles())) {
@@ -140,7 +153,7 @@ public class Resource {
            for(File i:root.listFiles()){
                if(i.getName().matches("NapCat\\.[0-9]+\\.Shell")&&i.isDirectory()){
                    for(File j:i.listFiles()){
-                       if(j.getName().equalsIgnoreCase("napcat.bat")){
+                       if(j.getName().equalsIgnoreCase("napcat.quick.bat")){
                            a=true;
                        }
                    }

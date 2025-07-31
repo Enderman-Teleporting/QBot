@@ -26,6 +26,7 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 import top.mrxiaom.overflow.BotBuilder;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -39,6 +40,7 @@ public class Main {
     public static Bot bot=null;
     public static JSONObject JSON_ALL;
     public static JSONObject JSON_NO_GUIDE;
+    public static Console console=System.console();;
 
     public static void main(String[] args) throws Exception {
         Logger logger;
@@ -62,49 +64,8 @@ public class Main {
             logger=new Logger(Logger.Levels.DEBUG, (String)JSON_NO_GUIDE.get("log"));
         }
         new Thread(new Loader()).start();
-        logger.info("输入任意字符完成登录");
-        System.in.read();
-        bot= BotBuilder.positive("ws://127.0.0.1:"+((JSONObject)JSON_ALL.get("Global")).get("port")).connect();
-        if(bot==null){
-            throw new BotInfoNotFoundException();
-        }
-        bot.login();
-        logger.info("正在注册监听器……");
-        List<Class<?>> clazz= ClassLoader.loadClasses();
-        clazz.add(AdminBuffet.class);
-        clazz.add(ChangeGroupName.class);
-        clazz.add(LeaverListener.class);
-        clazz.add(RequestPasser.class);
-        clazz.add(ChangeConfigListener.class);
-        clazz.add(FreeTalk.class);
-        clazz.add(GetHelp.class);
-        clazz.add(ImageGenerator.class);
-        clazz.add(MinecraftServer.class);
-        clazz.add(Nudger.class);
-        clazz.add(Repeater.class);
-        clazz.add(Replier.class);
-        clazz.add(ServerSearcher.class);
-        clazz.add(Roulette.class);
-        clazz.add(Wordle.class);
-        clazz.add(Interactions.class);
-        clazz.add(MessageCount.class);
-        for (Class<?> c:clazz){
-            Object abc=c.getDeclaredConstructor().newInstance();
-            if (abc instanceof ListenerHost a){
-                bot.getEventChannel().registerListenerHost(a);
-            }
-            logger.info("已注册监听器"+c.getName());
-        }
-        new Thread(() -> {
-            while(true){
-                try {
-                    logger.fine(CommandConsole.handle(bot,CommandConsole.getCommand()));
-                } catch (LoggerNotDeclaredException | LevelNotMatchException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }).start();
-        bot.join();
+
+
     }
 
     public static void buildURL(){
