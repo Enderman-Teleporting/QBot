@@ -38,7 +38,7 @@ class Loader : Runnable {
                 val name = getContent(a)
                 val content = a.substring(name.length + 2)
                 System.out.println(a.replaceFirst("[]", ""))
-                if(a.trim().contains("[debug] 本账号数据/缓存目录：")){
+                if(a.trim().matches("^\\[]\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d \\[.*debug.*] 本账号数据/缓存目录： .+$".toRegex())){
                     GlobalScope.launch {
                         if(Main.bot!=null){
                             Main.bot.close()
