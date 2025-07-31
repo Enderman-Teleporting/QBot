@@ -23,7 +23,7 @@ class Wordle: SimpleListenerHost() {
     @EventHandler
     suspend fun MessageEvent.wordleMsg(){
         if(FeatureInUse.isInUse("Wordle",subject.id)){
-            if(message.contentToString().startsWith("wordle ")) {
+            if(message.contentToString().trim().matches("wordle [0-9]+".toRegex())){
                 if (!gameMap.contains(subject.id)) {
                     gameMap[subject.id] = Game(null)
                 }
