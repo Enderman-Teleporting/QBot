@@ -17,9 +17,9 @@ public class FeatureInUse {
         Boolean c = b.getBoolean(name.replaceFirst(String.valueOf(name.charAt(0)), String.valueOf(name.charAt(0)).toLowerCase()));
         JSONArray d = b.getJSONArray("include");
         JSONArray e = b.getJSONArray("exclude");
-        if (c && (!e.contains((int)subjectId))) {
+        if (c && (!(e.contains((int)subjectId))||e.contains(subjectId))) {
             return true;
-        } else if ((!c) && d.contains((int)subjectId)) {
+        } else if ((!c) && (d.contains((int)subjectId)||d.contains(subjectId))) {
             return true;
         }else{
             return false;
