@@ -30,7 +30,7 @@ dependencies {
     implementation 'org.luaj:luaj-jse:3.0.1'
     compileOnly 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.13.4'
 }
 
