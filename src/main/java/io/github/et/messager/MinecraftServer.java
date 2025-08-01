@@ -37,7 +37,7 @@ public class MinecraftServer extends SimpleListenerHost {
         for(MCServer ms: ConfigLoader.servers){
             if(ms.getGroup()==id){
                 BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(ServerStream.os, StandardCharsets.UTF_8));
-                bw.write("["+ms.getName()+"]<"+evt.getSender().getNick()+">"+evt.getMessage().contentToString());
+                bw.write("["+ms.getName()+"]<"+evt.getSender().getNick()+">"+evt.getMessage().contentToString().replaceAll("\\n","''_nL_''"));
                 bw.newLine();
                 bw.flush();
                 if(evt.getMessage().contentToString().matches("whitelist\\s[a-zA-Z0-9_]+")){
