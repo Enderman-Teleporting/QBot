@@ -118,7 +118,7 @@ object SubMain {
                             for(server in ConfigLoader.servers){
                                 if(server.name==name){
                                     val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                    for(i in a.substring(a.indexOf(">")+1).split("''_nL_''")){
+                                    for(i in a.substring(a.indexOf("<")).split("''_nL_''")){
                                         bw.write("say $i")
                                         bw.newLine()
                                         bw.flush()
