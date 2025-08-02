@@ -6,5 +6,6 @@ class MCServer(
     val workingDir: String,
     val command: String,
     val group: Long,
-    val useAutoBackup: Boolean
+    val useAutoBackup: Boolean,
+    var encoding: String ="UTF-8"
 )

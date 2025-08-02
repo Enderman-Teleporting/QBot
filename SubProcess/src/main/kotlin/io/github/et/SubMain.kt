@@ -2,12 +2,10 @@ package io.github.et
 
 import io.github.et.ConfigLoader.load
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.*
 import java.net.Socket
-import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,10 +21,14 @@ object SubMain {
 
     private fun setupProcessMonitoring(server: MCServer, process: Process) {
         GlobalScope.launch {
-            val reader = BufferedReader(InputStreamReader(process.inputStream, StandardCharsets.UTF_8))
             while (process.isAlive) {
                 try {
+                    val reader = BufferedReader(InputStreamReader(process.inputStream, server.encoding))
                     val line = reader.readLine() ?: continue
+                    if(line.contains("�")||line.contains("中文测试<--[HERE]")){
+                        server.encoding= "GBK"
+                        continue
+                    }
                     OS.write("[${server.name}]$line\r\n")
                     OS.flush()
 
@@ -93,6 +95,10 @@ object SubMain {
                     File(server.workingDir)
                 )
                 processMap[server] = pb.start().also { setupProcessMonitoring(server, it) }
+                val bw = BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                bw.write("中文测试")
+                bw.newLine()
+                bw.flush()
             }
 
             Thread {
@@ -151,6 +157,10 @@ object SubMain {
                                         File(server.workingDir)
                                     )
                                     processMap[server] = pb.start().also { setupProcessMonitoring(server, it) }
+                                    val bw = BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                    bw.write("中文测试")
+                                    bw.newLine()
+                                    bw.flush()
                                 }
                             }
                         }else if(a.startsWith("forceStop ")){
@@ -172,6 +182,10 @@ object SubMain {
                                         File(server.workingDir)
                                     )
                                     processMap[server] = pb.start().also { setupProcessMonitoring(server, it) }
+                                    val bw = BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                    bw.write("中文测试")
+                                    bw.newLine()
+                                    bw.flush()
                                 }
                             }
                         }else if(a.startsWith("backup ")){
@@ -405,3 +419,4 @@ private fun createZipFile(sourceDir: File, zipFile: File) {
         }
     }
 }
+
