@@ -44,12 +44,11 @@ class Loader : Runnable {
                             Main.bot.close()
                         }
                         val logger=Logger.getDeclaredLogger()
-                        Main.bot =
-                            BotBuilder.positive("ws://127.0.0.1:" + (Main.JSON_ALL["Global"] as JSONObject)["port"])
-                                .connect()
-                        if (Main.bot == null) {
-                            throw BotInfoNotFoundException()
-                        }
+                        do {
+                            Main.bot =
+                                BotBuilder.positive("ws://127.0.0.1:" + (Main.JSON_ALL["Global"] as JSONObject)["port"])
+                                    .connect()
+                        }while (Main.bot==null)
                         Main.bot.login()
                         logger.info("正在注册监听器……")
                         val clazz = ClassLoader.loadClasses()
@@ -102,7 +101,7 @@ class Loader : Runnable {
                 }
                 for (i in ConfigLoader.servers) {
                     if (i.name == name) {
-                        if (content.contains("<".toRegex()) && content.contains(">".toRegex())&&(!a.contains("\\[Server]".toRegex()))) {
+                        if (content.contains("<".toRegex()) && content.contains(">".toRegex())&&(!a.contains("\\[Server]".toRegex()))&&(!a.contains("<init>".toRegex()))){
                             GlobalScope.launch {
                                 Objects.requireNonNull(Main.bot.getGroup(i.group))?.sendMessage("[" + name + "]" + content.substring(content.indexOf("<")))
                             }
