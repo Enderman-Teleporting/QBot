@@ -66,10 +66,7 @@ public class Resource {
     }
 
     public static void update() throws Exception {
-        File file = new File("./NapCatInstaller.exe");
-        if (!file.exists()) {
-            extractNapcatZip();
-        }
+        extractNapcatZip();
         Main.JSON_NO_GUIDE = JsonBuilder.buildJson();
         Main.JSON_ALL = JsonBuilder.buildFullJson();
         try {
