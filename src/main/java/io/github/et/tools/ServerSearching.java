@@ -83,7 +83,9 @@ public class ServerSearching {
                         }else if(b.getInteger("current_players")<=5) {
                             mcb.append(new PlainText("玩家列表:" + convertUnicode(b.getJSONArray("player_list").toString() + "\n")));
                         }else{
-                            mcb.append(new PlainText("玩家列表:" + convertUnicode(b.getJSONArray("player_list").subList(0, 5).toString() + "等\n")));
+                            try {
+                                mcb.append(new PlainText("玩家列表:" + convertUnicode(b.getJSONArray("player_list").subList(0, 5).toString() + "等\n")));
+                            }catch (Exception ignored){}
                         }
                         if(b.getString("favicon_b64")!=null){
                             mcb.append(ExternalResource.uploadAsImage(ExternalResource.create(Base64.getDecoder().decode(b.getString("favicon_b64").replaceFirst(".+,", ""))),subject));
