@@ -4,7 +4,7 @@
 
 <large>**注意：本项目仅供学习交流使用，请勿用于非法用途**</large>
 
-[点击查看B站教程(旧版，仅适用于5.2.0及之前的版本，新版暂未更新)](https://www.bilibili.com/video/BV1ggf8YREkD/?share_source=copy_web&vd_source=b904c4c05cc1b7140840d80bc226110f)  给个币吧谢谢各位
+[点击查看B站教程](https://www.bilibili.com/video/BV1uzh3z5Ejx/?share_source=copy_web)  给个币吧谢谢各位
 
 ## 主程序语言和其他库
 
