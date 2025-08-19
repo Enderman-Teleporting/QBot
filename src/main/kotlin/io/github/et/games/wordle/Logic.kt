@@ -3,7 +3,6 @@ package io.github.et.games.wordle
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 

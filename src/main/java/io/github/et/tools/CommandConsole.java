@@ -10,12 +10,8 @@ import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import net.mamoe.mirai.Bot;
 
 import java.io.BufferedWriter;
-import java.io.Console;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class CommandConsole {

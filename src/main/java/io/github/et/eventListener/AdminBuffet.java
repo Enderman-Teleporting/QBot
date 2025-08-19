@@ -1,6 +1,5 @@
 package io.github.et.eventListener;
 
-import io.github.et.Main;
 import io.github.et.exceptions.messageExceptions.IllegalEventHandlingException;
 import io.github.et.utils.json.FeatureInUse;
 import io.github.ettoolset.tools.logger.Logger;

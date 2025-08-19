@@ -1,6 +1,5 @@
 package io.github.et.messager;
 
-import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
 import io.github.et.tools.GPT;
 import io.github.et.utils.json.FeatureInUse;
 import io.github.ettoolset.tools.logger.Logger;

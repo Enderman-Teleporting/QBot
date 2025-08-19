@@ -2,13 +2,10 @@ package io.github.et.tools;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.contact.Group;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeMap;
-import java.util.Comparator;
 
 @Getter
 @Setter

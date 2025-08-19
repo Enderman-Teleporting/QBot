@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.alibaba.fastjson2.JSONReader;
 import io.github.et.Main;
 import io.github.et.exceptions.BotInfoNotFoundException;
 import io.github.et.utils.lua.Item;
