@@ -97,6 +97,8 @@ public class JsonBuilder {
                         return Integer.parseInt(input);
                     } else if (type == Long.class) {
                         return Long.parseLong(input);
+                    } else if (type==Double.class) {
+                        return Double.parseDouble(input);
                     } else if (type == String.class) {
                         return input;
                     } else if (type == JSONArray.class) {

@@ -1,4 +1,4 @@
-package io.github.et.utils.classLoader;
+package io.github.et.utils.pluginLoader;
 
 import net.mamoe.mirai.event.SimpleListenerHost;
 
