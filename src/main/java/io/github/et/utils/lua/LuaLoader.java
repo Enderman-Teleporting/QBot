@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class LuaLoader {
     private LuaValue lua;
     private String luaPath;
+    private String pkgPath;
     private String luaName;
     private String cn;
     private boolean isGame;
@@ -22,8 +23,9 @@ public class LuaLoader {
     private String parent;
     private LuaLoader parentLua;
 
-    public LuaLoader(String luaPath) throws BotInfoNotFoundException, ClassNotFoundException {
+    public LuaLoader(String luaPath, String pkgPath) throws BotInfoNotFoundException, ClassNotFoundException {
         this.luaPath = luaPath;
+        this.pkgPath = pkgPath;
         load();
     }
 

@@ -12,6 +12,8 @@ import java.util.jar.JarFile;
 
 public class ClassLoader {
     public static List<Class<?>> loadClasses() throws Exception {
+        //TODO 加载特定子类(父类未写)
+        //TODO 使用@useConfig注解向子类中特定的HashMap中添加特定配制的路径以便直接取用
         List<Class<?>> classes = new ArrayList<>();
         java.lang.ClassLoader classLoader = ClassLoader.class.getClassLoader();
         
