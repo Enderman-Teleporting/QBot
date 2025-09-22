@@ -28,8 +28,8 @@ dependencies {
     implementation 'net.mamoe:mirai-core:2.16.0'
     implementation 'org.fusesource.jansi:jansi:2.4.2'
     implementation 'org.luaj:luaj-jse:3.0.1'
-    compileOnly 'org.projectlombok:lombok:1.18.38'
-    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+    compileOnly 'org.projectlombok:lombok:1.18.42'
+    annotationProcessor 'org.projectlombok:lombok:1.18.42'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.13.4'
 }
