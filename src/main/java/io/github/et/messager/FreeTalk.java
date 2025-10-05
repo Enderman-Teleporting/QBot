@@ -136,7 +136,7 @@ public class FreeTalk extends SimpleListenerHost {
                 if (Objects.equals(currentMessageNum.get(id), targetMessageNum.get(id))) {
                     String content = GPT.freeSpeech(id);
                     if (content != null) {
-                        content = content.replaceAll("^((`\\d+:\\d+`\\s*:*\\s*[^\\n\\s()]+\\s*\\(\\d+\\)\\s*:*\\s*)|(.+\\d-\\d-\\d\\s*.*\\d\\s*:\\s*\\d\\s*"+event.getBot().getNick()+"\\s*))?", "").trim();
+                        content = content.replaceAll("^((`\\d+:\\d+`\\s*:*\\s*[^\\n\\s()]+\\s*\\(\\d+\\)\\s*:*\\s*)|(.+\\d-\\d-\\d\\s*.{0,10}"+event.getBot().getNick()+"\\s*))?", "").trim();
                         String[] messages = content.split("[\n，。；：,.;:` ]");
                         for (int i = 0; i < messages.length; i++) {
                             messages[i] = messages[i].trim();
