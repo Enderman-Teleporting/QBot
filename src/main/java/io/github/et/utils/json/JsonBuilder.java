@@ -248,7 +248,7 @@ public class JsonBuilder {
             if (!jsonObject.containsKey(lua.getParent())) {
                 jsonObject.put(lua.getParent(), new JSONObject());
             }
-            jsonObject.getJSONObject(lua.getParent()).put(lua.getPkgPath().matches("^(et|global).*$")?featureName: lua.getPkgPath()+"."+featureName, featureConfig);
+            jsonObject.getJSONObject(lua.getParent()).put(lua.getPkgPath().matches("^(et|global)$")?featureName: lua.getPkgPath()+"."+featureName, featureConfig);
         } else {
             jsonObject.put(lua.getPkgPath().matches("^(et|global).*$")?featureName: lua.getPkgPath()+"."+featureName, featureConfig);
         }

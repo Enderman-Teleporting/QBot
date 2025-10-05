@@ -13,6 +13,7 @@ public class LuaConfig {
     private String featureName;
     private boolean isGame;
     private HashMap<String, Object> config=new HashMap<>();
+    public static ArrayList<LuaConfig> luaConfigArrayList = new ArrayList<>();
 
     public LuaConfig(boolean isGame,String packageName,String name) throws BotLuaConfigException {
         if(!name.matches("^[A-Z][a-zA-Z_]+$")){
@@ -66,10 +67,14 @@ public class LuaConfig {
 
 
     }
+    public void register(){
+        luaConfigArrayList.add(this);
+    }
 
-    //创建文件
-    //注册
-    //含有该文件跳过环节
+    @Override
+    public String toString() {
+        return this.getPackageName()+"."+featureName;
+    }
 
 
 }
