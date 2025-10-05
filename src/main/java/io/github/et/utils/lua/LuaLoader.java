@@ -11,6 +11,7 @@ import java.util.ArrayList;
 @Getter
 @Setter
 public class LuaLoader {
+    //TODO FreeTalk bug:设置include/exclude会被吞
     private LuaValue lua;
     private String luaPath;
     private String pkgPath;
