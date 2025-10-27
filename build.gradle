@@ -21,7 +21,7 @@ shadowJar{
 }
 
 dependencies {
-    implementation 'com.alibaba:fastjson:2.0.58'
+    implementation 'com.alibaba:fastjson:2.0.60'
     implementation 'io.github.enderman-tping:ETToolset:1.0.0-pre3'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10'
     implementation "top.mrxiaom.mirai:overflow-core:1.0.7"
