@@ -28,7 +28,6 @@ public class Main {
         Logger logger;
         AnsiConsole.systemInstall();
         Resource.update();
-        Resource.checkFileValidity();
         JsonBuilder.update();
         File file=new File("plugins");
         File file1 = new File("configs/addonConfigs");
@@ -46,7 +45,7 @@ public class Main {
             logger=new Logger(Logger.Levels.DEBUG, (String)JSON_NO_GUIDE.get("log"));
         }
         new Thread(new Loader()).start();
-
+        new Thread(new HeartBeat()).start();
 
     }
 

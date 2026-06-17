@@ -132,11 +132,11 @@ object SubMain {
                                     val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
                                     for(i in a.substring(a.indexOf("<")).split("''_nL_''")){
                                         if(processMap[server]?.isAlive == true) {
-                                        bw.write("say $i")
-                                        bw.newLine()
-                                        bw.flush()
-                                    }
+                                            bw.write("say $i")
+                                            bw.newLine()
+                                            bw.flush()
                                         }
+                                    }
 
                                 }
                             }
@@ -331,7 +331,7 @@ object SubMain {
             if (!exeFile.exists()) {
                 return
             }
-            
+
             val canonicalPath = exeFile.canonicalPath
             ProcessHandle.allProcesses().forEach { processHandle ->
                 try {
@@ -343,7 +343,7 @@ object SubMain {
                 } catch (e: Exception) {
                 }
             }
-            
+
         } catch (_: Exception) {}
     }
 
