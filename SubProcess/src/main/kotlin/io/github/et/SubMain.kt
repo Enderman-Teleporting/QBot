@@ -24,9 +24,11 @@ object SubMain {
             while (process.isAlive) {
                 try {
                     val reader = BufferedReader(InputStreamReader(process.inputStream, server.encoding))
-                    val line = reader.readLine() ?: continue
-                    if(line.contains("�")||line.contains("中文测试<--[HERE]")){
+                    val line = reader.readLine() ?: break
+                    if(line.contains("�")){
                         server.encoding= "GBK"
+                        continue
+                    }else if(line.contains("中文测试<--[HERE]")){
                         continue
                     }
                     OS.write("[${server.name}]$line\r\n")
@@ -82,7 +84,7 @@ object SubMain {
                 while(true){
                     var a = iss.readLine()
                     if(a == null) {
-                        continue
+                        break
                     }
                     OS.write("[]$a")
                     OS.newLine()
@@ -96,9 +98,11 @@ object SubMain {
                 )
                 processMap[server] = pb.start().also { setupProcessMonitoring(server, it) }
                 val bw = BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                bw.write("中文测试")
-                bw.newLine()
-                bw.flush()
+                if(processMap[server]?.isAlive == true) {
+                    bw.write("中文测试")
+                    bw.newLine()
+                    bw.flush()
+                }
             }
 
             Thread {
@@ -106,17 +110,19 @@ object SubMain {
                     while (true) {
                         val a = `is`.readLine()
                         if(a == null) {
-                            continue
+                            break
                         }
                         if (a.startsWith("[") && a.contains("]/")) {
                             val name = getContent(a)
                             val cmd = a.substring(name.length + 3)
                             for (server in ConfigLoader.servers) {
                                 if (server.name == name) {
-                                    val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                    bw.write(cmd)
-                                    bw.newLine()
-                                    bw.flush()
+                                    if(processMap[server]?.isAlive == true) {
+                                        val bw = BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                        bw.write(cmd)
+                                        bw.newLine()
+                                        bw.flush()
+                                    }
                                 }
                             }
                         }else if(a.contains("<".toRegex())&&a.contains(">".toRegex())&&(!a.contains("\\[Server]".toRegex()))&&(!a.contains("/[a-z]+".toRegex()))){
@@ -125,9 +131,11 @@ object SubMain {
                                 if(server.name==name){
                                     val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
                                     for(i in a.substring(a.indexOf("<")).split("''_nL_''")){
-                                        bw.write("say $i")
-                                        bw.newLine()
-                                        bw.flush()
+                                        if(processMap[server]?.isAlive == true) {
+                                            bw.write("say $i")
+                                            bw.newLine()
+                                            bw.flush()
+                                        }
                                     }
 
                                 }
@@ -137,6 +145,7 @@ object SubMain {
                                     if(server.name==name){
                                         val cmd="whitelist add "+a.replace("\\[[A-Za-z0-9]+]<.+>whitelist\\s".toRegex(),"").trim()
                                         val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                        //TODO 此处可有未开启判定
                                         bw.write(cmd)
                                         bw.newLine()
                                         bw.flush()
@@ -147,20 +156,25 @@ object SubMain {
                             val name = a.substring(8)
                             for (server in ConfigLoader.servers) {
                                 if (server.name == name) {
-                                    val bufferedWriter= BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                    bufferedWriter.write("stop")
-                                    bufferedWriter.newLine()
-                                    bufferedWriter.flush()
-                                    processMap[server]!!.destroy()
+                                    if(processMap[server]!!.isAlive) {
+                                        val bufferedWriter =
+                                            BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                        bufferedWriter.write("stop")
+                                        bufferedWriter.newLine()
+                                        bufferedWriter.flush()
+                                        processMap[server]!!.destroy()
+                                    }
                                     val pb = ProcessBuilder(*server.command.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
                                         .toTypedArray()).directory(
                                         File(server.workingDir)
                                     )
                                     processMap[server] = pb.start().also { setupProcessMonitoring(server, it) }
                                     val bw = BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                    bw.write("中文测试")
-                                    bw.newLine()
-                                    bw.flush()
+                                    if(processMap[server]!!.isAlive) {
+                                        bw.write("中文测试")
+                                        bw.newLine()
+                                        bw.flush()
+                                    }
                                 }
                             }
                         }else if(a.startsWith("forceStop ")){
@@ -183,12 +197,15 @@ object SubMain {
                                     )
                                     processMap[server] = pb.start().also { setupProcessMonitoring(server, it) }
                                     val bw = BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                    bw.write("中文测试")
-                                    bw.newLine()
-                                    bw.flush()
+                                    if(processMap[server]!!.isAlive) {
+                                        bw.write("中文测试")
+                                        bw.newLine()
+                                        bw.flush()
+                                    }
                                 }
                             }
                         }else if(a.startsWith("backup ")){
+                            //TODO 此处可添加多种服务器类型(基岩版,插件服)与服务器是否正在运行判定
                             val name=a.substring(7)
                             for(server in ConfigLoader.servers){
                                 if(name==server.name){
@@ -234,7 +251,7 @@ object SubMain {
                                 while(true){
                                     var a = iss.readLine()
                                     if(a == null) {
-                                        continue
+                                        break
                                     }
                                     OS.write("[]$a")
                                     OS.newLine()
@@ -314,7 +331,7 @@ object SubMain {
             if (!exeFile.exists()) {
                 return
             }
-            
+
             val canonicalPath = exeFile.canonicalPath
             ProcessHandle.allProcesses().forEach { processHandle ->
                 try {
@@ -326,7 +343,7 @@ object SubMain {
                 } catch (e: Exception) {
                 }
             }
-            
+
         } catch (_: Exception) {}
     }
 
