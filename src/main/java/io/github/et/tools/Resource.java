@@ -34,7 +34,9 @@ public class Resource {
 
 
     public static void update() throws Exception {
-        extractNapcatZip();
+        if(!checkFileValidity()) {
+            extractNapcatZip();
+        }
         Main.JSON_NO_GUIDE = JsonBuilder.buildJson();
         Main.JSON_ALL = JsonBuilder.buildFullJson();
         System.out.println("正在配置...");
