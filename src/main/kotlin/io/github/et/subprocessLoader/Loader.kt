@@ -59,7 +59,6 @@ class Loader : Runnable {
                         clazz.add(ChangeConfigListener::class.java)
                         clazz.add(FreeTalk::class.java)
                         clazz.add(GetHelp::class.java)
-                        clazz.add(ImageGenerator::class.java)
                         clazz.add(MinecraftServer::class.java)
                         clazz.add(Nudger::class.java)
                         clazz.add(Repeater::class.java)
