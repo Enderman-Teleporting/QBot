@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSONReader;
 import io.github.et.Main;
 import io.github.et.exceptions.BotInfoNotFoundException;
 import io.github.et.utils.lua.Item;
@@ -22,8 +23,7 @@ public class JsonBuilder {
     private static final Scanner scanner = new Scanner(System.in);
     private static JSONObject existingConfig = null;
     private static HashMap<String, String> helpList = new HashMap<>();
-    private static ArrayList<String>luaPaths = new ArrayList<>();
-    public static void initAll() throws BotInfoNotFoundException, ClassNotFoundException, IOException {
+    public static void initAll() throws BotInfoNotFoundException, ClassNotFoundException {
         File configFile = new File("botInfo.json");
         if (configFile.exists()) {
             try (FileReader reader = new FileReader(configFile)) {
@@ -41,7 +41,7 @@ public class JsonBuilder {
 
         ArrayList<String> luaFiles = findLuaFiles("./configs/addonConfigs");
         for (String luaFile : luaFiles) {
-            luas.add(new LuaLoader(luaFile, luaPaths.get(luaFiles.indexOf(luaFile))));
+            luas.add(new LuaLoader(luaFile));
         }
         for (LuaLoader lua : luas) {
             if (lua.getParent() != null) {
@@ -54,7 +54,7 @@ public class JsonBuilder {
         generateList();
     }
 
-    public static ArrayList<String> findLuaFiles(String folderPath) throws IOException {
+    public static ArrayList<String> findLuaFiles(String folderPath) {
         ArrayList<String> luaFiles = new ArrayList<>();
         File directory = new File(folderPath);
         if (!directory.exists() || !directory.isDirectory()) {
@@ -64,7 +64,7 @@ public class JsonBuilder {
         return luaFiles;
     }
 
-    private static void traverseDirectory(File dir, ArrayList<String> result) throws IOException {
+    private static void traverseDirectory(File dir, ArrayList<String> result) {
         File[] files = dir.listFiles();
         if (files == null) {
             return;
@@ -74,7 +74,6 @@ public class JsonBuilder {
                 String fileName = file.getName().toLowerCase();
                 if (fileName.endsWith(".lua")) {
                     result.add(file.getAbsolutePath());
-                    luaPaths.add(file.getCanonicalPath().substring(new File(".").getCanonicalPath().length()+21).replaceAll("(^\\\\|/)|(\\\\|/$)","").replaceAll("[\\\\/].+\\.lua$","").replaceAll("\\.","").replaceAll("[\\\\/]","."));
                 }
             } else if (file.isDirectory()) {
                 traverseDirectory(file, result);
@@ -98,8 +97,6 @@ public class JsonBuilder {
                         return Integer.parseInt(input);
                     } else if (type == Long.class) {
                         return Long.parseLong(input);
-                    } else if (type==Double.class) {
-                        return Double.parseDouble(input);
                     } else if (type == String.class) {
                         return input;
                     } else if (type == JSONArray.class) {
@@ -248,9 +245,9 @@ public class JsonBuilder {
             if (!jsonObject.containsKey(lua.getParent())) {
                 jsonObject.put(lua.getParent(), new JSONObject());
             }
-            jsonObject.getJSONObject(lua.getParent()).put(lua.getPkgPath().matches("^(et|global)$")?featureName: lua.getPkgPath()+"."+featureName, featureConfig);
+            jsonObject.getJSONObject(lua.getParent()).put(featureName, featureConfig);
         } else {
-            jsonObject.put(lua.getPkgPath().matches("^(et|global).*$")?featureName: lua.getPkgPath()+"."+featureName, featureConfig);
+            jsonObject.put(featureName, featureConfig);
         }
     }
 

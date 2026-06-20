@@ -5,13 +5,16 @@ import io.github.et.eventListener.AdminBuffet
 import io.github.et.eventListener.ChangeGroupName
 import io.github.et.eventListener.LeaverListener
 import io.github.et.eventListener.RequestPasser
+import io.github.et.exceptions.BotInfoNotFoundException
 import io.github.et.games.roulette.Roulette
 import io.github.et.games.wordle.Wordle
 import io.github.et.messager.*
 import io.github.et.tools.CommandConsole
 import io.github.et.tools.DeathMessage
-import io.github.et.utils.pluginLoader.ClassLoader
+import io.github.et.utils.classLoader.ClassLoader
+import io.github.ettoolset.tools.logger.LevelNotMatchException
 import io.github.ettoolset.tools.logger.Logger
+import io.github.ettoolset.tools.logger.LoggerNotDeclaredException
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -56,6 +59,7 @@ class Loader : Runnable {
                         clazz.add(ChangeConfigListener::class.java)
                         clazz.add(FreeTalk::class.java)
                         clazz.add(GetHelp::class.java)
+                        clazz.add(ImageGenerator::class.java)
                         clazz.add(MinecraftServer::class.java)
                         clazz.add(Nudger::class.java)
                         clazz.add(Repeater::class.java)
