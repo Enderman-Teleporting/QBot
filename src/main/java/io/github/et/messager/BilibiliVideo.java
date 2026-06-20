@@ -32,21 +32,25 @@ public class BilibiliVideo extends SimpleListenerHost {
 
     @EventHandler
     public void bilibiliVideo(MessageEvent event) throws IOException {
-        if (FeatureInUse.isInUse("Bilibili", event.getSubject().getId())) {
-            for (Message i : event.getMessage()) {
-                if (i instanceof LightApp a) {
-                    String m = a.getContent();
-                    if (!m.contains("b23.tv")) {
-                        return;
-                    }
-                    sth(event,m);
-                } else if (i instanceof PlainText a) {
-                    String m = a.getContent();
-                    if(m.matches("^(https://|http://|)(bilibili.com/video/|b23.tv/).+")){
-                        sth(event,m);
+        try {
+            if (FeatureInUse.isInUse("Bilibili", event.getSubject().getId())) {
+                for (Message i : event.getMessage()) {
+                    if (i instanceof LightApp a) {
+                        String m = a.getContent();
+                        if (!m.contains("b23.tv")) {
+                            return;
+                        }
+                        sth(event, m);
+                    } else if (i instanceof PlainText a) {
+                        String m = a.getContent();
+                        if (m.matches("^(https://|http://|)(www.bilibili.com/video/|b23.tv/).+")) {
+                            sth(event, m);
+                        }
                     }
                 }
             }
+        }catch (Exception e){
+            event.getSubject().sendMessage(e.getMessage());
         }
     }
 

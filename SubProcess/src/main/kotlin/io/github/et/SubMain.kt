@@ -25,7 +25,7 @@ object SubMain {
                 try {
                     val reader = BufferedReader(InputStreamReader(process.inputStream, server.encoding))
                     val line = reader.readLine() ?: continue
-                    if(line.contains("�")||line.contains("中文测试<--[HERE]")){
+                    if(line.contains("�")){
                         server.encoding= "GBK"
                         continue
                     }

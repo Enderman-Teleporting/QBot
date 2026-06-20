@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import io.github.et.Main;
 import io.github.et.exceptions.BotInfoNotFoundException;
 import io.github.et.utils.json.JsonBuilder;
+import io.github.ettoolset.tools.logger.Logger;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -101,6 +102,9 @@ public class Resource {
 
             }
 
+        }else{
+            Logger.getDeclaredLogger().fatal("暂时不支持Windows以外的系统，请尝试使用Wine启动");
+            System.exit(0);
         }
 
 

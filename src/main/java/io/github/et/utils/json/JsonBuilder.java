@@ -11,6 +11,7 @@ import io.github.et.utils.lua.Item;
 import io.github.et.utils.lua.LuaLoader;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -20,7 +21,8 @@ import static io.github.et.Main.JSON_NO_GUIDE;
 
 public class JsonBuilder {
     public static ArrayList<LuaLoader> luas = new ArrayList<>();
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final Console console=System.console();
+    private static final Scanner scanner = new Scanner(System.in, console.charset());
     private static JSONObject existingConfig = null;
     private static HashMap<String, String> helpList = new HashMap<>();
     public static void initAll() throws BotInfoNotFoundException, ClassNotFoundException {
@@ -85,7 +87,6 @@ public class JsonBuilder {
         while (true) {
             try {
                 String input = scanner.nextLine().trim();
-
                 boolean typeSupported = false;
                 for (Class<?> type : item.getClasses()) {
                     if (type == Boolean.class) {

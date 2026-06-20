@@ -68,6 +68,7 @@ class Loader : Runnable {
                         clazz.add(Wordle::class.java)
                         clazz.add(Interactions::class.java)
                         clazz.add(MessageCount::class.java)
+                        clazz.add(BilibiliVideo::class.java)
                         for (c in clazz) {
                             val abc = c.getDeclaredConstructor().newInstance()
                             if (abc is ListenerHost) {

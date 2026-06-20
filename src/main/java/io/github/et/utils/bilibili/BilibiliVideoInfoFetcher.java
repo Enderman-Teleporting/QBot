@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +34,7 @@ public class BilibiliVideoInfoFetcher {
                 throw new BilibiliRequestException("请求失败，状态码：" + code);
             }
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "GBK"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -54,7 +55,7 @@ public class BilibiliVideoInfoFetcher {
         Matcher bvMatcher = bvPattern.matcher(input);
         if (bvMatcher.find()) {
             return bvMatcher.group(1);
-        }else if (input.contains("[mirai:app:")) {
+        }else if (input.contains("\"qqdocurl\":")) {
             int start = input.indexOf("{");
             int end = input.lastIndexOf("}");
             if (start != -1 && end != -1 && end > start) {
