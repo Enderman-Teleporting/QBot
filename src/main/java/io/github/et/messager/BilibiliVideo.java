@@ -62,7 +62,6 @@ public class BilibiliVideo extends SimpleListenerHost {
         Image img = ExternalResource.uploadAsImage(new URL(js2.getString("pic")).openStream(), event.getSubject());
         MessageChain reply = new MessageChainBuilder()
                 .append(img)
-                .append(js2.getString(""))
                 .append(new PlainText(js2.getString("title") + "(by " + js4.getString("name") + ")\n"))
                 .append(new PlainText("点赞：" + js3.getInteger("like") + "\n"))
                 .append(new PlainText("投币：" + js3.getInteger("coin") + "\n"))
