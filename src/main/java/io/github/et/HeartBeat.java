@@ -1,7 +1,6 @@
 package io.github.et;
 
 import lombok.SneakyThrows;
-import net.mamoe.mirai.Bot;
 
 public class HeartBeat implements Runnable {
     @SneakyThrows

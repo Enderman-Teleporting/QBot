@@ -1,5 +1,6 @@
 package io.github.et.messager;
 
+import io.github.et.games.wordle.Wordle;
 import io.github.et.tools.GPT;
 import io.github.et.utils.json.FeatureInUse;
 import io.github.ettoolset.tools.logger.Logger;
@@ -25,7 +26,6 @@ public class Replier extends SimpleListenerHost {
         } catch (LoggerNotDeclaredException e) {
             throw new RuntimeException(e);
         }
-        //throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent",exception);
     }
 
     @EventHandler
@@ -67,7 +67,12 @@ public class Replier extends SimpleListenerHost {
     }
     @EventHandler
     public void privateTalk(FriendMessageEvent msgEvent) throws IOException, LoggerNotDeclaredException {
-        if (!(msgEvent.getMessage().contentToString().startsWith("/") || msgEvent.getMessage().contentToString().startsWith("绘图 ") || msgEvent.getMessage().contentToString().startsWith("查服 ")|| msgEvent.getMessage().contentToString().startsWith("帮助 ")|| msgEvent.getMessage().contentToString().startsWith("帮助")||msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle")||msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().matches("[a-zA-Z]+"))) {
+        for (Message a:msgEvent.getMessage()){
+            if(a instanceof LightApp){
+                return;
+            }
+        }
+        if (!(msgEvent.getMessage().contentToString().startsWith("/") || msgEvent.getMessage().contentToString().startsWith("绘图 ") || msgEvent.getMessage().contentToString().startsWith("查服 ")|| msgEvent.getMessage().contentToString().startsWith("帮助 ")|| msgEvent.getMessage().contentToString().startsWith("帮助")||msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle")||msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| msgEvent.getMessage().contentToString().startsWith("wordle ")|| (msgEvent.getMessage().contentToString().matches("[a-zA-Z]+")&&(Wordle.Companion.getGameMap().get(msgEvent.getSender().getId()).isGameRunning()))|| msgEvent.getMessage().contentToString().startsWith("https:"))) {
             if (FeatureInUse.isInUse("Reply", msgEvent.getSubject().getId())) {
                 MessageChain msg = msgEvent.getMessage();
                 StringBuilder sb = new StringBuilder();

@@ -74,7 +74,7 @@ public class JsonBuilder {
                 String fileName = file.getName().toLowerCase();
                 if (fileName.endsWith(".lua")) {
                     result.add(file.getAbsolutePath());
-                    luaPaths.add(file.getCanonicalPath().substring(new File(".").getCanonicalPath().length()+21).replaceAll("(^\\\\|/)|(\\\\|/$)","").replaceAll("[\\\\/].+\\.lua$","").replaceAll("\\.","$").replaceAll("[\\\\/]","."));
+                    luaPaths.add(file.getCanonicalPath().substring(new File(".").getCanonicalPath().length()+21).replaceAll("(^\\\\|/)|(\\\\|/$)","").replaceAll("[\\\\/].+\\.lua$","").replaceAll("\\.","").replaceAll("[\\\\/]","."));
                 }
             } else if (file.isDirectory()) {
                 traverseDirectory(file, result);

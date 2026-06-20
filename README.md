@@ -47,8 +47,6 @@
 
 >如果你需要ChatGPT功能，你可以选择前往[免费ChatGPT API](https://github.com/popjane/free_chatgpt_api)获取APIKEY并填入，公益不易，希望各位能够赞助该项目
 
-5. 首次启动程序会跳出一个NapCat下载窗口，如果下载失败请删除`QQ.exe`，`NapCat.xxxx.Shell.zip`，`NapCat.xxxx.Shell`目录后启动`NapCatInstaller.exe`程序，如果仍然失败，请删除以上文件后前往[NapCat发布页](https://github.com/NapNeko/NapCatQQ/releases/latest)手动下载`NapCat.xxxx.Shell.zip`并放置在根目录，运行`NapCatInstaller.exe`，下载成功后在QBot的控制台中按Enter
-
 6. 首次启动可能会要求扫码登录，请在扫码后在手Q勾选下次登录无需扫码确认。如果程序在若干输出后没有所需反应，请重启，当看到注册监听器的输出后就证明已经完成
 
 7. 完成！在Java窗口中可以输入help进行命令查询，可按提示输入指令
@@ -97,8 +95,6 @@
 需要提供GPT的APIkey以及API的URL，at机器人会回复问题 ，如果你的模型是识图模型，机器人可以读取图上内容，否则报错
 
 在模型合适的情况下可以模拟真人在群内的聊天,在配置文件中设置机器人角色,需要详细描述,例如“一名xx中学(具体化)学生”
-
-~~绘图语法为`绘图 [提示词(最好英文)]`,注意空格,聊天回复私聊直接聊,群聊需at一下机器人（从未测试，应该不能用）~~
 
 > at 消息回复与随意聊天功能上下文是分开的
 
