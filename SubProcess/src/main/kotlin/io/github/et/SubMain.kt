@@ -207,7 +207,11 @@ object SubMain {
                                         bw.newLine()
                                         bw.flush()
                                         Thread.sleep(300)
-                                        if(File(server.workingDir + "/world").exists()) {
+                                        if(File(server.workingDir + "/world_nether").exists()) {
+                                            compressDirectory(server.workingDir+"/world", toDir, time.toString()+"_WORLD")
+                                            compressDirectory(server.workingDir+"/world_the_end", toDir, time.toString()+"_WORLD_THE_END")
+                                            compressDirectory(server.workingDir+"/world_nether", toDir, time.toString()+"_WORLD_NETHER")
+                                        }else if(File(server.workingDir + "/world").exists()) {
                                             compressDirectory(server.workingDir + "/world", toDir, time.toString())
                                         }else{
                                             compressDirectory(server.workingDir+"/worlds", toDir, time.toString())
