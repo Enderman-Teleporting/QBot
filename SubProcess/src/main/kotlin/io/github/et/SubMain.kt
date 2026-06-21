@@ -199,12 +199,24 @@ object SubMain {
                                             toDir.mkdirs()
                                         }
                                         val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                        bw.write("save-off")
+                                        if(server.command.contains("java.exe ")||server.command.contains("javaw.exe ")||server.command.contains("java ")) {
+                                            bw.write("save-off")
+                                        }else{
+                                            bw.write("save hold")
+                                        }
                                         bw.newLine()
                                         bw.flush()
                                         Thread.sleep(300)
-                                        compressDirectory(server.workingDir + "/world", toDir, time.toString())
-                                        bw.write("save-on")
+                                        if(File(server.workingDir + "/world").exists()) {
+                                            compressDirectory(server.workingDir + "/world", toDir, time.toString())
+                                        }else{
+                                            compressDirectory(server.workingDir+"/worlds", toDir, time.toString())
+                                        }
+                                        if(server.command.contains("java.exe ")||server.command.contains("javaw.exe ")||server.command.contains("java ")) {
+                                            bw.write("save-on")
+                                        }else{
+                                            bw.write("save resume")
+                                        }
                                         bw.newLine()
                                         bw.flush()
                                         Thread.sleep(300)
@@ -264,12 +276,28 @@ object SubMain {
                                         toDir.mkdirs()
                                     }
                                     val bw = BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                    bw.write("save-off")
+                                    if(server.command.contains("java.exe")||server.command.contains("java ")||server.command.contains("javaw.exe")) {
+                                        bw.write("save-off")
+                                    }else{
+                                        bw.write("save hold")
+                                    }
                                     bw.newLine()
                                     bw.flush()
                                     Thread.sleep(300)
-                                    compressDirectory(server.workingDir + "/world", toDir, time.toString())
-                                    bw.write("save-on")
+                                    if(File(server.workingDir + "/world_nether").exists()) {
+                                        compressDirectory(server.workingDir+"/world", toDir, time.toString()+"_WORLD")
+                                        compressDirectory(server.workingDir+"/world_the_end", toDir, time.toString()+"_WORLD_THE_END")
+                                        compressDirectory(server.workingDir+"/world_nether", toDir, time.toString()+"_WORLD_NETHER")
+                                    }else if(File(server.workingDir + "/world").exists()) {
+                                        compressDirectory(server.workingDir + "/world", toDir, time.toString())
+                                    }else{
+                                        compressDirectory(server.workingDir+"/worlds", toDir, time.toString())
+                                    }
+                                    if(server.command.contains("java.exe")||server.command.contains("java ")||server.command.contains("javaw.exe")) {
+                                        bw.write("save-on")
+                                    }else {
+                                        bw.write("save resume")
+                                    }
                                     bw.newLine()
                                     bw.flush()
                                     for (i in toDir.listFiles()) {
