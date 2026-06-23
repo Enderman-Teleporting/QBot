@@ -5,6 +5,8 @@ import java.io.File
 import java.io.FileReader
 import java.io.IOException
 import java.nio.charset.StandardCharsets
+import java.util.*
+import kotlin.collections.ArrayList
 
 object ConfigLoader {
     @JvmField
@@ -13,17 +15,17 @@ object ConfigLoader {
     @JvmStatic
     @Throws(IOException::class)
     fun load() {
-        val configFile = File("./config.txt")
-        if (configFile.exists()) {
-            val bf = BufferedReader(FileReader(configFile, StandardCharsets.UTF_8))
-            for (i in bf.lines().toList()) {
-                val a = i.split("\\|\\|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                if(a.size==5) {
-                    servers.add(MCServer(a[0], a[1], a[2], a[3].toLong(),a[4].toBoolean()))
-                }else{
-                    throw IllegalStateException()
-                }
+        val root=File("./mcservers")
+        if(!root.exists()){
+            return
+        }
+        for (i in root.listFiles()!!) {
+            if(i.name.lowercase(Locale.getDefault()).endsWith(".properties")){
+                val a =Properties()
+                a.load(FileReader(i, StandardCharsets.UTF_8))
+                servers.add(MCServer(a["name"].toString(), a["working_dir"].toString(),a["command"].toString(),a["group"].toString().toLong(),a["useBackup"].toString().toBoolean(),a["death_msg"].toString().toBoolean() ,a["useAdvancement"].toString().toBoolean()))
             }
         }
+
     }
 }

@@ -110,11 +110,31 @@ class Loader : Runnable {
                             GlobalScope.launch {
                                 Objects.requireNonNull(Main.bot.getGroup(i.group))?.sendMessage("[" + name + "]" + aaa[aaa.size-4]+" "+aaa[aaa.size-3]+" "+aaa[aaa.size-2]+" "+aaa[aaa.size-1])
                             }
-                        }else {
-                            val result=DeathMessage.getDeathMessage(content)
-                            if(result!=null&&(!content.contains("\\[Server]".toRegex()))){
+                        }else if(content.trim().matches(Regex(".+\\w+ has made the advancement \\[[A-Za-z0-9 _]+]"))) {
+                            if(!content.contains("\\[Server]".toRegex())&&(i.useAdvancement)){
+                                val aaa=content.split("[\\s:]".toRegex())
                                 GlobalScope.launch {
-                                    Objects.requireNonNull(Main.bot.getGroup(i.group))?.sendMessage("[$name]$result")
+                                    var result=""
+                                    for (i in 0..aaa.size-1){
+                                        if(aaa[i+1]=="has"&&aaa[i+2]=="made"&&aaa[i+3]=="the"&&aaa[i+4]=="advancement"){
+                                            for (j in i..aaa.size-2){
+                                                result+=aaa[j]+" "
+                                            }
+                                            result+=aaa[aaa.size-1]
+                                            break
+                                        }
+                                    }
+                                    Objects.requireNonNull(Main.bot.getGroup(i.group))?.sendMessage("[" + name + "]" +result)
+                                }
+                            }
+                        }else {
+                            if(i.useDeathMsg) {
+                                val result = DeathMessage.getDeathMessage(content)
+                                if (result != null && (!content.contains("\\[Server]".toRegex()))) {
+                                    GlobalScope.launch {
+                                        Objects.requireNonNull(Main.bot.getGroup(i.group))
+                                            ?.sendMessage("[$name]$result")
+                                    }
                                 }
                             }
                         }

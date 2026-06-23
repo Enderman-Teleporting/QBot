@@ -8,24 +8,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class ConfigLoader {
     public static ArrayList<MCServer> servers=new ArrayList<>();
     public static void load() throws IOException, BotInfoNotFoundException {
-        File configFile=new File("./config.txt");
-        if(configFile.exists()) {
-            BufferedReader bf = new BufferedReader(new FileReader(configFile, StandardCharsets.UTF_8));
-            for (String i:bf.lines().toList()){
-                String[] a=i.split("\\|\\|");
-                if(a.length==5){
-                    if(!a[0].matches("[a-zA-Z0-9]+")){
-                        throw new BotInfoNotFoundException("服务器名称只能为字母和数字组合");
-                    }
-                    servers.add(new MCServer(a[0], a[1], a[2], Long.parseLong(a[3]), Boolean.parseBoolean(a[4])));
-                }else{
-                    throw new BotInfoNotFoundException("Wrong arguments in config file");
-                }
-
+        File file=new File("./mcservers");
+        if(!file.exists()){
+            return;
+        }
+        for (File i:file.listFiles()){
+            if(i.getName().toLowerCase().endsWith(".properties")){
+                Properties a=new Properties();
+                a.load(new FileReader(i));
+                servers.add(new MCServer(a.getProperty("name"), a.getProperty("working_dir"), a.getProperty("command"), Long.parseLong(a.getProperty("group")), Boolean.parseBoolean(a.getProperty("useBackup")),Boolean.parseBoolean(a.getProperty("death_msg")), Boolean.parseBoolean(a.getProperty("useAdvancement"))));
             }
         }
     }
