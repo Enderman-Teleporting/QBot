@@ -82,7 +82,7 @@ object SubMain {
                 while(true){
                     var a = iss.readLine()
                     if(a == null) {
-                        continue
+                        break
                     }
                     OS.write("[]$a")
                     OS.newLine()
@@ -106,40 +106,49 @@ object SubMain {
                     while (true) {
                         val a = `is`.readLine()
                         if(a == null) {
-                            continue
+                            break
                         }
                         if (a.startsWith("[") && a.contains("]/")) {
                             val name = getContent(a)
                             val cmd = a.substring(name.length + 3)
                             for (server in ConfigLoader.servers) {
-                                if (server.name == name) {
-                                    val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                    bw.write(cmd)
-                                    bw.newLine()
-                                    bw.flush()
+                                if (server.name == name&& processMap[server]!=null) {
+                                    if(processMap[server]!!.isAlive()) {
+                                        val bw = BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                        bw.write(cmd)
+                                        bw.newLine()
+                                        bw.flush()
+                                    }
                                 }
                             }
                         }else if(a.contains("<".toRegex())&&a.contains(">".toRegex())&&(!a.contains("\\[Server]".toRegex()))&&(!a.contains("/[a-z]+".toRegex()))){
                             val name= getContent(a)
                             for(server in ConfigLoader.servers){
-                                if(server.name==name){
-                                    val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                    for(i in a.substring(a.indexOf("<")).split("''_nL_''")){
-                                        bw.write("say $i")
-                                        bw.newLine()
-                                        bw.flush()
+                                if(server.name==name&& processMap[server]!=null){
+                                    if(processMap[server]!!.isAlive()) {
+                                        val bw = BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                        for (i in a.substring(a.indexOf("<")).split("''_nL_''")) {
+                                            bw.write("say $i")
+                                            bw.newLine()
+                                            bw.flush()
+                                        }
                                     }
-
                                 }
                             }
                             if(a.matches("\\[[A-Za-z0-9]+]<.+>whitelist\\s\\S+".toRegex())){
                                 for (server in ConfigLoader.servers){
-                                    if(server.name==name){
-                                        val cmd="whitelist add "+a.replace("\\[[A-Za-z0-9]+]<.+>whitelist\\s".toRegex(),"").trim()
-                                        val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                        bw.write(cmd)
-                                        bw.newLine()
-                                        bw.flush()
+                                    if(server.name==name&& processMap[server]!=null) {
+                                        if (processMap[server]!!.isAlive()) {
+                                            val cmd = "whitelist add " + a.replace(
+                                                "\\[[A-Za-z0-9]+]<.+>whitelist\\s".toRegex(),
+                                                ""
+                                            ).trim()
+                                            val bw =
+                                                BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                            bw.write(cmd)
+                                            bw.newLine()
+                                            bw.flush()
+                                        }
                                     }
                                 }
                             }
@@ -147,11 +156,16 @@ object SubMain {
                             val name = a.substring(8)
                             for (server in ConfigLoader.servers) {
                                 if (server.name == name) {
-                                    val bufferedWriter= BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                    bufferedWriter.write("stop")
-                                    bufferedWriter.newLine()
-                                    bufferedWriter.flush()
-                                    processMap[server]!!.destroy()
+                                    if(processMap[server]!=null) {
+                                        if (processMap[server]!!.isAlive) {
+                                            val bufferedWriter =
+                                                BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
+                                            bufferedWriter.write("stop")
+                                            bufferedWriter.newLine()
+                                            bufferedWriter.flush()
+                                            processMap[server]!!.destroy()
+                                        }
+                                    }
                                     val pb = ProcessBuilder(*server.command.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
                                         .toTypedArray()).directory(
                                         File(server.workingDir)
@@ -166,7 +180,7 @@ object SubMain {
                         }else if(a.startsWith("forceStop ")){
                             val name=a.substring(10)
                             for(server in ConfigLoader.servers){
-                                if(server.name==name) {
+                                if(server.name==name&&processMap[server]!=null){
                                     if (processMap[server]!!.isAlive) {
                                         processMap[server]?.destroy()
                                         processMap[server]?.destroyForcibly()
@@ -177,6 +191,10 @@ object SubMain {
                             val name = a.substring(8)
                             for (server in ConfigLoader.servers) {
                                 if (server.name == name) {
+                                    if(processMap[server]!=null){
+                                        if(processMap[server]!!.isAlive)
+                                        break
+                                    }
                                     val pb = ProcessBuilder(*server.command.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
                                         .toTypedArray()).directory(
                                         File(server.workingDir)
@@ -199,13 +217,18 @@ object SubMain {
                                             toDir.mkdirs()
                                         }
                                         val bw=BufferedWriter(OutputStreamWriter(processMap[server]!!.outputStream))
-                                        if(server.command.contains("java.exe ")||server.command.contains("javaw.exe ")||server.command.contains("java ")) {
-                                            bw.write("save-off")
-                                        }else{
-                                            bw.write("save hold")
+                                        if(bw!=null) {
+                                            if (server.command.contains("java.exe ") || server.command.contains("javaw.exe ") || server.command.contains(
+                                                    "java "
+                                                )
+                                            ) {
+                                                bw.write("save-off")
+                                            } else {
+                                                bw.write("save hold")
+                                            }
+                                            bw.newLine()
+                                            bw.flush()
                                         }
-                                        bw.newLine()
-                                        bw.flush()
                                         Thread.sleep(300)
                                         if(File(server.workingDir + "/world_nether").exists()) {
                                             compressDirectory(server.workingDir+"/world", toDir, time.toString()+"_WORLD")
@@ -216,13 +239,18 @@ object SubMain {
                                         }else{
                                             compressDirectory(server.workingDir+"/worlds", toDir, time.toString())
                                         }
-                                        if(server.command.contains("java.exe ")||server.command.contains("javaw.exe ")||server.command.contains("java ")) {
-                                            bw.write("save-on")
-                                        }else{
-                                            bw.write("save resume")
+                                        if(bw!=null) {
+                                            if (server.command.contains("java.exe ") || server.command.contains("javaw.exe ") || server.command.contains(
+                                                    "java "
+                                                )
+                                            ) {
+                                                bw.write("save-on")
+                                            } else {
+                                                bw.write("save resume")
+                                            }
+                                            bw.newLine()
+                                            bw.flush()
                                         }
-                                        bw.newLine()
-                                        bw.flush()
                                         Thread.sleep(300)
                                         for (i in toDir.listFiles()){
                                             if(i.name.endsWith(".zip")&&i.name.substring(0,i.name.length -4).matches("[0-9]+".toRegex())){
@@ -250,7 +278,7 @@ object SubMain {
                                 while(true){
                                     var a = iss.readLine()
                                     if(a == null) {
-                                        continue
+                                        break
                                     }
                                     OS.write("[]$a")
                                     OS.newLine()
@@ -262,6 +290,7 @@ object SubMain {
                         }
                     }
                 } catch (e: IOException) {
+                    OS.write("[](Sub)$e.stackTraceToString()")
                     deal()
                 }
             }.start()
@@ -323,6 +352,7 @@ object SubMain {
                 }
             }.start()
         } catch (e: Exception) {
+            OS.write("[](Sub)${e.stackTraceToString()}")
             deal()
         }
     }
