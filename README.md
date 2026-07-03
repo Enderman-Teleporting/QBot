@@ -22,19 +22,16 @@
 
 1. 下载最新版本`Release`中的jar文件
 
-2. 如果需要群服互通，请在根目录下创建`config.txt`文件，内容如下：
-
-   ```text
-   服名称（仅限英文字母和数字）||运行目录||启动指令（加上-Dfile.encoding=utf-8，如果有桌面环境不推荐--nogui）||要互通的群号||true/false（是否使用自动备份，若地图较大不建议开启）
-   ```
-
-   若需要互通多个服，可以写多行，示例：
-
-   ```text
-   AAA||C:\abc\server||C:\abc\server\launch.bat||114514||true
-   BBB||D:\def\server2||java -Dfile.encoding=utf-8 -jar server.jar||1919810||false
-   ```
-
+2. 如果需要群服互通，请在根目录下创建`mcservers`文件夹，在其中创建多个properties文件，每个要互通的服对应一个文件，文件名任意，如`abc.properties`，内容如下：
+```properties
+name=服务器名称，仅支持英文、数字、下划线
+working_dir=工作目录
+command=启动指令
+group=要互通的群的群号
+useBackup=true或false，是否使用自动备份
+death_msg=true或false，是否在玩家死亡时发送消息
+useAdvancement=true或false，是否在群内分享玩家进度
+```
    
 
 3. 直接运行jar文件，一定要加-Dfile.encoding=utf-8
