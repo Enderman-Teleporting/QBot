@@ -3,8 +3,7 @@ package io.github.et.messager;
 import io.github.et.games.wordle.Wordle;
 import io.github.et.tools.GPT;
 import io.github.et.utils.json.FeatureInUse;
-import io.github.ettoolset.tools.logger.Logger;
-import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
+import io.github.et.conopt4j.logger.Logger;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
@@ -20,16 +19,11 @@ import java.io.IOException;
 public class Replier extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        try {
-            Logger logger = Logger.getDeclaredLogger();
-            logger.error("Exception occurred when handling a reply operation, error info as follows:");
-        } catch (LoggerNotDeclaredException e) {
-            throw new RuntimeException(e);
-        }
+        Logger.error("Exception occurred when handling a reply operation, error info as follows:");
     }
 
     @EventHandler
-    public void groupTalk(GroupMessageEvent msgEvent) throws LoggerNotDeclaredException {
+    public void groupTalk(GroupMessageEvent msgEvent){
         if (msgEvent.getMessage().contains(new At(msgEvent.getBot().getId()))) {
             if (FeatureInUse.isInUse("Reply", msgEvent.getSubject().getId())) {
                 MessageChain msg = msgEvent.getMessage();
@@ -59,14 +53,13 @@ public class Replier extends SimpleListenerHost {
                         .append(new At(msgEvent.getSender().getId()))
                         .build();
                 msgEvent.getGroup().sendMessage(chain);
-                Logger logger = Logger.getDeclaredLogger();
-                logger.info("Handled chatting event from Group: %s", msgEvent.getGroup().getId());
+                Logger.info("Handled chatting event from Group: %s", msgEvent.getGroup().getId());
             }
         }
 
     }
     @EventHandler
-    public void privateTalk(FriendMessageEvent msgEvent) throws IOException, LoggerNotDeclaredException {
+    public void privateTalk(FriendMessageEvent msgEvent) throws IOException{
         for (Message a:msgEvent.getMessage()){
             if(a instanceof LightApp){
                 return;
@@ -95,8 +88,7 @@ public class Replier extends SimpleListenerHost {
                 }
                 String result = GPT.getReply(msgEvent.getSubject().getId(), sb.toString());
                 msgEvent.getSubject().sendMessage(result);
-                Logger logger = Logger.getDeclaredLogger();
-                logger.info("Handled message reply at" + msgEvent.getSubject().getId());
+                Logger.info("Handled message reply at" + msgEvent.getSubject().getId());
             }
         }
 

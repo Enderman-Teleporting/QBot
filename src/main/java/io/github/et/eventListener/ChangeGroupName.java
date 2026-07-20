@@ -13,9 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class ChangeGroupName extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        Logger.error("Exception occurred when handling a group name change request, error info as follows:");
-        throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent", exception);
-    }
+        Logger.error("Exception occurred when handling a group name change request");}
 
     @EventHandler
     public void change(GroupMessageEvent msgEvent)  {

@@ -15,8 +15,7 @@ import org.jetbrains.annotations.NotNull;
 public class AdminBuffet extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        Logger.error("Exception occurred when handling an operation, error info as follows:");
-        throw new IllegalEventHandlingException("Exceptions found while handling AdminBuffet event",exception);
+        Logger.error("Exception occurred when handling an operation");
     }
 
 

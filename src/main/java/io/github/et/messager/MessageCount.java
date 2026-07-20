@@ -3,8 +3,7 @@ package io.github.et.messager;
 import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
 import io.github.et.tools.Ranking;
 import io.github.et.utils.json.FeatureInUse;
-import io.github.ettoolset.tools.logger.Logger;
-import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
+import io.github.et.conopt4j.logger.Logger;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
@@ -21,13 +20,7 @@ public class MessageCount extends SimpleListenerHost {
     private static String date= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        try {
-            Logger logger = Logger.getDeclaredLogger();
-            logger.error("Exception occurred when counting message, error info as follows:");
-        } catch (LoggerNotDeclaredException e) {
-            throw new RuntimeException(e);
-        }
-        throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent", exception);
+        Logger.error("Exception occurred when counting message");
     }
 
     @EventHandler

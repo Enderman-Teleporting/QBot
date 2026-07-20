@@ -4,14 +4,12 @@ import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
 import io.github.et.subprocessLoader.ConfigLoader;
 import io.github.et.subprocessLoader.MCServer;
 import io.github.et.subprocessLoader.ServerStream;
-import io.github.ettoolset.tools.logger.Logger;
-import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import org.jetbrains.annotations.NotNull;
-
+import io.github.et.conopt4j.logger.Logger;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -22,13 +20,7 @@ import java.nio.charset.StandardCharsets;
 public class MinecraftServer extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        try {
-            Logger logger = Logger.getDeclaredLogger();
-            logger.error("Exception occurred when linking MC Server, error info as follows:");
-        } catch (LoggerNotDeclaredException e) {
-            throw new RuntimeException(e);
-        }
-        throw new IllegalMessageDealingException("Exception occurred when linking MC Server",exception);
+        Logger.error("Exception occurred when linking MC Server");
     }
 
     @EventHandler

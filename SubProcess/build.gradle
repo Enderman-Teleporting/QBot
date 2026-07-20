@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'com.gradleup.shadow' version '8.3.0'
-    id 'org.jetbrains.kotlin.jvm' version '1.8.10'
+    id 'com.gradleup.shadow' version '9.4.2'
+    id 'org.jetbrains.kotlin.jvm' version '2.3.20'
 }
 
 group = 'io.github.et'
@@ -20,7 +20,7 @@ shadowJar{
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0"
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }

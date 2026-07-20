@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'com.gradleup.shadow' version '9.4.2'
-    id 'org.jetbrains.kotlin.jvm' version '1.8.10'
+    id 'org.jetbrains.kotlin.jvm' version '2.3.20'
 }
 
 group 'io.github.et'
@@ -22,7 +22,7 @@ shadowJar{
 
 dependencies {
     implementation 'com.alibaba:fastjson:2.0.62'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.3.20'
     implementation "top.mrxiaom.mirai:overflow-core:1.1.0"
     implementation 'net.mamoe:mirai-core:2.16.0'
     implementation 'org.luaj:luaj-jse:3.0.1'

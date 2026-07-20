@@ -5,8 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import io.github.et.Main;
 import io.github.et.tools.GPT;
 import io.github.et.utils.json.FeatureInUse;
-import io.github.ettoolset.tools.logger.Logger;
-import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
+import io.github.et.conopt4j.logger.Logger;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
@@ -54,16 +53,10 @@ public class FreeTalk extends SimpleListenerHost {
     }
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        try {
-            Logger logger = Logger.getDeclaredLogger();
-            logger.error("Exception occurred when handling free talk operation, error info as follows:");
-        } catch (LoggerNotDeclaredException e) {
-            throw new RuntimeException(e);
-        }
-        //throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent",exception);
+        Logger.error("Exception occurred when handling free talk operation");
     }
     @EventHandler
-    public void contextRecorder(GroupMessageEvent event) throws InterruptedException, LoggerNotDeclaredException {
+    public void contextRecorder(GroupMessageEvent event) throws InterruptedException {
         if(FeatureInUse.isInUse("FreeTalk",event.getSubject().getId(),"Reply")) {
             String prompt = "现在你是一名QQ群里的成员,群名称为:"+event.getSubject().getName()+",你的昵称为:" + event.getBot().getNick() + ",你要尽量以网民的口吻聊天,可适当玩梗、玩抽象，你的每一个回答都应控制在20-30字以内,末尾不加句号。在现实生活中，你的设定是这样的：\n" +
                     Main.JSON_NO_GUIDE.getJSONObject("Reply").getJSONObject("FreeTalk").getString("role") + "\n" +
@@ -181,8 +174,7 @@ public class FreeTalk extends SimpleListenerHost {
                         targetMessageNum.put(id, 0);
                         currentMessageNum.put(id, 0);
                     } else {
-                        Logger logger = Logger.getDeclaredLogger();
-                        logger.error("Failed to send message in \"Free Talk\" mode");
+                        Logger.error("Failed to send message in \"Free Talk\" mode");
                         context.get(id).clear();
                         targetMessageNum.put(id, 0);
                         currentMessageNum.put(id, 0);

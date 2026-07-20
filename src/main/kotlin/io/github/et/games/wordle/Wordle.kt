@@ -2,7 +2,7 @@ package io.github.et.games.wordle
 
 import io.github.et.exceptions.GameCrashedException
 import io.github.et.utils.json.FeatureInUse
-import io.github.ettoolset.tools.logger.Logger
+import io.github.et.conopt4j.logger.Logger
 import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.SimpleListenerHost
 import net.mamoe.mirai.event.events.MessageEvent
@@ -17,9 +17,7 @@ class Wordle: SimpleListenerHost() {
         var GameMap: MutableMap<Long, Game> = mutableMapOf()
     }
     override fun handleException(context: CoroutineContext, exception: Throwable) {
-        val logger: Logger = Logger.getDeclaredLogger()
-        logger.error("Game Wordle crashed, info as below")
-        throw GameCrashedException("Game Wordle crashed")
+        Logger.error("Game Wordle crashed")
     }
 
     @EventHandler

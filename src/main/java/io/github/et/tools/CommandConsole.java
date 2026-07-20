@@ -5,8 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import io.github.et.Main;
 import io.github.et.subprocessLoader.ServerStream;
 import io.github.et.utils.json.JsonBuilder;
-import io.github.ettoolset.tools.logger.LevelNotMatchException;
-import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
+import io.github.et.conopt4j.logger.Logger;
 import net.mamoe.mirai.Bot;
 
 import java.io.BufferedWriter;
@@ -18,7 +17,7 @@ public class CommandConsole {
     public static String getCommand(){
         return Main.console.readLine();
     }
-    public static String handle(Bot bot,String cmd) throws LoggerNotDeclaredException, LevelNotMatchException {
+    public static String handle(Bot bot,String cmd) {
         String[] commands=cmd.split(" ");
         try{
             switch (commands[0]) {

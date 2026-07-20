@@ -14,8 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class LeaverListener extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        Logger.error("Error dealing with exits, error info as follows:");
-        throw new IllegalEventHandlingException("Exception occurred when a group leaver is found",exception);
+        Logger.error("Error dealing with exits");
     }
     @EventHandler
     public void onExit(MemberLeaveEvent event) {

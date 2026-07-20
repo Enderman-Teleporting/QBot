@@ -14,9 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class RequestPasser extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        Logger.error("Error dealing with applications, error info as follows:");
-        throw new IllegalEventHandlingException("Exception occurred when dealing with Application event",exception);
-    }
+        Logger.error("Error dealing with applications");}
     @EventHandler
     public void friendPasser(NewFriendRequestEvent event){
         event.accept();

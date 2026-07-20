@@ -3,8 +3,7 @@ package io.github.et.messager;
 import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
 import io.github.et.tools.ServerSearching;
 import io.github.et.utils.json.FeatureInUse;
-import io.github.ettoolset.tools.logger.Logger;
-import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
+import io.github.et.conopt4j.logger.Logger;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
@@ -17,17 +16,11 @@ import java.io.IOException;
 public class ServerSearcher extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        try {
-            Logger logger = Logger.getDeclaredLogger();
-            logger.error("Exception occurred when handling a server searching operation, error info as follows:");
-        } catch (LoggerNotDeclaredException e) {
-            throw new RuntimeException(e);
-        }
-        throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent", exception);
+        Logger.error("Exception occurred when handling a server searching operation, error info as follows:");
     }
 
     @EventHandler
-    public void search(MessageEvent msgEvent) throws LoggerNotDeclaredException, IOException {
+    public void search(MessageEvent msgEvent) throws IOException {
         if (msgEvent.getMessage().contentToString().startsWith("查服 ")) {
             if (FeatureInUse.isInUse("MineServerStat", msgEvent.getSubject().getId())) {
                 String msg = msgEvent.getMessage().contentToString();
@@ -38,8 +31,7 @@ public class ServerSearcher extends SimpleListenerHost {
                 } else {
                     msgEvent.getSubject().sendMessage(ServerSearching.search(msg, 25565, msgEvent.getSubject()));
                 }
-                Logger logger = Logger.getDeclaredLogger();
-                logger.info("Handled a server searching request");
+                Logger.info("Handled a server searching request");
             } else {
                 msgEvent.getSubject().sendMessage("功能未开启");
             }

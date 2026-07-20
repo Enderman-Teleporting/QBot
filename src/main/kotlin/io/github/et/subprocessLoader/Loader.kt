@@ -11,7 +11,7 @@ import io.github.et.messager.*
 import io.github.et.tools.CommandConsole
 import io.github.et.tools.DeathMessage
 import io.github.et.utils.classLoader.ClassLoader
-import io.github.ettoolset.tools.logger.Logger
+import io.github.et.conopt4j.logger.Logger;
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -40,14 +40,13 @@ class Loader : Runnable {
                 ) {
                     GlobalScope.launch {
                         if (Main.bot == null) {
-                            val logger = Logger.getDeclaredLogger()
                             do {
                                 Main.bot =
                                     BotBuilder.positive("ws://127.0.0.1:" + (Main.JSON_ALL["Global"] as JSONObject)["port"])
                                         .connect()
                             } while (Main.bot == null)
                             Main.bot.login()
-                            logger.info("正在注册监听器……")
+                            Logger.info("正在注册监听器……")
                             val clazz = ClassLoader.loadClasses()
                             clazz.add(AdminBuffet::class.java)
                             clazz.add(ChangeGroupName::class.java)
@@ -71,7 +70,7 @@ class Loader : Runnable {
                                 if (abc is ListenerHost) {
                                     Main.bot.eventChannel.registerListenerHost(abc)
                                 }
-                                logger.info("已注册监听器" + c.name)
+                                Logger.info("已注册监听器" + c.name)
 
                             }
                             Thread {
@@ -80,7 +79,7 @@ class Loader : Runnable {
                                         if (Main.bot == null) {
                                             continue
                                         }
-                                        logger.fine(
+                                        Logger.fine(
                                             CommandConsole.handle(
                                                 Main.bot,
                                                 CommandConsole.getCommand()
@@ -96,10 +95,9 @@ class Loader : Runnable {
                     }
                 }
                 if (a.contains("{\"status\":\"failed\",\"retcode\":1200,\"data\":null,\"message\":\"Timeout: NTEvent serviceAndMethod:NodeIKernelMsgService/sendMsg ListenerName:NodeIKernelMsgListener/onMsgInfoListUpdate")) {
-                    val logger = Logger.getDeclaredLogger()
-                    logger.severe("检测到bot发送消息超时")
+                    Logger.severe("检测到bot发送消息超时")
                     if (Main.JSON_NO_GUIDE.getJSONObject("Global").getBoolean("autoRestart")) {
-                        logger.severe("正在尝试重启")
+                        Logger.severe("正在尝试重启")
                         CommandConsole.handle(Main.bot, "restart")
                     }
                 }

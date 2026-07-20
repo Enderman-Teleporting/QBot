@@ -2,7 +2,7 @@ package io.github.et.games.roulette
 
 import io.github.et.exceptions.GameCrashedException
 import io.github.et.utils.json.FeatureInUse
-import io.github.ettoolset.tools.logger.Logger
+import io.github.et.conopt4j.logger.Logger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,9 +23,8 @@ class Roulette: SimpleListenerHost() {
     private val jobMap = mutableMapOf<Long, Job>()
 
     override fun handleException(context: CoroutineContext, exception: Throwable) {
-        val logger:Logger=Logger.getDeclaredLogger()
-        logger.error("Game Roulette crashed, info as below")
-        throw GameCrashedException("Game Roulette crashed")
+        Logger.error("Game Roulette crashed")
+
     }
 
     @EventHandler
