@@ -1,9 +1,8 @@
 package io.github.et.eventListener;
 
+import io.github.et.conopt4j.logger.Logger;
 import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
 import io.github.et.utils.json.FeatureInUse;
-import io.github.ettoolset.tools.logger.Logger;
-import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
@@ -14,24 +13,18 @@ import org.jetbrains.annotations.NotNull;
 public class ChangeGroupName extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        try {
-            Logger logger = Logger.getDeclaredLogger();
-            logger.error("Exception occurred when handling a group name change request, error info as follows:");
-        } catch (LoggerNotDeclaredException e) {
-            throw new RuntimeException(e);
-        }
+        Logger.error("Exception occurred when handling a group name change request, error info as follows:");
         throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent", exception);
     }
 
     @EventHandler
-    public void change(GroupMessageEvent msgEvent) throws LoggerNotDeclaredException {
+    public void change(GroupMessageEvent msgEvent)  {
 
         if (msgEvent.getMessage().contentToString().startsWith("群名称 ")) {
             if (FeatureInUse.isInUse("GroupName", msgEvent.getSubject().getId())) {
                 String message = msgEvent.getMessage().contentToString().substring(4);
                 msgEvent.getSubject().setName(message);
-                Logger logger = Logger.getDeclaredLogger();
-                logger.info("Handled a change-group-name request");
+                Logger.info("Handled a change-group-name request");
             } else {
                 msgEvent.getSubject().sendMessage("功能未开启");
             }

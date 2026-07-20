@@ -1,12 +1,10 @@
 package io.github.et
 
-import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.util.*
-import kotlin.collections.ArrayList
 
 object ConfigLoader {
     @JvmField

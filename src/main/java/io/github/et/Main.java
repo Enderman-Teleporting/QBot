@@ -1,17 +1,15 @@
 package io.github.et;
 
 import com.alibaba.fastjson2.JSONObject;
+import io.github.et.conopt4j.launcher.Launcher;
 import io.github.et.subprocessLoader.Loader;
 import io.github.et.tools.Resource;
 import io.github.et.utils.json.JsonBuilder;
-import io.github.ettoolset.tools.logger.Logger;
 import net.mamoe.mirai.Bot;
-import org.fusesource.jansi.AnsiConsole;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
-import java.io.Console;
-import java.io.File;
+import java.io.*;
 
 
 public class Main {
@@ -25,24 +23,34 @@ public class Main {
     public static Console console=System.console();;
 
     public static void main(String[] args) throws Exception {
-        Logger logger;
-        AnsiConsole.systemInstall();
+        File file=new File("log.properties");
+        if(!file.exists()){
+            file.createNewFile();
+            BufferedWriter bw=new BufferedWriter(new FileWriter(file));
+            bw.write("conopt4j.logger.format = Style.HINT\n" +
+                    "conopt4j.logger.level = Level.DEBUG\n" +
+                    "conopt4j.logger.info = Color.WHITE\n" +
+                    "conopt4j.logger.warn = Color.YELLOW\n" +
+                    "conopt4j.logger.debug = Color.CYAN\n" +
+                    "conopt4j.logger.error = Color.RED\n" +
+                    "conopt4j.logger.fatal = Color.PURPLE\n" +
+                    "conopt4j.logger.severe = Color.RED\n" +
+                    "conopt4j.logger.fine = Color.BLUE\n" +
+                    "conopt4j.logger.useTime = false\n" +
+                    "conopt4j.logger.useTrace = true\n" +
+                    "conopt4j.logger.maxHistory = 1024\n" +
+                    "conopt4j.command.prompt = >");
+        }
+        Launcher.init(new FileInputStream(file));
         Resource.update();
         JsonBuilder.update();
-        File file=new File("plugins");
+        File file0 =new File("plugins");
         File file1 = new File("configs/addonConfigs");
-        if(!file.exists()){
-            file.mkdirs();
+        if(!file0.exists()){
+            file0.mkdirs();
         }
         if(!file1.exists()){
             file1.mkdirs();
-        }
-        if (JSON_NO_GUIDE.get("log") == null) {
-            logger=new Logger(Logger.Levels.DEBUG,null);
-        } else if(JSON_NO_GUIDE.get("log").equals("null")){
-            logger=new Logger(Logger.Levels.DEBUG,null);
-        }else{
-            logger=new Logger(Logger.Levels.DEBUG, (String)JSON_NO_GUIDE.get("log"));
         }
         new Thread(new Loader()).start();
         new Thread(new HeartBeat()).start();

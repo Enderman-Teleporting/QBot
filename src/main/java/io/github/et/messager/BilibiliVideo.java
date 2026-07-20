@@ -1,11 +1,10 @@
 package io.github.et.messager;
 
 import com.alibaba.fastjson.JSONObject;
+import io.github.et.conopt4j.logger.Logger;
 import io.github.et.exceptions.messageExceptions.IllegalMessageDealingException;
 import io.github.et.utils.bilibili.BilibiliVideoInfoFetcher;
 import io.github.et.utils.json.FeatureInUse;
-import io.github.ettoolset.tools.logger.Logger;
-import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
@@ -21,12 +20,7 @@ import java.net.URL;
 public class BilibiliVideo extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        try {
-            Logger logger = Logger.getDeclaredLogger();
-            logger.error("Exception occurred when fetching some information of a Bilibili video, error info as follows:");
-        } catch (LoggerNotDeclaredException e) {
-            throw new RuntimeException(e);
-        }
+        Logger.error("Exception occurred when fetching some information of a Bilibili video, error info as follows:");
         throw new IllegalMessageDealingException("Exception occurred when dealing with MessageEvent", exception);
     }
 

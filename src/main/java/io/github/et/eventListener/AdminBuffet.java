@@ -1,9 +1,8 @@
 package io.github.et.eventListener;
 
+import io.github.et.conopt4j.logger.Logger;
 import io.github.et.exceptions.messageExceptions.IllegalEventHandlingException;
 import io.github.et.utils.json.FeatureInUse;
-import io.github.ettoolset.tools.logger.Logger;
-import io.github.ettoolset.tools.logger.LoggerNotDeclaredException;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.contact.NormalMember;
 import net.mamoe.mirai.event.EventHandler;
@@ -16,19 +15,14 @@ import org.jetbrains.annotations.NotNull;
 public class AdminBuffet extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        try{
-            Logger logger= Logger.getDeclaredLogger();
-            logger.error("Exception occurred when handling an operation, error info as follows:");
-        } catch (LoggerNotDeclaredException e) {
-            throw new RuntimeException(e);
-        }
+        Logger.error("Exception occurred when handling an operation, error info as follows:");
         throw new IllegalEventHandlingException("Exceptions found while handling AdminBuffet event",exception);
     }
 
 
 
     @EventHandler
-    public void doAdmin(GroupMessageEvent msgEvent) throws LoggerNotDeclaredException, InterruptedException {
+    public void doAdmin(GroupMessageEvent msgEvent) throws InterruptedException {
         if (msgEvent.getMessage().contentToString().equals("我要管理")) {
             if (FeatureInUse.isInUse("Admin", msgEvent.getSubject().getId())) {
                 if (msgEvent.getSender() instanceof NormalMember) {
@@ -39,8 +33,7 @@ public class AdminBuffet extends SimpleListenerHost {
                     msgEvent.getSubject().sendMessage("忘说了，就给一分钟");
                     sender.modifyAdmin(false);
                 }
-                Logger logger = Logger.getDeclaredLogger();
-                logger.info("Received and handled Admin request from %s", msgEvent.getSubject().getId());
+                Logger.info("Received and handled Admin request from %s", msgEvent.getSubject().getId());
             } else {
                 msgEvent.getSubject().sendMessage("功能未开启");
             }
