@@ -94,10 +94,7 @@ class Loader : Runnable {
                 }
                 for (i in ConfigLoader.servers) {
                     if (i.name == name) {
-                        if (content.contains("<".toRegex()) && content.contains(">".toRegex()) && (!a.contains("\\[Server]".toRegex())) && (!a.contains(
-                                "<init>".toRegex()
-                            ))
-                        ) {
+                        if (content.contains("<".toRegex()) && content.contains(">".toRegex()) && (!a.contains("\\[Server]".toRegex())) && (!a.contains("<init>".toRegex()))&&(!a.contains("BROADCAST DEBUG".toRegex()))) {
                             GlobalScope.launch {
                                 Objects.requireNonNull(Main.bot.getGroup(i.group))
                                     ?.sendMessage("[" + name + "]" + content.substring(content.indexOf("<")))

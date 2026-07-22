@@ -32,6 +32,7 @@ useBackup=true或false，是否使用自动备份
 death_msg=true或false，是否在玩家死亡时发送消息
 useAdvancement=true或false，是否在群内分享玩家进度
 ```
+> 进行互通的服务器一定要在`server.properties`中将`enforce-secure-profile`设置为`false`
    
 
 3. 直接运行jar文件，一定要加-Dfile.encoding=utf-8
@@ -56,7 +57,6 @@ useAdvancement=true或false，是否在群内分享玩家进度
    >
    > 另一种为功能完整路径加要设置的参数加值，例如`set Reply URL https://...`（URL参数应当填到`https://.../vx/`（x为数字），子功能会共用父功能参数）
    >
-   > 发送MC指令语法为`[名称]/指令`，例如：`[AAA]/say hello`
    >
    >  
    >

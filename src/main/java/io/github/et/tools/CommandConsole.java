@@ -40,7 +40,7 @@ public class CommandConsole {
                         if(group==null){
                             return "Group not found";
                         }
-                        group.sendMessage(String.valueOf(cxt.get("Message")));
+                        group.sendMessage(cxt.get("Message").toString());
                         return("Group Message Has Been Sent!");
                     })
                 .build();
@@ -54,7 +54,7 @@ public class CommandConsole {
                         if(friend==null){
                             return "Friend not found";
                         }
-                        friend.sendMessage(String.valueOf(cxt.get("Message")));
+                        friend.sendMessage(cxt.get("Message").toString());
                         return("Private Message Has Been Sent!");
                     });
         Launcher.registerCommand(sendPrivateMsg);
@@ -203,7 +203,7 @@ public class CommandConsole {
                     .addExecution(cxt->{
                         JSONObject jo1= Main.JSON_ALL;
                         JSONObject jo2=Main.JSON_NO_GUIDE;
-                        String[] path = String.valueOf(cxt.get("FullPath")).split("\\.");
+                        String[] path = cxt.get("FullPath").toString().split("\\.");
                         for (String s : path) {
                             jo1 = jo1.getJSONObject(s);
                             jo2 = jo2.getJSONObject(s);
@@ -246,16 +246,16 @@ public class CommandConsole {
                         }
                         return "Setting Completed!";
                     })
-                .addParameterNode(new Parameter<>("FullPath",Type.STRING),new Parameter<>("CommandName",Type.STRING),new Parameter<>("Value",Type.STRING))
+                .addParameterNode(new Parameter<>("FullPath",Type.STRING),new Parameter<>("ConfigName",Type.STRING),new Parameter<>("Value",Type.STRING))
                     .addExecution(context -> {
                                 JSONObject jo1= Main.JSON_ALL;
                                 JSONObject jo2=Main.JSON_NO_GUIDE;
-                                String[] path= String.valueOf(context.get("FullPath")).split("\\.");
+                                String[] path= context.get("FullPath").toString().split("\\.");
                                 for (String s : path) {
                                     jo1 = jo1.getJSONObject(s);
                                     jo2 = jo2.getJSONObject(s);
                                 }
-                                String name = context.get("CommandName");
+                                String name = context.get("ConfigName");
                                 if(jo1.get(name) instanceof Boolean){
                                     jo1.put(name,Boolean.valueOf(context.get("Value")));
                                     jo2.put(name,Boolean.valueOf(context.get("Value")));
@@ -263,7 +263,6 @@ public class CommandConsole {
                                     jo1.put(name, Integer.parseInt(context.get("Value")));
                                     jo2.put(name, Integer.parseInt(context.get("Value")));
                                 } else if (jo1.get(name) instanceof String) {
-                                    StringBuilder value = new StringBuilder();
                                     jo1.put(name, context.get("Value"));
                                     jo2.put(name, context.get("Value"));
                                 } else if (jo1.get(name) instanceof JSONArray) {
@@ -415,6 +414,20 @@ public class CommandConsole {
                         return "";
                     });
         Launcher.registerCommand(resetListener);
+        Command command = new Command("command");
+        command.setDescription("Send Minecraft command")
+                .setDeamon(true)
+                .addParameterNode(new Parameter<>("MinecraftServerName", Type.STRING), new Parameter<>("command",Type.STRING))
+                    .addExecution(cxt->{
+                        try {
+                            ServerStream.os.write(("["+cxt.get("MinecraftServerName")+"]/"+cxt.get("command")+"\n").getBytes());
+                        } catch (IOException e) {
+                            return "Command sending failed";
+                        }
+                        return "Command has been sent";
+                    })
+                .build();
+        Launcher.registerCommand(command);
 
     }
 }
