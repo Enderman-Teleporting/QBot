@@ -1,8 +1,7 @@
 package io.github.et.games.wordle
 
-import io.github.et.exceptions.GameCrashedException
-import io.github.et.utils.json.FeatureInUse
 import io.github.et.conopt4j.logger.Logger
+import io.github.et.utils.json.FeatureInUse
 import net.mamoe.mirai.event.EventHandler
 import net.mamoe.mirai.event.SimpleListenerHost
 import net.mamoe.mirai.event.events.MessageEvent

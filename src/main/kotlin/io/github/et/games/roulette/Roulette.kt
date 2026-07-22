@@ -1,8 +1,7 @@
 package io.github.et.games.roulette
 
-import io.github.et.exceptions.GameCrashedException
-import io.github.et.utils.json.FeatureInUse
 import io.github.et.conopt4j.logger.Logger
+import io.github.et.utils.json.FeatureInUse
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

@@ -1,6 +1,9 @@
 package  io.github.et.subprocessLoader
 import com.alibaba.fastjson2.JSONObject
 import io.github.et.Main
+import io.github.et.conopt4j.launcher.Launcher
+import io.github.et.conopt4j.logger.Logger
+import io.github.et.conopt4j.threading.command.Command
 import io.github.et.eventListener.AdminBuffet
 import io.github.et.eventListener.ChangeGroupName
 import io.github.et.eventListener.LeaverListener
@@ -10,8 +13,8 @@ import io.github.et.games.wordle.Wordle
 import io.github.et.messager.*
 import io.github.et.tools.CommandConsole
 import io.github.et.tools.DeathMessage
+import io.github.et.tools.Resource
 import io.github.et.utils.classLoader.ClassLoader
-import io.github.et.conopt4j.logger.Logger;
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -46,6 +49,7 @@ class Loader : Runnable {
                                         .connect()
                             } while (Main.bot == null)
                             Main.bot.login()
+                            Launcher.init(Resource::class.java.getResourceAsStream("/io/github/et/LoggingProperty.properties"))
                             Logger.info("正在注册监听器……")
                             val clazz = ClassLoader.loadClasses()
                             clazz.add(AdminBuffet::class.java)
@@ -73,23 +77,7 @@ class Loader : Runnable {
                                 Logger.info("已注册监听器" + c.name)
 
                             }
-                            Thread {
-                                while (true) {
-                                    try {
-                                        if (Main.bot == null) {
-                                            continue
-                                        }
-                                        Logger.fine(
-                                            CommandConsole.handle(
-                                                Main.bot,
-                                                CommandConsole.getCommand()
-                                            )
-                                        )
-                                    } catch (e: Exception) {
-                                        break
-                                    }
-                                }
-                            }.start()
+                            CommandConsole.registerCommands(Main.bot)
                             Main.bot.join()
                         }
                     }
@@ -98,7 +86,7 @@ class Loader : Runnable {
                     Logger.severe("检测到bot发送消息超时")
                     if (Main.JSON_NO_GUIDE.getJSONObject("Global").getBoolean("autoRestart")) {
                         Logger.severe("正在尝试重启")
-                        CommandConsole.handle(Main.bot, "restart")
+                        Command.runCommand("restart")
                     }
                 }
                 if (name.isEmpty() || Main.bot == null) {

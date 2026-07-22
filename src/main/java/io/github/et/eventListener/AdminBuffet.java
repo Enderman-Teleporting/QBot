@@ -1,7 +1,6 @@
 package io.github.et.eventListener;
 
 import io.github.et.conopt4j.logger.Logger;
-import io.github.et.exceptions.messageExceptions.IllegalEventHandlingException;
 import io.github.et.utils.json.FeatureInUse;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.contact.NormalMember;

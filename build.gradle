@@ -3,9 +3,14 @@ plugins {
     id 'com.gradleup.shadow' version '9.4.2'
     id 'org.jetbrains.kotlin.jvm' version '2.3.20'
 }
+java{
+    toolchain {
+        JavaLanguageVersion.of(17)
+    }
+}
 
 group 'io.github.et'
-version '5.2.7'
+version '5.2.8'
 
 repositories {
     mavenCentral()
@@ -31,6 +36,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.13.4'
     implementation fileTree(dir:'lib',include:['*.jar'])
+    implementation 'org.jline:jline:3.30.0'
 }
 
 sourceSets {
