@@ -36,7 +36,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.13.4'
     implementation fileTree(dir:'lib',include:['*.jar'])
-    implementation 'org.jline:jline:3.30.0'
+    implementation 'org.jline:jline:4.3.1'
 }
 
 sourceSets {
