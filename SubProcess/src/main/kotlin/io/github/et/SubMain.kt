@@ -12,6 +12,7 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
+import kotlin.io.path.createTempDirectory
 import kotlin.system.exitProcess
 
 
@@ -424,7 +425,7 @@ object SubMain {
 fun compressDirectory(dir1: String, dir2: File, name: String) {
     val sourceDir = File(dir1)
     require(sourceDir.exists() && sourceDir.isDirectory) { "Source directory $dir1 is invalid" }
-    val tempDir = createTempDir("zip_temp_").apply { deleteOnExit() }
+    val tempDir = createTempDirectory(prefix = "zip_temp_").toFile().apply { deleteOnExit() }
     val tempTargetDir = File(tempDir, sourceDir.name).apply { mkdirs() }
 
     try {

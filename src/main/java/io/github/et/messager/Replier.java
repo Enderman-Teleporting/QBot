@@ -19,7 +19,7 @@ import java.io.IOException;
 public class Replier extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        Logger.error("Exception occurred when handling a reply operation, error info as follows:");
+        Logger.error("Exception occurred when handling a reply operation");
     }
 
     @EventHandler

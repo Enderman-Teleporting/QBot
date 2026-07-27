@@ -12,7 +12,7 @@
 * OverFlow
 * Mirai
 * FastJson
-* ETToolset(本人自己写的飞舞库)
+* Conopt4j(本人自己写的飞舞库)
 * Lombok
 * JAnsi
 * LuaJ
@@ -31,9 +31,7 @@ group=要互通的群的群号
 useBackup=true或false，是否使用自动备份
 death_msg=true或false，是否在玩家死亡时发送消息
 useAdvancement=true或false，是否在群内分享玩家进度
-```
-> 进行互通的服务器一定要在`server.properties`中将`enforce-secure-profile`设置为`false`
-   
+``` 
 
 3. 直接运行jar文件，一定要加-Dfile.encoding=utf-8
 

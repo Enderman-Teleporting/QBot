@@ -33,7 +33,7 @@ public class CommandConsole {
     public static void registerCommands(Bot bot) {
         Command sendGroupMsg = new Command("sendGroupMsg");
         sendGroupMsg.setDescription("Send a message to a group chat")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("GroupCode", Type.LONG),new Parameter<>("Message", Type.STRING))
                     .addExecution(cxt->{
                         Group group=bot.getGroup(cxt.get("GroupCode"));
@@ -47,7 +47,7 @@ public class CommandConsole {
         Launcher.registerCommand(sendGroupMsg);
         Command sendPrivateMsg = new Command("sendPrivateMsg");
         sendPrivateMsg.setDescription("Send a message to a private chat")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("FriendID", Type.LONG),new Parameter<>("Message", Type.STRING))
                     .addExecution(cxt->{
                         Friend friend=bot.getFriend(cxt.get("FriendID"));
@@ -60,7 +60,7 @@ public class CommandConsole {
         Launcher.registerCommand(sendPrivateMsg);
         Command setAdmin = new Command("setAdmin");
         setAdmin.setDescription("Set the administrator permission for a member in group chat")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("GroupCode", Type.LONG),new Parameter<>("GroupMemberID", Type.LONG))
                     .addExecution(context ->{
                         Group group=bot.getGroup(context.get("GroupCode"));
@@ -81,7 +81,7 @@ public class CommandConsole {
         Launcher.registerCommand(setAdmin);
         Command cancelAdmin = new Command("cancelAdmin");
         cancelAdmin.setDescription("Cancel the administrator permission for a member in group chat")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("GroupCode", Type.LONG),new Parameter<>("GroupMemberID", Type.LONG))
                     .addExecution(context ->{
                         Group group=bot.getGroup(context.get("GroupCode"));
@@ -102,7 +102,7 @@ public class CommandConsole {
         Launcher.registerCommand(cancelAdmin);
         Command deleteFriend = new Command("deleteFriend");
         deleteFriend.setDescription("Delete a friend")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("FriendID", Type.LONG))
                     .addExecution(cxt->{
                         Friend friend=bot.getFriend(cxt.get("FriendID"));
@@ -116,7 +116,7 @@ public class CommandConsole {
         Launcher.registerCommand(deleteFriend);
         Command deleteGroup = new Command("deleteGroup");
         deleteGroup.setDescription("Leave a group")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("GroupCode", Type.LONG))
                     .addExecution(context ->{
                         Group group=bot.getGroup(context.get("GroupCode"));
@@ -130,7 +130,7 @@ public class CommandConsole {
         Launcher.registerCommand(deleteGroup);
         Command mute=new Command("mute");
         mute.setDescription("Mute a member in a group")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("GroupCode", Type.LONG), new Parameter<>("GroupMemberID", Type.LONG), new Parameter<>("Time", Type.INTEGER))
                 .addExecution(cxt -> {
                     Group group = bot.getGroup(cxt.get("GroupCode"));
@@ -148,7 +148,7 @@ public class CommandConsole {
         Launcher.registerCommand(mute);
         Command unmute=new Command("unmute");
         unmute.setDescription("Unmute a member in a group")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("GroupCode", Type.LONG), new Parameter<>("GroupMemberID", Type.LONG))
                     .addExecution(cxt->{
                         Group group = bot.getGroup(cxt.get("GroupCode"));
@@ -166,7 +166,7 @@ public class CommandConsole {
         Launcher.registerCommand(unmute);
         Command groupName = new Command("groupName");
         groupName.setDescription("Set group name")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("GroupCode",Type.LONG),new Parameter<>("GroupName", Type.STRING))
                     .addExecution(ext-> {
                         Group group=bot.getGroup(ext.get("GroupCode"));
@@ -180,7 +180,7 @@ public class CommandConsole {
         Launcher.registerCommand(groupName);
         Command kick=new Command("kick");
         kick.setDescription("Kick a member from a group");
-        kick.setDeamon(true)
+        kick.setDaemon(true)
                 .addParameterNode(new Parameter<>("GroupCode", Type.LONG),new Parameter<>("GroupMemberID", Type.LONG))
                     .addExecution(context -> {
                         Group group = bot.getGroup(context.get("GroupCode"));
@@ -198,7 +198,7 @@ public class CommandConsole {
         Launcher.registerCommand(kick);
         Command set=new Command("set");
         set.setDescription("Configuration settings")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("GroupCode", Type.LONG),new Parameter<>("FullPath",Type.STRING))
                     .addExecution(cxt->{
                         JSONObject jo1= Main.JSON_ALL;
@@ -281,7 +281,7 @@ public class CommandConsole {
         Launcher.registerCommand(set);
         Command restart=new Command("restart");
         restart.setDescription("Restart QQ bot/MC server")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode()
                     .addExecution(context ->  {
                         if (ServerStream.os != null) {
@@ -315,7 +315,7 @@ public class CommandConsole {
         Launcher.registerCommand(restart);
         Command forceStop=new Command("forceStop");
         forceStop.setDescription("Force stop MC server")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("MCServerName",Type.STRING))
                     .addExecution(cxt->{
                         if(ServerStream.os!=null) {
@@ -334,7 +334,7 @@ public class CommandConsole {
         Launcher.registerCommand(forceStop);
         Command startup=new Command("startup");
         startup.setDescription("Startup MC server")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("MCServerName",Type.STRING))
                 .addExecution(cxt->{
                         if(ServerStream.os!=null) {
@@ -356,7 +356,7 @@ public class CommandConsole {
         Launcher.registerCommand(startup);
         Command backup=new Command("backup");
         backup.setDescription("Backup MC server")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("MCServerName",Type.STRING))
                 .addExecution(cxt->{
                     if(ServerStream.os!=null){
@@ -375,7 +375,7 @@ public class CommandConsole {
         Launcher.registerCommand(backup);
         Command resetListener=new Command("resetListener");
         resetListener.setDescription("When you have called \"restart\", but the bot doen't seem to reply,please try resetListener")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode()
                     .addExecution(cxt->{
                         Logger.info("正在注册监听器……");
@@ -416,7 +416,7 @@ public class CommandConsole {
         Launcher.registerCommand(resetListener);
         Command command = new Command("command");
         command.setDescription("Send Minecraft command")
-                .setDeamon(true)
+                .setDaemon(true)
                 .addParameterNode(new Parameter<>("MinecraftServerName", Type.STRING), new Parameter<>("command",Type.STRING))
                     .addExecution(cxt->{
                         try {

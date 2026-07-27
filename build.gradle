@@ -35,7 +35,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.46'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.13.4'
-    implementation("io.github.enderman-tping:Conopt4j:1.0.0")
+    implementation("io.github.enderman-tping:Conopt4j:1.0.1")
+
 }
 
 sourceSets {

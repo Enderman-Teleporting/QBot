@@ -15,7 +15,7 @@ import java.io.IOException;
 public class ServerSearcher extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        Logger.error("Exception occurred when handling a server searching operation, error info as follows:");
+        Logger.error("Exception occurred when handling a server searching operation");
     }
 
     @EventHandler
