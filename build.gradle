@@ -10,7 +10,7 @@ java{
 }
 
 group 'io.github.et'
-version '5.2.8'
+version '5.2.9'
 
 repositories {
     mavenCentral()
@@ -33,7 +33,7 @@ dependencies {
     implementation 'org.luaj:luaj-jse:3.0.1'
     compileOnly 'org.projectlombok:lombok:1.18.46'
     annotationProcessor 'org.projectlombok:lombok:1.18.46'
-    implementation("io.github.enderman-tping:Conopt4j:1.0.1")
+    implementation("io.github.enderman-tping:Conopt4j:1.0.3")
 
 }
 
