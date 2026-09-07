@@ -31,8 +31,8 @@ dependencies {
     implementation "top.mrxiaom.mirai:overflow-core:1.1.0"
     implementation 'net.mamoe:mirai-core:2.16.0'
     implementation 'org.luaj:luaj-jse:3.0.1'
-    compileOnly 'org.projectlombok:lombok:1.18.46'
-    annotationProcessor 'org.projectlombok:lombok:1.18.46'
+    compileOnly 'org.projectlombok:lombok:1.18.48'
+    annotationProcessor 'org.projectlombok:lombok:1.18.48'
     implementation("io.github.enderman-tping:Conopt4j:1.0.3")
 
 }
