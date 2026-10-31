@@ -122,7 +122,7 @@ object SubMain {
                                     }
                                 }
                             }
-                        }else if(a.contains("<".toRegex())&&a.contains(">".toRegex())&&(!a.contains("\\[Server]".toRegex()))&&(!a.contains("/[a-z]+".toRegex()))){
+                        }else if(a.contains("<".toRegex())&&a.contains(">".toRegex())&&(!a.contains("\\[Server]".toRegex()))&&(!a.matches("^\\[[a-z]+]/[a-z]+ .+$".toRegex()))){
                             val name= getContent(a)
                             for(server in ConfigLoader.servers){
                                 if(server.name==name&& processMap[server]!=null){

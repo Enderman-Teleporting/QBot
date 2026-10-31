@@ -172,6 +172,9 @@ public class JsonBuilder {
 
     private static void configureFeature(LuaLoader lua, JSONObject jsonObject, boolean includeRule) {
         String featureName = lua.getLuaName();
+        JSONObject existingParentConfig = getParentConfig(existingConfig, lua);
+        JSONObject existingFeatureConfig = existingParentConfig == null ? null : existingParentConfig.getJSONObject(featureName);
+        JSONObject parentConfig = lua.getParent() == null ? null : jsonObject;
         JSONObject featureConfig = new JSONObject();
 
         if (includeRule) {
@@ -187,12 +190,10 @@ public class JsonBuilder {
             }
         }
         if(!lua.getLuaName().equals("Global")) {
-            if (existingConfig != null) {
-                if (existingConfig.containsKey(featureName) &&
-                        existingConfig.getJSONObject(featureName).containsKey("include") &&
-                        existingConfig.getJSONObject(featureName).containsKey("exclude")) {
-                    featureConfig.put("include", existingConfig.getJSONObject(featureName).get("include"));
-                    featureConfig.put("exclude", existingConfig.getJSONObject(featureName).get("exclude"));
+            if (existingFeatureConfig != null) {
+                if (existingFeatureConfig.containsKey("include") && existingFeatureConfig.containsKey("exclude")) {
+                    featureConfig.put("include", existingFeatureConfig.get("include"));
+                    featureConfig.put("exclude", existingFeatureConfig.get("exclude"));
                 } else {
                     featureConfig.put("include", new JSONArray());
                     featureConfig.put("exclude", new JSONArray());
@@ -207,17 +208,8 @@ public class JsonBuilder {
 
             if (existingConfig != null) {
                 if (lua.getParent() != null) {
-                    if (existingConfig.containsKey(lua.getParent()) &&
-                            existingConfig.getJSONObject(lua.getParent()).containsKey(itemName)) {
-                        value = existingConfig.getJSONObject(lua.getParent()).get(itemName);
-                        if (validateConfigValue(value, item)) {
-                            needInput = false;
-                        }
-                    }
-                    if (existingConfig.containsKey(lua.getParent()) &&
-                            existingConfig.getJSONObject(lua.getParent()).containsKey(featureName) &&
-                            existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).containsKey(itemName)) {
-                        value = existingConfig.getJSONObject(lua.getParent()).getJSONObject(featureName).get(itemName);
+                    if (existingFeatureConfig != null && existingFeatureConfig.containsKey(itemName)) {
+                        value = existingFeatureConfig.get(itemName);
                         if (validateConfigValue(value, item)) {
                             needInput = false;
                         }
@@ -240,13 +232,35 @@ public class JsonBuilder {
             featureConfig.put(itemName, value);
         }
 
-        if (lua.getParent() != null) {
-            if (!jsonObject.containsKey(lua.getParent())) {
-                jsonObject.put(lua.getParent(), new JSONObject());
+        JSONObject destination = parentConfig == null ? jsonObject : parentConfig;
+        destination.put(featureName, featureConfig);
+    }
+
+    private static JSONObject getParentConfig(JSONObject root, LuaLoader lua) {
+        if (root == null || lua.getParent() == null) return null;
+        JSONObject parent = root;
+        ArrayList<String> path = new ArrayList<>();
+        LuaLoader ancestor = lua.getParentLua();
+        while (ancestor != null) {
+            path.add(0, ancestor.getLuaName());
+            ancestor = ancestor.getParentLua();
+        }
+        if (path.isEmpty()) {
+            java.util.Collections.addAll(path, lua.getParent().split("\\."));
+        }
+        for (String part : path) {
+            if (parent == null) return null;
+            parent = parent.getJSONObject(part);
+        }
+        return parent;
+    }
+
+    private static void configureChildren(LuaLoader parent, JSONObject output, boolean includeRule) {
+        for (LuaLoader child : luas) {
+            if (parent.getLuaName().equals(child.getParent())) {
+                configureFeature(child, output, includeRule);
+                configureChildren(child, output.getJSONObject(child.getLuaName()), includeRule);
             }
-            jsonObject.getJSONObject(lua.getParent()).put(featureName, featureConfig);
-        } else {
-            jsonObject.put(featureName, featureConfig);
         }
     }
 
@@ -272,8 +286,8 @@ public class JsonBuilder {
             .forEach(lua -> configureFeature(lua, jsonObject, false));
 
         luas.stream()
-            .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() != null)
-            .forEach(lua -> configureFeature(lua, jsonObject, false));
+            .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() == null)
+            .forEach(lua -> configureChildren(lua, jsonObject.getJSONObject(lua.getLuaName()), false));
 
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && lua.isGame())
@@ -311,8 +325,8 @@ public class JsonBuilder {
             .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() == null)
             .forEach(lua -> configureFeature(lua, jsonObject, true));
         luas.stream()
-            .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() != null)
-            .forEach(lua -> configureFeature(lua, jsonObject, true));
+            .filter(lua -> !lua.getLuaName().equals("Global") && !lua.isGame() && lua.getParent() == null)
+            .forEach(lua -> configureChildren(lua, jsonObject.getJSONObject(lua.getLuaName()), true));
 
         luas.stream()
             .filter(lua -> !lua.getLuaName().equals("Global") && lua.isGame())
